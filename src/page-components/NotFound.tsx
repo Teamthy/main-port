@@ -1,0 +1,51 @@
+import Link from "next/link";
+
+export default function NotFound() {
+  return (
+    <main>
+      <section className="lg:pt-30 lg:pb-20 pt-20 pb-10">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="max-w-3xl text-center mx-auto">
+            <h1 className="text-3xl lg:text-5xl font-normal -tracking-[2.88px] mb-4 text-black">
+              Oops! Page Not Found
+            </h1>
+            <p className="mb-8 lg:mb-12 text-gray-700 text-lg leading-6 -tracking-[0.2px] max-w-xl mx-auto">
+              It seems the page you were looking for could not be found.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-5">
+              <Link
+                href="/"
+                className="px-6 py-4.5 flex items-center bg-black text-sm font-medium -tracking-[0.2px] leading-5 text-white rounded-full hover:bg-gray-900 transition font-mono uppercase"
+              >
+                Return Home
+              </Link>
+              <Link
+                href="/portfolio"
+                className="px-6 py-4.5 flex items-center bg-white border border-black text-sm font-medium -tracking-[0.2px] leading-5 text-black rounded-full hover:bg-gray-50 transition font-mono uppercase"
+              >
+                Explore Projects
+              </Link>
+            </div>
+          </div>
+
+          {/* 404 SVG */}
+          <div className="mt-20 max-w-[1007px] mx-auto">
+            <svg className="w-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1009 414" fill="none">
+              <path
+                d="M553.235 0.5C585.235 0.500031 611.429 8.56622 631.775 24.7383L632.73 25.502C652.681 41.6442 666.231 64.8486 673.402 95.0713L673.738 96.5098C680.686 126.804 680.568 163.371 673.409 206.193C666.137 249.698 653.796 286.925 636.377 317.863L636.376 317.862C619.357 348.188 598.235 371.543 573.001 387.906L571.796 388.681C546.154 404.951 517.323 413.084 485.319 413.084C453.059 413.084 426.734 404.952 406.387 388.648L406.386 388.647C386.043 372.217 372.306 348.562 365.151 317.73V317.729C358.127 286.769 358.262 249.53 365.534 206.028C372.677 162.523 384.953 125.49 402.373 94.9395C419.791 64.2627 441.317 40.8457 466.955 24.708C492.597 8.56802 521.361 0.5 553.235 0.5ZM314.491 5.94922L314.395 6.53027L270.457 271.191H321.692L321.595 271.774L311.67 331.128L311.601 331.546H260.438L248.23 405.076L248.161 405.494H178.258L178.354 404.913L190.504 331.546H0.587891L0.682617 330.965L10.0234 273.558L10.0439 273.428L10.126 273.325L223.604 6.13672L223.755 5.94922H314.491ZM1001.14 5.94922L1001.04 6.53027L957.105 271.191H1008.34L1008.24 271.774L998.318 331.128L998.249 331.546H947.086L934.878 405.076L934.809 405.494H864.906L865.003 404.913L877.152 331.546H687.236L687.33 330.965L696.672 273.558L696.692 273.428L696.774 273.325L910.253 6.13672L910.403 5.94922H1001.14ZM543.505 61.6318C518.921 61.6319 497.391 73.849 478.907 98.4072L478.906 98.4082C460.423 122.837 447.21 158.75 439.303 206.193C433.988 238.08 432.827 264.815 435.802 286.413L436.091 288.411C439.192 308.895 445.684 324.4 455.52 334.984L455.998 335.485C466.08 345.937 479.211 351.173 495.438 351.173C520.153 351.173 541.682 338.956 560.035 314.399C578.39 289.84 591.604 253.732 599.642 206.027C604.956 174.402 606.051 147.862 602.947 126.396V126.393C599.971 104.915 593.381 88.8106 583.229 78.0156L583.227 78.0137C573.082 67.0983 559.857 61.6318 543.505 61.6318ZM772.371 268.778L772.069 271.191H888.175L918.341 88.6816H916.14L772.371 268.778ZM85.7227 268.778L85.4209 271.191H201.526L231.692 88.6816H229.491L85.7227 268.778Z"
+                stroke="url(#paint0_linear_404)"
+                strokeWidth="1"
+              />
+              <defs>
+                <linearGradient id="paint0_linear_404" x1="751.352" y1="1" x2="751.352" y2="412.584" gradientUnits="userSpaceOnUse">
+                  <stop stopColor="#000"/>
+                  <stop offset="1" stopColor="#fff"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
