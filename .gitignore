@@ -50,3 +50,8 @@ coverage/
 # Misc
 .cache/
 .parcel-cache/
+
+
+# Documentation drafts
+PERSONALIZATION_GUIDELINES.md
+*.md.bak
