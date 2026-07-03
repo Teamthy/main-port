@@ -3,7 +3,7 @@
 import { ChangeEvent, useState } from "react";
 
 const calendar = () => {
-  const days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const now = new Date();
   const month = now.toLocaleString("default", { month: "long" });
   const year = now.getFullYear();
@@ -24,10 +24,10 @@ function MiniCalendar() {
         <h4 className="text-white text-base font-medium">{cal.month} {cal.year}</h4>
         <div className="flex gap-2">
           <button className="text-white/60 hover:text-white transition">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
           </button>
           <button className="text-white/60 hover:text-white transition">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6" /></svg>
           </button>
         </div>
       </div>
@@ -38,10 +38,9 @@ function MiniCalendar() {
       </div>
       <div className="grid grid-cols-7 gap-1">
         {cal.cells.map((day, i) => (
-          <div key={i} className={`text-center text-sm py-2 rounded-lg cursor-pointer transition ${
-            day === cal.today ? "bg-white text-black font-medium" :
+          <div key={i} className={`text-center text-sm py-2 rounded-lg cursor-pointer transition ${day === cal.today ? "bg-white text-black font-medium" :
             day ? "text-white/80 hover:bg-white/10" : ""
-          }`}>
+            }`}>
             {day || ""}
           </div>
         ))}
@@ -129,13 +128,13 @@ export default function Contact() {
                         onChange={handleChange}
                         className="px-8 py-3 rounded-full border border-[#E9E9EA] focus:outline-none focus:border-black focus:ring-2 focus:ring-offset-2 focus:ring-black/30 h-16 text-base w-full appearance-none bg-white cursor-pointer"
                       >
-                          <option value="">Select budget</option>
-                          <option value="under-10k">Under $10k</option>
-                          <option value="10k-50k">$10k - $50k</option>
-                          <option value="over-50k">$50k+</option>
+                        <option value="">Select budget</option>
+                        <option value="under-10k">Under $10k</option>
+                        <option value="10k-50k">$10k - $50k</option>
+                        <option value="over-50k">$50k+</option>
                       </select>
                       <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none" className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                        <path d="M5.54779 9.09467C5.84069 8.80178 6.31556 8.80178 6.60846 9.09467L12.3281 14.8143L18.0478 9.09467C18.3407 8.80178 18.8156 8.80178 19.1085 9.09467C19.4013 9.38756 19.4013 9.86244 19.1085 10.1553L12.8585 16.4053C12.5656 16.6982 12.0907 16.6982 11.7978 16.4053L5.54779 10.1553C5.2549 9.86244 5.2549 9.38756 5.54779 9.09467Z" fill="#323544"/>
+                        <path d="M5.54779 9.09467C5.84069 8.80178 6.31556 8.80178 6.60846 9.09467L12.3281 14.8143L18.0478 9.09467C18.3407 8.80178 18.8156 8.80178 19.1085 9.09467C19.4013 9.38756 19.4013 9.86244 19.1085 10.1553L12.8585 16.4053C12.5656 16.6982 12.0907 16.6982 11.7978 16.4053L5.54779 10.1553C5.2549 9.86244 5.2549 9.38756 5.54779 9.09467Z" fill="#323544" />
                       </svg>
                     </div>
                   </div>
@@ -154,7 +153,7 @@ export default function Contact() {
                 <div>
                   <button
                     onClick={handleSubmit}
-                    className="px-7 py-4 bg-black text-white font-mono text-sm uppercase tracking-wider rounded-full hover:bg-gray-900 transition"
+                    className="btn btn-primary uppercase"
                   >
                     Book a Call
                   </button>
@@ -181,31 +180,31 @@ export default function Contact() {
             <div className="rounded-[20px] border border-[#E9E9EA] bg-white p-8">
               <div className="size-12 rounded-xl bg-[#FBFBFB] flex items-center justify-center mb-5">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                  <polyline points="22,6 12,13 2,6"/>
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                  <polyline points="22,6 12,13 2,6" />
                 </svg>
               </div>
               <h3 className="text-lg font-medium text-black mb-2">Email</h3>
-              <p className="text-base text-gray-500 font-mono">hi@olusanyatimothy.dev</p>
+              <p className="text-base text-gray-500 font-mono">olusanyatimothy54@gmail.com</p>
             </div>
             <div className="rounded-[20px] border border-[#E9E9EA] bg-white p-8">
               <div className="size-12 rounded-xl bg-[#FBFBFB] flex items-center justify-center mb-5">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+                  <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
                 </svg>
               </div>
-              <h3 className="text-lg font-medium text-black mb-2">Call Us</h3>
-              <p className="text-base text-gray-500 font-mono">+1 (555) 123-4567</p>
+              <h3 className="text-lg font-medium text-black mb-2">Call Me</h3>
+              <p className="text-base text-gray-500 font-mono">+234 812 786 8211</p>
             </div>
             <div className="rounded-[20px] border border-[#E9E9EA] bg-white p-8">
               <div className="size-12 rounded-xl bg-[#FBFBFB] flex items-center justify-center mb-5">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                  <circle cx="12" cy="10" r="3"/>
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                  <circle cx="12" cy="10" r="3" />
                 </svg>
               </div>
-              <h3 className="text-lg font-medium text-black mb-2">Visit Us</h3>
-              <p className="text-base text-gray-500 font-mono">San Francisco, CA</p>
+              <h3 className="text-lg font-medium text-black mb-2">Visit Me</h3>
+              <p className="text-base text-gray-500 font-mono">Lagos, Nigeria</p>
             </div>
           </div>
         </div>

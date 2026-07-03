@@ -9,19 +9,12 @@ const values = [
   { title: "Results Driven", desc: "We focus on outcomes that matter — growth, engagement, and measurable impact for your business." },
 ];
 
-const team = [
-  { name: "Olusanya Timothy", role: "Software & AI Engineer", img: IMAGES.team[0] },
-  { name: "Open-source Contributor", role: "Collaborator", img: IMAGES.team[1] },
-  { name: "Independent Consultant", role: "Advisor", img: IMAGES.team[2] },
-  { name: "Freelance Designer", role: "Design Partner", img: IMAGES.team[3] },
-];
-
 export default function About() {
   return (
     <main>
       {/* Hero */}
-      <section className="pt-15 lg:pt-30 lg:pb-20 pb-10">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="pt-16 lg:pt-32 lg:pb-20 pb-10">
+        <div className="max-w-7xl mx-auto px-8">
           <div className="max-w-3xl">
             <p className="font-mono text-sm uppercase text-[#1D1F2C] -tracking-[0.18px] mb-3">About</p>
             <h1 className="text-3xl lg:text-5xl font-normal -tracking-[2.88px] mb-6 text-black">
@@ -37,7 +30,7 @@ export default function About() {
       {/* Image */}
       <section className="pb-20">
         <div className="max-w-[1440px] mx-auto px-7.5">
-          <img src={IMAGES.hero} alt="Olusanya Timothy" className="w-full rounded-[20px] h-[400px] lg:h-[500px] object-cover" />
+          <img src={IMAGES.hero} alt="Olusanya Timothy" loading="lazy" decoding="async" className="w-full rounded-[20px] h-[400px] lg:h-[500px] object-cover" />
         </div>
       </section>
 
@@ -64,10 +57,10 @@ export default function About() {
       </section>
 
       {/* Stats */}
-      <section className="py-20 sm:py-25 bg-black rounded-4xl mx-4 sm:mx-6 lg:mx-7.5">
+      <section className="py-20 sm:py-24 bg-black rounded-4xl mx-4 sm:mx-6 lg:mx-8">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-              {[
+            {[
               { val: "200+", label: "Projects Delivered" },
               { val: "50+", label: "Clients Served" },
               { val: "98%", label: "Client Satisfaction" },
@@ -88,7 +81,7 @@ export default function About() {
           <div className="mb-16">
             <p className="font-mono text-sm uppercase text-[#1D1F2C] -tracking-[0.18px] mb-3">Our Values</p>
             <h2 className="text-3xl sm:text-5xl font-normal -tracking-[2.88px] text-black">
-              What <span className="italic">drives us</span>
+              What <span className="italic">drives me</span>
             </h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -103,23 +96,21 @@ export default function About() {
         </div>
       </section>
 
-      {/* Team */}
+      {/* Stack I use (replaces Team) */}
       <section className="py-20 sm:py-25 bg-[#FBFBFB]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-16">
-            <p className="font-mono text-sm uppercase text-[#1D1F2C] -tracking-[0.18px] mb-3">Our Team</p>
+            <p className="font-mono text-sm uppercase text-[#1D1F2C] -tracking-[0.18px] mb-3">Stack I use</p>
             <h2 className="text-3xl sm:text-5xl font-normal -tracking-[2.88px] text-black">
-              Meet the <span className="italic">people</span>
+              Technologies I <span className="italic">use</span>
             </h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {team.map((m, i) => (
-              <div key={i} className="rounded-[20px] border border-[#E9E9EA] bg-white overflow-hidden">
-                <img src={m.img} alt={m.name} className="w-full h-64 object-cover object-top" />
-                <div className="p-6">
-                  <h3 className="text-lg font-medium text-black -tracking-[0.2px]">{m.name}</h3>
-                  <p className="text-sm text-gray-500 font-mono">{m.role}</p>
-                </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+            {[
+              'JavaScript', 'TypeScript', 'Node.js', 'React', 'Next.js', 'Golang', 'Python', 'PostgreSQL', 'Docker', 'Kubernetes', 'AWS', 'Tailwind CSS'
+            ].map((tech) => (
+              <div key={tech} className="rounded-[12px] border border-[#E9E9EA] bg-white p-4 flex items-center justify-center">
+                <span className="text-base font-medium text-black">{tech}</span>
               </div>
             ))}
           </div>
@@ -127,8 +118,8 @@ export default function About() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 sm:py-25">
-        <div className="max-w-[1440px] mx-auto px-7.5">
+      <section className="py-20 sm:py-24">
+        <div className="max-w-[1440px] mx-auto px-8">
           <div className="rounded-4xl bg-black px-6 sm:px-10 py-20 sm:py-25 text-center relative overflow-hidden">
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
               <div className="absolute -top-40 -left-40 w-96 h-96 bg-gray-800 rounded-full opacity-30 blur-[100px]" />
@@ -136,11 +127,11 @@ export default function About() {
             </div>
             <div className="relative z-10 max-w-3xl mx-auto">
               <h2 className="text-3xl sm:text-5xl font-normal text-white -tracking-[2.88px] leading-tight mb-6">
-                Want to work <span className="italic">with us?</span>
+                Want to work <span className="italic">with me?</span>
               </h2>
               <p className="text-base text-white/60 leading-7 mb-10 max-w-xl mx-auto">Let's discuss your project and see how I can help bring your vision to life.</p>
-              <Link href="/contact" className="group px-6 py-4.5 inline-flex gap-2 items-center bg-white text-sm font-medium -tracking-[0.2px] leading-5 text-black rounded-full hover:bg-gray-100 transition-all duration-300">
-                <span className="font-mono uppercase">Get in Touch</span>
+              <Link href="/contact" className="btn btn-icon btn-secondary group">
+                <span>Get in Touch</span>
                 <ArrowIcon className="transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
             </div>

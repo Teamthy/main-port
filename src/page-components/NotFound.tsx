@@ -15,13 +15,13 @@ export default function NotFound() {
             <div className="flex flex-col sm:flex-row justify-center items-center gap-5">
               <Link
                 href="/"
-                className="px-6 py-4.5 flex items-center bg-black text-sm font-medium -tracking-[0.2px] leading-5 text-white rounded-full hover:bg-gray-900 transition font-mono uppercase"
+                className="btn btn-primary uppercase"
               >
                 Return Home
               </Link>
               <Link
                 href="/portfolio"
-                className="px-6 py-4.5 flex items-center bg-white border border-black text-sm font-medium -tracking-[0.2px] leading-5 text-black rounded-full hover:bg-gray-50 transition font-mono uppercase"
+                className="btn btn-secondary uppercase"
               >
                 Explore Projects
               </Link>

@@ -15,15 +15,6 @@ export default function Footer() {
         { label: "Contact", to: "/contact" },
       ],
     },
-    {
-      title: "Services",
-      links: [
-        { label: "Backend Engineering", to: "/services" },
-        { label: "AI/ML Engineering", to: "/services" },
-        { label: "AI Red Teaming", to: "/services" },
-        { label: "Frontend Development", to: "/services" },
-      ],
-    },
   ];
 
   return (
@@ -66,12 +57,12 @@ export default function Footer() {
               <h4 className="text-white text-sm font-semibold mb-5 uppercase tracking-wider font-mono">
                 Connect
               </h4>
-              <ul className="space-y-3">
-                <li><a href="https://twitter.com/olusanyatimothy" className="text-white/60 text-sm hover:text-white/80 transition">Twitter / X</a></li>
-                <li><a href="https://linkedin.com/in/olusanyatimothy" className="text-white/60 text-sm hover:text-white/80 transition">LinkedIn</a></li>
-                <li><a href="https://github.com/olusanyatimothy" className="text-white/60 text-sm hover:text-white/80 transition">GitHub</a></li>
-                <li><a href="mailto:hello@olusanyatimothy.dev" className="text-white/60 text-sm hover:text-white/80 transition">Email</a></li>
-              </ul>
+                <ul className="space-y-3">
+                  <li><a href="https://twitter.com/olusanyatimothy" className="text-white/60 text-sm hover:text-white/80 transition">Twitter / X</a></li>
+                  <li><a href="https://linkedin.com/in/olusanyatimothy" className="text-white/60 text-sm hover:text-white/80 transition">LinkedIn</a></li>
+                  <li><a href="https://github.com/olusanyatimothy" className="text-white/60 text-sm hover:text-white/80 transition">GitHub</a></li>
+                  <li><a href="mailto:hello@olusanyatimothy.dev" className="text-white/60 text-sm hover:text-white/80 transition">Email</a></li>
+                </ul>
             </div>
           </div>
         </div>

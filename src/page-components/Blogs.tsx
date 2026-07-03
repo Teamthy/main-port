@@ -14,7 +14,7 @@ export default function Blogs() {
   return (
     <main>
       {/* Hero */}
-      <section className="pt-15 lg:pt-30 lg:pb-20 pb-10">
+      <section className="pt-16 lg:pt-32 lg:pb-20 pb-10">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-3xl">
             <p className="font-mono text-sm uppercase text-[#1D1F2C] -tracking-[0.18px] mb-3">Blog</p>
@@ -51,7 +51,7 @@ export default function Blogs() {
       </section>
 
       {/* Posts Grid */}
-      <section className="pb-20 sm:pb-25">
+      <section className="pb-20 sm:pb-24">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {posts.slice(1).map((post) => (

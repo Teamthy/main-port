@@ -161,7 +161,7 @@ export default function PortfolioDetail({ params }: { params: { id: string } }) 
                 </article>
               ))}
             </div>
-            <Link href="/portfolio" className="group px-7 py-4 bg-white text-sm font-mono uppercase tracking-wider text-black rounded-full hover:bg-gray-100 transition">
+            <Link href="/portfolio" className="btn btn-secondary group">
               <span>Explore All Projects</span>
               <ArrowIcon className="transition-transform duration-300 group-hover:translate-x-1" />
             </Link>

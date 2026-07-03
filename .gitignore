@@ -55,3 +55,6 @@ coverage/
 # Documentation drafts
 PERSONALIZATION_GUIDELINES.md
 *.md.bak
+
+# Archived old code
+src/pages_archived/

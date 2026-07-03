@@ -20,15 +20,10 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-[#E9E9EA]">
       <nav className="max-w-[1440px] mx-auto px-7.5 h-20 flex items-center justify-between">
-        {/* Logo */}
+        {/* Name (no logo) */}
         <Link href="/" className="flex items-center gap-2">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-            <rect width="32" height="32" rx="8" fill="black" />
-            <path d="M8 10L16 18L24 10" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M8 15L16 23L24 15" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
           <span className="text-black text-lg font-medium">
-            Olusanya<span className="italic font-normal">Timothy</span>
+            Olusanya<span className="italic font-normal"> Timothy</span>
           </span>
         </Link>
         {/* Desktop Nav */}
@@ -49,10 +44,9 @@ export default function Navbar() {
         <div className="hidden lg:flex items-center gap-4">
           <Link
             href="/contact"
-            className="px-7 py-4 bg-black text-white font-mono text-sm uppercase tracking-wider rounded-full hover:bg-gray-900 transition"
+            className="btn btn-primary"
           >
             Get Started
-            
           </Link>
         </div>
 
@@ -75,28 +69,28 @@ export default function Navbar() {
         </button>
 
         {/* Mobile Menu */}
-      {open && (
-        <div className="lg:hidden border-t border-[#E9E9EA] bg-white px-7.5 py-6 space-y-1 [&>li>a]:block [&>li>a]:py-3 [&>li>a]:text-base [&>li>a]:text-black [&>li>a]:uppercase [&>li>a]:font-normal">
-          <ul className="space-y-1">
-            {links.map((l) => (
-              <li key={l.to}>
-                <Link href={l.to} onClick={() => setOpen(false)} className="block py-3 text-base text-black">
-                  {l.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <div className="pt-4">
-            <Link
-              href="/contact"
-              onClick={() => setOpen(false)}
-              className="px-6 py-4 inline-flex items-center bg-black text-sm font-medium text-white rounded-full"
-            >
-              <span className="font-mono uppercase">Book a Call</span>
-            </Link>
+        {open && (
+          <div className="lg:hidden border-t border-[#E9E9EA] bg-white px-7.5 py-6 space-y-1 [&>li>a]:block [&>li>a]:py-3 [&>li>a]:text-base [&>li>a]:text-black [&>li>a]:uppercase [&>li>a]:font-normal">
+            <ul className="space-y-1">
+              {links.map((l) => (
+                <li key={l.to}>
+                  <Link href={l.to} onClick={() => setOpen(false)} className="block py-3 text-base text-black">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <div className="pt-4">
+              <Link
+                href="/contact"
+                onClick={() => setOpen(false)}
+                className="btn btn-primary w-full justify-center"
+              >
+                <span className="font-mono uppercase">Book a Call</span>
+              </Link>
+            </div>
           </div>
-        </div>
-      )}
+        )}
       </nav>
     </header>
   );

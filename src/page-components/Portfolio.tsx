@@ -2,16 +2,15 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
 import ArrowIcon from "../components/ArrowIcon";
 import { IMAGES } from "../data/images";
 
 const categories = ["All", "App Design", "SaaS", "Webflow Development"];
 
 function getProjects() {
-  const months = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+  const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
   const year = new Date().getFullYear();
-  const d = () => `${months[Math.floor(Math.random()*12)]} ${year}`;
+  const d = () => `${months[Math.floor(Math.random() * 12)]} ${year}`;
   return [
     { id: 1, title: "Finance Management System", type: "WEB APP", date: d(), image: IMAGES.projects[0], category: "App Design" },
     { id: 2, title: "SaaS Dashboard UI", type: "WEB APP", date: d(), image: IMAGES.projects[1], category: "SaaS" },
@@ -31,7 +30,7 @@ export default function Portfolio() {
 
   return (
     <main>
-      <section className="pt-15 lg:pt-30">
+      <section className="pt-16 lg:pt-32">
         <div className="max-w-7xl mx-auto px-6">
           <h2 className="text-black text-3xl sm:text-5xl font-normal -tracking-[1.92px] mb-16">
             Projects by <span className="italic">Olusanya Timothy</span>
@@ -52,20 +51,13 @@ export default function Portfolio() {
           </div>
         </div>
 
-        <div className="py-25 bg-black rounded-4xl min-h-[500px]">
+        <div className="py-24 bg-black rounded-4xl min-h-[500px]">
           <div className="max-w-7xl mx-auto px-6">
-            <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-              <AnimatePresence mode="popLayout">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                 {filtered.map(p => (
-                  <motion.article
+                  <article
                     key={p.id}
-                    layout
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.3 }}
-                    whileHover="hover"
-                    className="p-6 rounded-[20px] border border-[#1F1F1F] bg-neutral-950"
+                    className="p-6 rounded-[20px] border border-[#1F1F1F] bg-neutral-950 transition-shadow duration-300 hover:shadow-lg"
                   >
                     <h3 className="text-lg text-white -tracking-[0.2px]">
                       <Link href={`/portfolio/${p.id}`} className="hover:text-gray-300 transition">{p.title}</Link>
@@ -75,25 +67,24 @@ export default function Portfolio() {
                       <span>{p.date}</span>
                     </div>
                     <Link href={`/portfolio/${p.id}`} className="block overflow-hidden rounded-2xl">
-                      <motion.img
-                        variants={{ initial: { scale: 1 }, hover: { scale: 1.05 } }}
-                        transition={{ duration: 0.4, ease: "easeOut" }}
+                      <img
                         src={p.image}
                         alt={p.title}
-                        className="w-full h-64 object-cover"
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-64 object-cover transition-transform duration-300 hover:scale-105"
                       />
                     </Link>
-                  </motion.article>
+                  </article>
                 ))}
-              </AnimatePresence>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-20 sm:py-25">
-        <div className="max-w-[1440px] mx-auto px-7.5">
+      <section className="py-20 sm:py-24">
+        <div className="max-w-[1440px] mx-auto px-8">
           <div className="rounded-4xl bg-black px-6 sm:px-10 py-20 sm:py-25 text-center relative overflow-hidden">
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
               <div className="absolute -top-40 -left-40 w-96 h-96 bg-gray-800 rounded-full opacity-30 blur-[100px]" />
@@ -104,8 +95,8 @@ export default function Portfolio() {
                 Have a project in <span className="italic">mind?</span>
               </h2>
               <p className="text-base text-white/60 leading-7 mb-10 max-w-xl mx-auto">Let's discuss how we can help you bring your vision to life.</p>
-              <Link href="/contact" className="group px-6 py-4.5 inline-flex gap-2 items-center bg-white text-sm font-medium -tracking-[0.2px] leading-5 text-black rounded-full hover:bg-gray-100 transition-all duration-300">
-                <span className="font-mono uppercase">Book a Call</span>
+              <Link href="/contact" className="btn btn-icon btn-secondary group">
+                <span>Book a Call</span>
                 <ArrowIcon className="transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
             </div>
