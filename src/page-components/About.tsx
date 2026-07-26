@@ -11,7 +11,7 @@ const values = [
 
 export default function About() {
   return (
-    <main>
+    <main id="main-content" tabIndex={-1} className="outline-none">
       {/* Hero */}
       <section className="pt-16 lg:pt-32 lg:pb-20 pb-10">
         <div className="max-w-7xl mx-auto px-8">
@@ -23,6 +23,15 @@ export default function About() {
             <p className="text-lg text-gray-700 leading-7 -tracking-[0.2px]">
               I'm a software & AI engineer specializing in backend systems, AI/ML engineering, and AI red teaming. I help teams build and secure systems that power products.
             </p>
+            <div className="flex flex-col sm:flex-row items-start gap-4 mt-8">
+              <a href="/olusanya-timothy-resume.pdf" download className="btn btn-primary group">
+                <span>Download CV</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>
+              </a>
+              <Link href="/contact" className="btn btn-outline uppercase">
+                <span>Hire me</span>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -64,7 +73,7 @@ export default function About() {
               { val: "200+", label: "Projects Delivered" },
               { val: "50+", label: "Clients Served" },
               { val: "98%", label: "Client Satisfaction" },
-              { val: "6+", label: "Years Experience" },
+              { val: "8+", label: "Years Experience" },
             ].map((s, i) => (
               <div key={i} className="text-center">
                 <p className="text-4xl lg:text-5xl font-semibold text-white -tracking-[1.92px] mb-2">{s.val}</p>

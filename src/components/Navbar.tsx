@@ -42,6 +42,9 @@ export default function Navbar() {
 
         {/* Desktop CTA */}
         <div className="hidden lg:flex items-center gap-4">
+          <a href="/olusanya-timothy-resume.pdf" download className="btn btn-outline">
+            Resume
+          </a>
           <Link
             href="/contact"
             className="btn btn-primary"
@@ -70,7 +73,7 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {open && (
-          <div className="lg:hidden border-t border-[#E9E9EA] bg-white px-7.5 py-6 space-y-1 [&>li>a]:block [&>li>a]:py-3 [&>li>a]:text-base [&>li>a]:text-black [&>li>a]:uppercase [&>li>a]:font-normal">
+          <div className="lg:hidden border-t border-[#E9E9EA] bg-white px-7.5 py-6 space-y-1">
             <ul className="space-y-1">
               {links.map((l) => (
                 <li key={l.to}>
@@ -80,7 +83,15 @@ export default function Navbar() {
                 </li>
               ))}
             </ul>
-            <div className="pt-4">
+            <div className="pt-4 space-y-3">
+              <a
+                href="/olusanya-timothy-resume.pdf"
+                download
+                onClick={() => setOpen(false)}
+                className="btn btn-outline w-full justify-center"
+              >
+                <span className="font-mono uppercase">Download CV</span>
+              </a>
               <Link
                 href="/contact"
                 onClick={() => setOpen(false)}

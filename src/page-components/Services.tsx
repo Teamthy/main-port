@@ -38,7 +38,7 @@ const process = [
 
 export default function Services() {
   return (
-    <main>
+    <main id="main-content" tabIndex={-1} className="outline-none">
       {/* Hero */}
       <section className="pt-16 lg:pt-32 lg:pb-20 pb-10">
         <div className="max-w-7xl mx-auto px-6">

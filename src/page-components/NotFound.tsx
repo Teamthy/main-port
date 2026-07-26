@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <main>
+    <main id="main-content" tabIndex={-1} className="outline-none">
       <section className="lg:pt-30 lg:pb-20 pt-20 pb-10">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-3xl text-center mx-auto">

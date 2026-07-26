@@ -58,10 +58,11 @@ export default function Footer() {
                 Connect
               </h4>
                 <ul className="space-y-3">
-                  <li><a href="https://twitter.com/olusanyatimothy" className="text-white/60 text-sm hover:text-white/80 transition">Twitter / X</a></li>
-                  <li><a href="https://linkedin.com/in/olusanyatimothy" className="text-white/60 text-sm hover:text-white/80 transition">LinkedIn</a></li>
-                  <li><a href="https://github.com/olusanyatimothy" className="text-white/60 text-sm hover:text-white/80 transition">GitHub</a></li>
-                  <li><a href="mailto:hello@olusanyatimothy.dev" className="text-white/60 text-sm hover:text-white/80 transition">Email</a></li>
+                  <li><a href="https://twitter.com/olusanyatimothy" target="_blank" rel="noopener noreferrer" className="text-white/60 text-sm hover:text-white/80 transition">Twitter / X</a></li>
+                  <li><a href="https://linkedin.com/in/olusanyatimothy" target="_blank" rel="noopener noreferrer" className="text-white/60 text-sm hover:text-white/80 transition">LinkedIn</a></li>
+                  <li><a href="https://github.com/olusanyatimothy" target="_blank" rel="noopener noreferrer" className="text-white/60 text-sm hover:text-white/80 transition">GitHub</a></li>
+                  <li><a href="mailto:olusanyatimothy54@gmail.com" className="text-white/60 text-sm hover:text-white/80 transition">Email</a></li>
+                  <li><a href="/olusanya-timothy-resume.pdf" download className="text-white/60 text-sm hover:text-white/80 transition">Resume (PDF)</a></li>
                 </ul>
             </div>
           </div>

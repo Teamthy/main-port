@@ -5,6 +5,10 @@ module.exports = {
     ],
     theme: {
         extend: {
+            fontFamily: {
+                sans: ['var(--font-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                mono: ['var(--font-mono)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+            },
             spacing: {
                 '7.5': '1.875rem',
                 '15': '3.75rem',

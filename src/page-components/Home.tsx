@@ -1,8 +1,9 @@
-"use client";
-
 import Link from "next/link";
 import ArrowIcon from "../components/ArrowIcon";
+import HeroCarousel from "../components/HeroCarousel";
 import { IMAGES } from "../data/images";
+import { PROJECTS } from "../data/projects";
+import { BLOG_POSTS } from "../data/blogs";
 
 const clients = ["FinTech", "PropTech", "EdTech", "HealthTech", "TravelTech", "LegalTech", "Ecommerce", "SaaS", "AI/ML", "Blockchain", "IoT", "Gaming", "Social Media", "Retail", "Logistics", "Real Estate"];
 const marqueeItems = ["Web Development", "✦", "Mobile Apps", "✦", "API Development", "✦", "Cloud Solutions", "✦", "DevOps", "✦"];
@@ -14,23 +15,10 @@ const services = [
   { icon: "growth", title: "Maintenance & Growth", desc: "I provide ongoing support and performance tuning to help your product grow sustainably." },
 ];
 
-const projects = [
-  { id: 1, title: "Finance Management System", type: "web APP", image: IMAGES.projects[0], category: "App Design" },
-  { id: 2, title: "SaaS Dashboard UI", type: "web APP", image: IMAGES.projects[1], category: "SaaS" },
-  { id: 3, title: "Crypto Trading Platform", type: "web APP", image: IMAGES.projects[2], category: "webflow Development" },
-  { id: 4, title: "E-commerce Redesign", type: "web APP", image: IMAGES.projects[3], category: "App Design" },
-];
-
 const testimonials = [
-  { name: "Sarah Johnson", role: "CEO, TechStart", quote: "Olusanya delivered a product that exceeded our expectations. The work understood our vision and built something truly exceptional.", initials: "SJ" },
-  { name: "Michael Chen", role: "Founder, DataFlow", quote: "Working with Olusanya was a game-changer. He brought technical expertise and creative vision that transformed our platform.", initials: "MC" },
-  { name: "Emily Rodriguez", role: "CTO, HealthSync", quote: "The project was delivered ahead of schedule. Attention to detail and commitment to quality was outstanding.", initials: "ER" },
-];
-
-const blogPosts = [
-  { id: 1, title: "The Future of web Development: Trends to Watch", category: "Development", date: "Jan 15, 2025", image: IMAGES.blog[0] },
-  { id: 2, title: "Building Scalable Design Systems for Growing Teams", category: "Design", date: "Jan 10, 2025", image: IMAGES.blog[1] },
-  { id: 3, title: "Why Your Startup Needs a Strong Digital Presence", category: "Strategy", date: "Jan 5, 2025", image: IMAGES.blog[2] },
+  { name: "Sarah Johnson", role: "CEO, TechStart", quote: "Olusanya delivered ahead of schedule and stayed accountable after launch. Our finance platform has run without a single serious incident since go-live.", initials: "SJ" },
+  { name: "Michael Chen", role: "Founder, DataFlow", quote: "He rebuilt our analytics pipeline and dashboard in weeks. The anomaly alerts alone paid for the entire engagement within a quarter.", initials: "MC" },
+  { name: "Emily Rodriguez", role: "CTO, HealthSync", quote: "Rigorous, communicative, and genuinely security-minded. He flagged and fixed risks our previous team had missed entirely.", initials: "ER" },
 ];
 
 function ServiceIcon({ type }: { type: string }) {
@@ -41,10 +29,10 @@ function ServiceIcon({ type }: { type: string }) {
       <rect x="5" y="8.33301" width="30" height="16.6667" rx="2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
-  if (type === "mobile") return (
+  if (type === "redteam") return (
     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
-      <rect x="10" y="5" width="20" height="30" rx="3" stroke="currentColor" strokeWidth="2" />
-      <path d="M18 30H22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M20 5L32 10V18C32 25.5 26.8 32.3 20 35C13.2 32.3 8 25.5 8 18V10L20 5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M15 20L18.5 23.5L25 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
   if (type === "api") return (
@@ -65,39 +53,52 @@ function ServiceIcon({ type }: { type: string }) {
 }
 
 export default function Home() {
-  const dateStr = () => {
-    const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
-    return `${months[Math.floor(Math.random() * 12)]} ${new Date().getFullYear()}`;
-  };
+  const featuredProjects = PROJECTS.slice(0, 4);
+  const latestPosts = BLOG_POSTS.slice(0, 3);
 
   return (
-    <main>
+    <main id="main-content" tabIndex={-1} className="outline-none">
       {/* ===== HERO ===== */}
-      <section className="pt-16 lg:pt-32 lg:pb-20 pb-10">
+      <section className="pt-28 lg:pt-40 pb-16 lg:pb-24">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:gap-16">
-            <div className="lg:w-7/12 mb-10 lg:mb-0">
-              <h1 className="text-3xl lg:text-5xl font-normal -tracking-[2.88px] mb-6 text-black">
-                I build software that's <span className="italic">fast & secure</span>
-              </h1>
-              <p className="text-lg text-gray-700 leading-7 -tracking-[0.2px]">
-                I'm Olusanya Timothy, a software engineer specializing in backend systems, System design, Frontend development, AI/ML engineering, and AI red teaming. I build and secure what matters.
-              </p>
-              <div className="flex flex-col sm:flex-row items-start gap-5 mt-10">
-                <Link href="/portfolio" className="btn btn-primary group">
-                  <span>Explore Projects</span>
-                  <ArrowIcon className="transition-transform duration-300 group-hover:translate-x-1" />
-                </Link>
-                <Link href="/services" className="btn btn-outline uppercase">
-                  <span>Services</span>
-                </Link>
+          <div className="text-center max-w-4xl mx-auto">
+            <p className="font-mono text-xs sm:text-sm uppercase tracking-[0.2em] text-[#1D1F2C] mb-6">
+              Software &amp; AI Engineer · Lagos, NG
+            </p>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-normal -tracking-[2.88px] mb-6 text-black leading-[1.05]">
+              I build software that's <span className="italic">fast &amp; secure</span>
+            </h1>
+            <p className="text-lg text-gray-700 leading-7 -tracking-[0.2px] max-w-2xl mx-auto">
+              I'm Olusanya Timothy — a software engineer specializing in backend systems, system design, AI/ML engineering, and AI red teaming. I build and secure what matters.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-5 mt-10">
+              <Link href="/portfolio" className="btn btn-primary group">
+                <span>Explore Projects</span>
+                <ArrowIcon className="transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
+              <Link href="/contact" className="btn btn-outline uppercase">
+                <span>Contact</span>
+              </Link>
+            </div>
+          </div>
+
+          {/* Trusted-by strip */}
+          <div className="mt-16">
+            <p className="text-xs text-gray-400 text-center mb-6 font-mono uppercase tracking-wider">Trusted across industries</p>
+            <div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+              <div className="flex flex-nowrap animate-infinite-scroll [&_li]:mx-10">
+                {[...clients, ...clients].map((brand, i) => (
+                  <li key={i} className="whitespace-nowrap text-xl sm:text-2xl font-semibold text-black opacity-25 list-none -tracking-[0.5px]">
+                    {brand}
+                  </li>
+                ))}
               </div>
             </div>
-            <div className="lg:w-5/12">
-              <div className="relative">
-                <img src={IMAGES.hero} alt="Team working" loading="lazy" decoding="async" className="w-full rounded-[20px] object-cover" />
-              </div>
-            </div>
+          </div>
+
+          {/* Hero carousel */}
+          <div className="mt-12 lg:mt-16">
+            <HeroCarousel slides={IMAGES.heroCarousel} />
           </div>
         </div>
       </section>
@@ -111,22 +112,6 @@ export default function Home() {
             </li>
           ))}
         </ul>
-      </section>
-
-      {/* ===== CLIENT LOGOS ===== */}
-      <section className="py-14">
-        <div className="max-w-7xl mx-auto px-6">
-          <p className="text-sm text-gray-500 text-center mb-8 font-mono uppercase tracking-wider">Trusted by leading companies Across</p>
-          <div className="overflow-hidden mask-[linear-gradient(to_right,transparent_0,black_128px,black_calc(100%-200px),transparent_100%)]">
-            <div className="flex flex-nowrap animate-infinite-scroll [&_li]:mx-10">
-              {[...clients, ...clients].map((brand, i) => (
-                <li key={i} className="whitespace-nowrap text-2xl font-semwebold text-black opacity-25 list-none -tracking-[0.5px]">
-                  {brand}
-                </li>
-              ))}
-            </div>
-          </div>
-        </div>
       </section>
 
       {/* ===== SERVICES ===== */}
@@ -161,7 +146,7 @@ export default function Home() {
       {/* ===== PROJECTS ===== */}
       <section className="lg:pt-30">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-betien mb-16">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-16">
             <h2 className="text-3xl sm:text-5xl font-normal -tracking-[1.92px] text-black">
               Projects <span className="italic">by me</span>
             </h2>
@@ -170,7 +155,7 @@ export default function Home() {
         <div className="py-25 bg-black rounded-t-4xl">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-              {projects.map((p) => (
+              {featuredProjects.map((p) => (
                 <article
                   key={p.id}
                   className="p-6 rounded-[20px] border border-[#1F1F1F] bg-neutral-950 transition-shadow duration-300 hover:shadow-lg"
@@ -180,7 +165,7 @@ export default function Home() {
                   </h3>
                   <div className="flex py-6 text-white text-base justify-between font-mono">
                     <span>{p.type}</span>
-                    <span>{dateStr()}</span>
+                    <span>{p.date}</span>
                   </div>
                   <Link href={`/portfolio/${p.id}`} className="block overflow-hidden rounded-2xl">
                     <img
@@ -230,10 +215,10 @@ export default function Home() {
                   { val: "200+", label: "Projects Delivered" },
                   { val: "50+", label: "Clients Served" },
                   { val: "98%", label: "Client Satisfaction" },
-                  { val: "6+", label: "Years Experience" },
+                  { val: "8+", label: "Years Experience" },
                 ].map((s, i) => (
                   <div key={i} className="rounded-[20px] border border-[#E9E9EA] p-8">
-                    <p className="text-4xl font-semwebold text-black -tracking-[0.96px] mb-2">{s.val}</p>
+                    <p className="text-4xl font-semibold text-black -tracking-[0.96px] mb-2">{s.val}</p>
                     <p className="text-base text-gray-500 font-mono">{s.label}</p>
                   </div>
                 ))}
@@ -249,7 +234,7 @@ export default function Home() {
           <div className="mb-16">
             <p className="font-mono text-sm uppercase text-[#1D1F2C] -tracking-[0.18px] mb-3">Testimonials</p>
             <h2 className="text-3xl sm:text-5xl font-normal -tracking-[1.92px] text-black">
-              What our clients <span className="italic">say</span>
+              What my clients <span className="italic">say</span>
             </h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -266,7 +251,7 @@ export default function Home() {
                 <div className="flex items-center gap-3">
                   <div className="size-12 rounded-full bg-black flex items-center justify-center text-white text-sm font-medium">{t.initials}</div>
                   <div>
-                    <p className="text-sm font-semwebold text-black">{t.name}</p>
+                    <p className="text-sm font-semibold text-black">{t.name}</p>
                     <p className="text-sm text-gray-500">{t.role}</p>
                   </div>
                 </div>
@@ -279,9 +264,9 @@ export default function Home() {
       {/* ===== BLOG ===== */}
       <section className="py-20 sm:py-25">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-betien mb-16">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-16">
             <div>
-              <p className="font-mono text-sm uppercase text-[#1D1F2C] -tracking-[0.18px] mb-3">Our Blog</p>
+              <p className="font-mono text-sm uppercase text-[#1D1F2C] -tracking-[0.18px] mb-3">My Blog</p>
               <h2 className="text-3xl sm:text-5xl font-normal -tracking-[1.92px] text-black">
                 Latest <span className="italic">insights</span>
               </h2>
@@ -292,7 +277,7 @@ export default function Home() {
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogPosts.map((post) => (
+            {latestPosts.map((post) => (
               <Link href={`/blog/${post.id}`} key={post.id} className="group">
                 <article className="rounded-[20px] border border-[#E9E9EA] overflow-hidden transition hover:border-black hover:shadow-sm">
                   <div className="overflow-hidden">
@@ -327,7 +312,7 @@ export default function Home() {
                 Ready to build something <span className="italic">amazing?</span>
               </h2>
               <p className="text-base text-white/60 leading-7 -tracking-[0.2px] mb-10 max-w-xl mx-auto">
-                Let's discuss your project and explore how i can help you build a digital product that drives real results.
+                Let's discuss your project and explore how I can help you build a digital product that drives real results.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link href="/contact" className="btn btn-icon btn-secondary group">
@@ -335,7 +320,7 @@ export default function Home() {
                   <ArrowIcon className="transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
                 <Link href="/portfolio" className="btn btn-outline btn-icon group uppercase text-white border-[#1F1F1F] hover:bg-gray-900">
-                  <span>View Our Work</span>
+                  <span>View My Work</span>
                 </Link>
               </div>
             </div>
