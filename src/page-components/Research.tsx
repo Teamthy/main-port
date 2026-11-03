@@ -2,7 +2,16 @@ import Link from "next/link";
 import ArrowIcon from "../components/ArrowIcon";
 import TerminalCard from "../components/TerminalCard";
 import Prose from "../components/Prose";
+import Icon, { type IconName } from "../components/Icon";
 import { ENGAGEMENTS, PILLARS, REPORTING, RESEARCH_ARTIFACTS, STANDARDS } from "../data/research";
+import { NDA_NOTE } from "../data/site";
+
+const ARTEFACT_ICONS: Record<string, IconName> = {
+  tieout: "verified",
+  gatecheck: "policy",
+  "host-failure-benchmark": "fingerprint",
+  "ai-redteam-five-tests": "radar",
+};
 
 const LAYERS = [
   { name: "Attacks", state: "crowded", examples: "garak · PyRIT · promptfoo · DeepTeam · Giskard · AgentDojo" },
@@ -22,7 +31,7 @@ export default function Research() {
               <p className="font-mono text-sm uppercase text-[#1D1F2C] -tracking-[0.18px] mb-4">
                 Research practice · AI red team &amp; evaluation
               </p>
-              <h1 className="text-4xl lg:text-6xl font-normal -tracking-[2.4px] mb-6 text-black leading-[1.05]">
+              <h1 className="text-4xl lg:text-5xl font-normal -tracking-[2.4px] mb-6 text-black leading-[1.05]">
                 The report is a claim.
                 <br />
                 The bundle is <span className="italic">the record.</span>
@@ -100,14 +109,15 @@ export default function Research() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-3xl mb-14">
             <p className="font-mono text-sm uppercase text-[#1D1F2C] -tracking-[0.18px] mb-3">Artefacts</p>
-            <h2 className="text-3xl sm:text-5xl font-normal -tracking-[1.92px] text-black mb-5">
+            <h2 className="text-3xl sm:text-4xl font-normal -tracking-[1.92px] text-black mb-5">
               Four harnesses, one <span className="italic">discipline</span>
             </h2>
-            <p className="text-lg text-gray-700 leading-7">
-              Each one is runnable from a cold clone, and each one is explicit about what it does not prove —
+            <p className="text-lg text-gray-700 leading-7 mb-4">
+              Each one is runnable from a cold clone, and each one is explicit about what it does not prove,
               because a suite that cannot state its limits is reporting its own confidence, not the system's
               behaviour.
             </p>
+            <p className="text-base text-gray-600 leading-7 border-l-2 border-black pl-5">{NDA_NOTE}</p>
           </div>
 
           <div className="space-y-6">
@@ -116,7 +126,10 @@ export default function Research() {
                 <div className="grid grid-cols-1 lg:grid-cols-12">
                   <div className="lg:col-span-5 bg-[#FAFAFA] p-8 sm:p-10 border-b lg:border-b-0 lg:border-r border-[#E9E9EA]">
                     <div className="flex items-center justify-between mb-6">
-                      <span className="font-mono text-xs text-gray-400">0{i + 1}</span>
+                      <span className="flex items-center gap-3 font-mono text-xs text-gray-400">
+                        <Icon name={ARTEFACT_ICONS[artifact.slug] ?? "science"} size={22} className="text-black" />
+                        0{i + 1}
+                      </span>
                       <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-gray-400">
                         {artifact.status}
                       </span>
@@ -172,7 +185,7 @@ export default function Research() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-3xl mb-14">
             <p className="font-mono text-sm uppercase text-[#1D1F2C] -tracking-[0.18px] mb-3">Method</p>
-            <h2 className="text-3xl sm:text-5xl font-normal -tracking-[1.92px] text-black mb-5">
+            <h2 className="text-3xl sm:text-4xl font-normal -tracking-[1.92px] text-black mb-5">
               Six pillars, all in <span className="italic">code</span>
             </h2>
             <p className="text-lg text-gray-700 leading-7">
@@ -247,7 +260,7 @@ export default function Research() {
             <p className="font-mono text-sm uppercase text-[#1D1F2C] -tracking-[0.18px] mb-3">
               Work with me
             </p>
-            <h2 className="text-3xl sm:text-5xl font-normal -tracking-[1.92px] text-black">
+            <h2 className="text-3xl sm:text-4xl font-normal -tracking-[1.92px] text-black">
               Three ways to <span className="italic">start</span>
             </h2>
           </div>

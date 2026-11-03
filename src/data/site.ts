@@ -1,6 +1,6 @@
 // Single source of truth for identity, links and copy that appears in more
 // than one place. Everything here is either verifiable (links, handles) or
-// deliberate positioning — no invented clients, metrics or testimonials.
+// deliberate positioning, no invented clients, metrics or testimonials.
 
 export const SITE = {
   name: "Olusanya Timothy",
@@ -14,12 +14,22 @@ export const SITE = {
   github: "https://github.com/Teamthy",
   githubHandle: "Teamthy",
   linkedin: "https://www.linkedin.com/in/olusanya-timothy",
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://olusanyatimothy.dev",
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://olusanyatimothy.vercel.app",
   resume: "/olusanya-timothy-resume.pdf",
   tagline: "I build the system, then try to break it.",
+  since: 2024,
+  languages: "Go, TypeScript, Node.js, JavaScript, Python",
   shortBio:
-    "Lagos-based software engineer working on production platforms in Go and TypeScript — and on the evaluation infrastructure that tells you whether an AI system actually held.",
+    "Software engineer since 2024, building production platforms in Go, TypeScript, Node.js, JavaScript and Python, and the evaluation infrastructure that tells you whether an AI system actually held.",
 } as const;
+
+/**
+ * Not everything can be shown. Several of the larger red-team engagements are
+ * covered by NDAs, so the site states that plainly instead of hinting at work
+ * it cannot evidence.
+ */
+export const NDA_NOTE =
+  "Some of the larger red-team engagements are private under NDA. What is published here is the method, the harnesses and the parts of the work the client agreed could be shown.";
 
 export const NAV_LINKS = [
   { href: "/research", label: "Research" },
@@ -43,13 +53,13 @@ export const CAPABILITIES: Capability[] = [
     id: "red-team",
     title: "AI red team & evaluation",
     short:
-      "Adversarial testing that produces evidence instead of a wall of findings — with sample sizes, named gaps and raw outputs you can re-derive.",
+      "Adversarial testing that produces evidence instead of a wall of findings, with sample sizes, named gaps and raw outputs you can re-derive.",
     detail:
       "I test agents the way attackers use them: prompt injection through trusted roles, poisoned retrieval, tool descriptions that carry instructions, multi-turn escalation, and refusals in the languages your customers actually write. Every run ships with the raw transcripts, a check version, and a verification command.",
     deliverables: [
       "Failure-mode audit against a live endpoint",
       "Evidence bundle with bundled raw transcripts",
-      "Named gaps — what the run cannot prove",
+      "Named gaps: what the run cannot prove",
       "CI gate that blocks only when security gets worse",
     ],
   },
@@ -57,7 +67,7 @@ export const CAPABILITIES: Capability[] = [
     id: "platform",
     title: "Agent & platform engineering",
     short:
-      "Go and TypeScript services for products that need sessions, money, permissions and deadlines to be right — not approximately right.",
+      "Go and TypeScript services for products that need sessions, money, permissions and deadlines to be right, not approximately right.",
     detail:
       "I build the unglamorous layer: a server that owns session state and scoring, a ledger that posts every naira twice, retrieval and tool boundaries that are enforced in code, and API contracts checked against the router on every build.",
     deliverables: [
@@ -86,7 +96,7 @@ export const CAPABILITIES: Capability[] = [
 export const STACK: { group: string; items: string[] }[] = [
   {
     group: "Languages",
-    items: ["Go", "TypeScript", "Python", "SQL", "Bash"],
+    items: ["Go", "TypeScript", "Node.js", "JavaScript", "Python", "SQL", "Bash"],
   },
   {
     group: "Backend",
@@ -109,7 +119,7 @@ export const STACK: { group: string; items: string[] }[] = [
 export const PRINCIPLES: { title: string; body: string }[] = [
   {
     title: "A claim is not evidence",
-    body: "A green report is a claim made by the thing being tested. I build artefacts a stranger can re-derive from a cold clone — hash chains, stored raw output, and a verify command that needs no model, no key and no network.",
+    body: "A green report is a claim made by the thing being tested. I build artefacts a stranger can re-derive from a cold clone: hash chains, stored raw output, and a verify command that needs no model, no key and no network.",
   },
   {
     title: "Named gaps beat green bundles",
@@ -117,7 +127,7 @@ export const PRINCIPLES: { title: string; body: string }[] = [
   },
   {
     title: "Contracts over conventions",
-    body: "An OpenAPI file that is not checked against the router is documentation, not a contract. I make drift fail the build — in both directions — so the client and server cannot quietly disagree.",
+    body: "An OpenAPI file that is not checked against the router is documentation, not a contract. I make drift fail the build, in both directions, so the client and server cannot quietly disagree.",
   },
   {
     title: "Money, time and permissions are integers",

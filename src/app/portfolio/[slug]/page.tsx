@@ -12,13 +12,13 @@ export function generateStaticParams(): RouteParams[] {
 export async function generateMetadata({ params }: { params: Promise<RouteParams> }): Promise<Metadata> {
   const { slug } = await params;
   const project = getProject(slug);
-  if (!project) return { title: "Project Not Found — Olusanya Timothy" };
+  if (!project) return { title: "Project Not Found · Olusanya Timothy" };
   return {
-    title: `${project.title} — ${project.kicker} | Olusanya Timothy`,
+    title: `${project.title} · ${project.kicker} | Olusanya Timothy`,
     description: project.summary,
     alternates: { canonical: `/portfolio/${project.slug}` },
     openGraph: {
-      title: `${project.title} — ${project.kicker}`,
+      title: `${project.title} · ${project.kicker}`,
       description: project.summary,
       type: "article",
     },

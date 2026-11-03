@@ -31,15 +31,19 @@ docs or committed test output — no invented clients, testimonials or metrics.
   and inside the generated Open Graph card. Project and article artwork stays as deterministic SVG motifs
   (`src/components/ProjectVisual.tsx`), so there are no stock images, remote image dependencies or fake
   screenshots. `scripts/build-brand-assets.sh <photo>` regenerates every portrait and icon derivative.
-- **Fonts are bundled** in `src/fonts` (Inter variable, Anonymous Pro) and loaded with `next/font/local`,
-  so builds never depend on a font CDN. Both families are OFL-licensed; provenance is in `src/fonts/README.md`.
+- **Monospace end to end.** The whole interface, headings and body copy included, is set in JetBrains Mono
+  (variable, OFL), bundled in `src/fonts` and loaded with `next/font/local`. One family, one file, no
+  request to a font CDN. Provenance is in `src/fonts/README.md`.
+- **Icons are Material Symbols** (Google, Apache 2.0), compiled from `@material-symbols/svg-400` into
+  `src/components/Icon.tsx` by `npm run icons:build`. They are inline SVG paths, so there is no icon font
+  to download and every icon inherits `currentColor`.
 - **GitHub data is fetched at build/revalidate time** (`src/lib/github.ts`, hourly ISR) and the UI degrades
   to a committed snapshot if the API is rate-limited or unreachable.
 
 ## Content model
 
 - `src/data/site.ts` — identity, links, capabilities, stack, principles (single source of truth).
-- `scripts/generate-resume.mjs` — the CV, generated with pdfkit. Weighted roughly 70/30 towards AI
+- `scripts/generate-resume.mjs` — the CV, generated with pdfkit and set in the same mono face. Weighted roughly 70/30 towards AI
   red teaming, security and evaluation, with platform engineering as the supporting third. Copy is
   plain hyphens only: the generator throws if an en or em dash reaches the page.
 - `src/data/projects.ts` — the twelve projects: slug, repo, live URL, metrics, problem/build/verification copy.

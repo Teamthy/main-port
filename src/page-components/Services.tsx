@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ArrowIcon from "../components/ArrowIcon";
+import CapabilityIcon from "../components/CapabilityIcon";
 import { CAPABILITIES, PRINCIPLES, SITE, STACK } from "../data/site";
 
 const process = [
@@ -16,7 +17,7 @@ const process = [
   {
     step: "03",
     title: "Build the boundary",
-    desc: "Contracts, sessions, ledgers and permissions are enforced where they cannot be skipped — in the schema, the router and the CI check rather than in a code review habit.",
+    desc: "Contracts, sessions, ledgers and permissions are enforced where they cannot be skipped, in the schema, the router and the CI check rather than in a code review habit.",
   },
   {
     step: "04",
@@ -59,7 +60,7 @@ export default function Services() {
               <p className="font-mono text-sm uppercase text-[#1D1F2C] -tracking-[0.18px] mb-3">
                 Services
               </p>
-              <h1 className="text-3xl lg:text-5xl font-normal -tracking-[2.4px] mb-6 text-black">
+              <h1 className="text-3xl lg:text-4xl font-normal -tracking-[2.4px] mb-6 text-black">
                 Build it, then prove it <span className="italic">holds</span>
               </h1>
               <p className="text-lg text-gray-700 leading-7 -tracking-[0.2px] max-w-2xl">
@@ -92,16 +93,19 @@ export default function Services() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-12">
             <p className="font-mono text-xs uppercase tracking-[0.18em] text-white/40 mb-3">Capabilities</p>
-            <h2 className="text-3xl sm:text-5xl font-normal text-white -tracking-[1.92px]">
+            <h2 className="text-3xl sm:text-4xl font-normal text-white -tracking-[1.92px]">
               What I actually <span className="italic">do</span>
             </h2>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {CAPABILITIES.map((capability, i) => (
               <div key={capability.id} className="rounded-[20px] border border-white/10 bg-white/[0.02] p-8 flex flex-col">
-                <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-white/30 mb-5">
-                  0{i + 1}
-                </span>
+                <div className="flex items-center justify-between mb-5 text-white/70">
+                  <CapabilityIcon id={capability.id} size={32} />
+                  <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-white/30">
+                    0{i + 1}
+                  </span>
+                </div>
                 <h3 className="text-xl text-white mb-4">{capability.title}</h3>
                 <p className="text-base text-white/60 leading-7 mb-6">{capability.detail}</p>
                 <div className="mt-auto border-t border-white/10 pt-5">
@@ -129,7 +133,7 @@ export default function Services() {
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-14">
             <div className="max-w-2xl">
               <p className="font-mono text-sm uppercase text-[#1D1F2C] -tracking-[0.18px] mb-3">Process</p>
-              <h2 className="text-3xl sm:text-5xl font-normal -tracking-[1.92px] text-black">
+              <h2 className="text-3xl sm:text-4xl font-normal -tracking-[1.92px] text-black">
                 Five steps, no <span className="italic">theatre</span>
               </h2>
             </div>
@@ -200,7 +204,7 @@ export default function Services() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-12">
             <p className="font-mono text-sm uppercase text-[#1D1F2C] -tracking-[0.18px] mb-3">Stack</p>
-            <h2 className="text-3xl sm:text-5xl font-normal -tracking-[1.92px] text-black">
+            <h2 className="text-3xl sm:text-4xl font-normal -tracking-[1.92px] text-black">
               Tools I reach <span className="italic">for</span>
             </h2>
           </div>
@@ -233,7 +237,7 @@ export default function Services() {
             </div>
             <div className="relative z-10 max-w-3xl mx-auto">
               <p className="font-mono text-xs uppercase tracking-[0.18em] text-white/40 mb-5">Next step</p>
-              <h2 className="text-3xl sm:text-5xl font-normal text-white -tracking-[2.4px] leading-tight mb-6">
+              <h2 className="text-3xl sm:text-4xl font-normal text-white -tracking-[2.4px] leading-tight mb-6">
                 Have a system worth <span className="italic">checking?</span>
               </h2>
               <p className="text-base text-white/60 leading-7 mb-10 max-w-xl mx-auto">

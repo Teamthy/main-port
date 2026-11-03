@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SITE } from "../data/site";
 import { Avatar } from "./Portrait";
+import Icon from "./Icon";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -9,12 +10,12 @@ export default function Footer() {
     <footer className="bg-neutral-950 pt-20 pb-10">
       <div className="max-w-[1440px] mx-auto px-6 sm:px-7.5">
         <div className="flex flex-col lg:flex-row gap-16 mb-16 lg:mb-20">
-          {/* Left — statement */}
+          {/* Left: statement */}
           <div className="lg:w-6/12">
             <p className="font-mono text-xs uppercase tracking-[0.18em] text-white/40 mb-5">
               {SITE.location} · available for audits and builds
             </p>
-            <h2 className="text-white text-3xl lg:text-5xl font-normal -tracking-[2.4px] mb-6 leading-tight">
+            <h2 className="text-white text-3xl lg:text-4xl font-normal -tracking-[2.4px] mb-6 leading-tight">
               Let&apos;s check the claim, or <span className="italic">build the system</span>
             </h2>
             <p className="text-base text-white/50 leading-7 mb-8 max-w-md">
@@ -38,7 +39,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Right — links */}
+          {/* Right: links */}
           <div className="lg:w-6/12 grid grid-cols-2 sm:grid-cols-3 gap-10">
             <div>
               <h4 className="text-white text-sm font-semibold mb-5 uppercase tracking-wider font-mono">
@@ -94,7 +95,9 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     className="text-white/60 text-sm hover:text-white/90 transition"
                   >
-                    GitHub ↗
+                    <span className="inline-flex items-center gap-1.5">
+                      <Icon name="code" size={15} /> GitHub
+                    </span>
                   </a>
                 </li>
                 <li>
@@ -104,17 +107,23 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     className="text-white/60 text-sm hover:text-white/90 transition"
                   >
-                    LinkedIn ↗
+                    <span className="inline-flex items-center gap-1.5">
+                      <Icon name="work" size={15} /> LinkedIn
+                    </span>
                   </a>
                 </li>
                 <li>
                   <a href={`mailto:${SITE.email}`} className="text-white/60 text-sm hover:text-white/90 transition">
-                    Email
+                    <span className="inline-flex items-center gap-1.5">
+                      <Icon name="mail" size={15} /> Email
+                    </span>
                   </a>
                 </li>
                 <li>
                   <a href={SITE.resume} download className="text-white/60 text-sm hover:text-white/90 transition">
-                    Resume (PDF)
+                    <span className="inline-flex items-center gap-1.5">
+                      <Icon name="download" size={15} /> Resume (PDF)
+                    </span>
                   </a>
                 </li>
               </ul>
@@ -129,7 +138,7 @@ export default function Footer() {
             <span className="text-white text-sm font-semibold">{SITE.name}</span>
           </div>
           <p className="text-white/50 text-sm text-center sm:text-right">
-            © {year} {SITE.name}. Built with Next.js — every claim links to its source.
+            © {year} {SITE.name}. Built with Next.js. Every claim links to its source.
           </p>
         </div>
       </div>

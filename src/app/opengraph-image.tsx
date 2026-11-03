@@ -15,7 +15,19 @@ function portraitDataUrl(): string | null {
 
 const PORTRAIT = portraitDataUrl();
 
-export const alt = "Olusanya Timothy — software engineer, AI red team & evaluation";
+/** The card is set in the same mono face as the site, so shares look like it. */
+function fontData(file: string): Buffer | null {
+  try {
+    return readFileSync(join(process.cwd(), "src/fonts", file));
+  } catch {
+    return null;
+  }
+}
+
+const MONO_REGULAR = fontData("jetbrains-mono-regular.ttf");
+const MONO_BOLD = fontData("jetbrains-mono-bold.ttf");
+
+export const alt = "Olusanya Timothy, software engineer, AI red team and evaluation";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -32,6 +44,7 @@ export default function OpengraphImage() {
           backgroundColor: "#0A0A0B",
           padding: "72px",
           color: "#FFFFFF",
+          fontFamily: "JetBrains Mono",
         }}
       >
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -103,15 +116,28 @@ export default function OpengraphImage() {
             ) : null}
             <div style={{ display: "flex", flexDirection: "column", paddingBottom: "6px" }}>
               <div style={{ display: "flex", fontSize: "30px" }}>{SITE.name}</div>
-              <div style={{ display: "flex", fontSize: "20px", color: "rgba(255,255,255,0.45)", marginTop: "6px" }}>
-                {SITE.role} · {SITE.location}
+              <div style={{ display: "flex", fontSize: "19px", color: "rgba(255,255,255,0.6)", marginTop: "6px" }}>
+                Software engineer since {SITE.since}
+              </div>
+              <div style={{ display: "flex", fontSize: "18px", color: "rgba(255,255,255,0.4)", marginTop: "4px" }}>
+                AI red team &amp; evaluation · {SITE.location}
               </div>
             </div>
           </div>
-          <div style={{ display: "flex", height: "6px", width: "260px", backgroundColor: "#C7F24E" }} />
+          <div style={{ display: "flex", height: "6px", width: "180px", backgroundColor: "#C7F24E", marginBottom: "10px" }} />
         </div>
       </div>
     ),
-    size,
+    {
+      ...size,
+      fonts: [
+        ...(MONO_REGULAR
+          ? [{ name: "JetBrains Mono", data: MONO_REGULAR, weight: 400 as const, style: "normal" as const }]
+          : []),
+        ...(MONO_BOLD
+          ? [{ name: "JetBrains Mono", data: MONO_BOLD, weight: 700 as const, style: "normal" as const }]
+          : []),
+      ],
+    },
   );
 }

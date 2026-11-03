@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NAV_LINKS, SITE } from "../data/site";
 import { Avatar } from "./Portrait";
+import Icon from "./Icon";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -16,7 +17,7 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-[#E9E9EA]">
       <nav className="max-w-[1440px] mx-auto px-6 sm:px-7.5 h-20 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2.5" aria-label="Olusanya Timothy — home">
+        <Link href="/" className="flex items-center gap-2.5" aria-label="Olusanya Timothy, home">
           <Avatar size={30} priority />
           <span className="text-black text-lg font-medium">
             Olusanya<span className="italic font-normal"> Timothy</span>
@@ -24,7 +25,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop nav */}
-        <ul className="hidden lg:flex items-center gap-6 xl:gap-8">
+        <ul className="hidden xl:flex items-center gap-6">
           {NAV_LINKS.map((link) => (
             <li key={link.href}>
               <Link
@@ -43,7 +44,7 @@ export default function Navbar() {
         </ul>
 
         {/* Desktop CTA */}
-        <div className="hidden lg:flex items-center gap-3">
+        <div className="hidden xl:flex items-center gap-3">
           <a
             href={SITE.github}
             target="_blank"
@@ -63,24 +64,11 @@ export default function Navbar() {
         {/* Mobile toggle */}
         <button
           onClick={() => setOpen(!open)}
-          className="lg:hidden p-2"
+          className="xl:hidden p-2"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-            {open ? (
-              <>
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </>
-            ) : (
-              <>
-                <line x1="3" y1="6" x2="21" y2="6" />
-                <line x1="3" y1="12" x2="21" y2="12" />
-                <line x1="3" y1="18" x2="21" y2="18" />
-              </>
-            )}
-          </svg>
+          <Icon name={open ? "close" : "menu"} size={24} />
         </button>
       </nav>
 
