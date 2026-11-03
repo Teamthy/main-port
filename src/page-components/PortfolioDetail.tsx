@@ -2,6 +2,7 @@ import Link from "next/link";
 import ArrowIcon from "../components/ArrowIcon";
 import ProjectVisual from "../components/ProjectVisual";
 import { getSimilarProjects, type Project } from "../data/projects";
+import { SITE } from "../data/site";
 
 function Section({
   eyebrow,
@@ -30,8 +31,30 @@ function Section({
 export default function PortfolioDetail({ project }: { project: Project }) {
   const similar = getSimilarProjects(project);
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    name: project.title,
+    description: project.summary,
+    codeRepository: project.repo,
+    url: `${SITE.siteUrl}/portfolio/${project.slug}`,
+    programmingLanguage: project.stack.join(", "),
+    applicationCategory: project.category,
+    dateCreated: project.year,
+    author: {
+      "@type": "Person",
+      name: SITE.name,
+      url: SITE.siteUrl,
+      sameAs: [SITE.github, SITE.linkedin],
+    },
+  };
+
   return (
     <main id="main-content" tabIndex={-1} className="outline-none">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Hero */}
       <section className="pt-24 lg:pt-32 pb-14 lg:pb-20 bg-black rounded-b-4xl">
         <div className="max-w-7xl mx-auto px-6">
