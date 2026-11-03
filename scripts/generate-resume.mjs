@@ -273,7 +273,7 @@ bullet(
 );
 bullet(
   "ai-redteam-five-tests.",
-  " A runnable harness for the five failures that ship quietly: prompt injection, poisoned retrieval, unread tool descriptions, monolingual refusals and rates quoted without a sample size. It points at any OpenAI-compatible endpoint, keeps the raw output for review, and tests refusals in English, Nigerian Pidgin and Yoruba."
+  " A runnable harness for the five failures that ship quietly: prompt injection, poisoned retrieval, unread tool descriptions, monolingual refusals and rates quoted without a sample size. It points at any endpoint that speaks the OpenAI API, keeps the raw output for review, and tests refusals in English, Nigerian Pidgin and Yoruba."
 );
 subhead("How a review runs");
 bullet(
@@ -286,7 +286,7 @@ bullet(
 );
 bullet(
   "Bundle.",
-  " Raw transcripts, bound records, negative controls and a written list of named gaps, plus a command a non-author can run. A limitation nobody records becomes somebody else's assumption."
+  " Raw transcripts, bound records, negative controls and a written list of named gaps, plus a command that somebody else can run. A limitation nobody records quietly becomes the next team's assumption."
 );
 
 // Start the 30% section on its own page: it reads as a deliberate second half
