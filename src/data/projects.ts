@@ -182,7 +182,7 @@ export const PROJECTS: Project[] = [
     year: "2026",
     status: "Open source · MIT",
     repo: "https://github.com/Teamthy/ai-redteam-five-tests",
-    stack: ["Python", "OpenAI-compatible APIs", "pytest-style harness"],
+    stack: ["Python", "OpenAI-compatible APIs", "Recorded JSON output"],
     tagline: "It ships the method, not pre-baked results.",
     summary:
       "A runnable harness for the five failure checks described in “The five boring failures that will ship with your AI feature”. It points at any OpenAI-compatible model, runs the tests, and records the output for review — your model, your results.",
@@ -384,7 +384,7 @@ export const PROJECTS: Project[] = [
     status: "Product · live",
     repo: "https://github.com/Teamthy/i-confess",
     live: "https://iconfessmain.vercel.app",
-    stack: ["Go API", "Next.js 15.5", "React 19", "Flutter", "PostgreSQL", "CI/CD workflows"],
+    stack: ["Go API", "Next.js 15.5", "React 19", "Flutter", "CI/CD workflows"],
     tagline: "Scripture, audio and habit in one return loop.",
     summary:
       "A daily confession, scripture meditation and audio-session platform built around a single loop: discover, choose, create or schedule a session, listen, confess, complete, return.",
