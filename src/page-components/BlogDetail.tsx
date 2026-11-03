@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ProjectVisual from "../components/ProjectVisual";
+import Prose from "../components/Prose";
 import { getRelatedPosts, type BlogPost } from "../data/blogs";
 import { SITE } from "../data/site";
 
@@ -53,7 +54,7 @@ export default function BlogDetail({ post }: { post: BlogPost }) {
           <div className="space-y-6 text-lg text-gray-700 leading-[1.8] -tracking-[0.2px]">
             {post.intro.map((paragraph, i) => (
               <p key={i} className={i === 0 ? "text-xl text-black leading-[1.75]" : undefined}>
-                {paragraph}
+                <Prose text={paragraph} />
               </p>
             ))}
 
@@ -63,14 +64,16 @@ export default function BlogDetail({ post }: { post: BlogPost }) {
                   <h2 className="text-2xl font-medium text-black -tracking-[0.5px] pt-6">{section.heading}</h2>
                 )}
                 {section.paragraphs.map((paragraph, j) => (
-                  <p key={j}>{paragraph}</p>
+                  <p key={j}>
+                    <Prose text={paragraph} />
+                  </p>
                 ))}
               </div>
             ))}
 
             {post.outro.map((paragraph, i) => (
               <p key={`outro-${i}`} className="border-l-2 border-black pl-5 text-black">
-                {paragraph}
+                <Prose text={paragraph} />
               </p>
             ))}
           </div>

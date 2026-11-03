@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ArrowIcon from "../components/ArrowIcon";
 import TerminalCard from "../components/TerminalCard";
+import Prose from "../components/Prose";
 import { ENGAGEMENTS, PILLARS, REPORTING, RESEARCH_ARTIFACTS, STANDARDS } from "../data/research";
 
 const LAYERS = [
@@ -137,19 +138,25 @@ export default function Research() {
                     </div>
                   </div>
                   <div className="lg:col-span-7 p-8 sm:p-10 bg-white">
-                    <p className="text-base text-gray-700 leading-7 mb-5">{artifact.what}</p>
+                    <p className="text-base text-gray-700 leading-7 mb-5">
+                      <Prose text={artifact.what} />
+                    </p>
                     <div className="space-y-4">
                       <div>
                         <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-gray-400 mb-1.5">
                           What it proves
                         </p>
-                        <p className="text-base text-gray-700 leading-7">{artifact.proves}</p>
+                        <p className="text-base text-gray-700 leading-7">
+                          <Prose text={artifact.proves} />
+                        </p>
                       </div>
                       <div>
                         <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-gray-400 mb-1.5">
                           What it does not prove
                         </p>
-                        <p className="text-base text-gray-600 leading-7">{artifact.doesNotProve}</p>
+                        <p className="text-base text-gray-600 leading-7">
+                          <Prose text={artifact.doesNotProve} />
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -180,7 +187,9 @@ export default function Research() {
                   <span className="font-mono text-xs text-gray-400">{pillar.id}</span>
                   <h3 className="text-lg font-medium text-black -tracking-[0.2px]">{pillar.title}</h3>
                 </div>
-                <p className="text-base text-gray-600 leading-7">{pillar.body}</p>
+                <p className="text-base text-gray-600 leading-7">
+                  <Prose text={pillar.body} />
+                </p>
               </div>
             ))}
           </div>
@@ -220,7 +229,9 @@ export default function Research() {
                 {REPORTING.map((rule, i) => (
                   <li key={rule} className="flex gap-6 py-6">
                     <span className="font-mono text-xs text-gray-400 pt-1">0{i + 1}</span>
-                    <p className="text-lg text-gray-700 leading-7">{rule}</p>
+                    <p className="text-lg text-gray-700 leading-7">
+                      <Prose text={rule} />
+                    </p>
                   </li>
                 ))}
               </ul>
@@ -249,12 +260,16 @@ export default function Research() {
                     {engagement.length}
                   </span>
                 </div>
-                <p className="text-base text-gray-600 leading-7 mb-6 flex-1">{engagement.body}</p>
+                <p className="text-base text-gray-600 leading-7 mb-6 flex-1">
+                  <Prose text={engagement.body} />
+                </p>
                 <ul className="space-y-2.5 border-t border-[#E9E9EA] pt-5">
                   {engagement.deliverables.map((item) => (
                     <li key={item} className="flex gap-3 text-sm text-gray-700 leading-6">
                       <span className="mt-2 size-1 shrink-0 rounded-full bg-black" />
-                      {item}
+                      <span>
+                        <Prose text={item} />
+                      </span>
                     </li>
                   ))}
                 </ul>

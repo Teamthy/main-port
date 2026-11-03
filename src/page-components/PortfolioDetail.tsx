@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ArrowIcon from "../components/ArrowIcon";
 import ProjectVisual from "../components/ProjectVisual";
+import Prose from "../components/Prose";
 import { getSimilarProjects, type Project } from "../data/projects";
 import { SITE } from "../data/site";
 
@@ -20,7 +21,7 @@ function Section({
       <div className="space-y-5">
         {paragraphs.map((paragraph, i) => (
           <p key={i} className="text-lg text-gray-700 leading-8 -tracking-[0.2px]">
-            {paragraph}
+            <Prose text={paragraph} />
           </p>
         ))}
       </div>
@@ -190,7 +191,9 @@ export default function PortfolioDetail({ project }: { project: Project }) {
                 <h2 className="text-2xl sm:text-3xl font-normal text-black -tracking-[0.9px] mb-5">
                   What it is
                 </h2>
-                <p className="text-lg text-gray-700 leading-8 -tracking-[0.2px]">{project.summary}</p>
+                <p className="text-lg text-gray-700 leading-8 -tracking-[0.2px]">
+                  <Prose text={project.summary} />
+                </p>
               </section>
 
               <Section eyebrow="01 / The problem" title="Why it needed building" paragraphs={project.problem} />
@@ -208,7 +211,9 @@ export default function PortfolioDetail({ project }: { project: Project }) {
                   {project.highlights.map((highlight) => (
                     <li key={highlight} className="flex gap-4">
                       <span className="mt-2.5 size-1.5 shrink-0 rounded-full bg-black" />
-                      <span className="text-base sm:text-lg text-gray-700 leading-8">{highlight}</span>
+                      <span className="text-base sm:text-lg text-gray-700 leading-8">
+                        <Prose text={highlight} />
+                      </span>
                     </li>
                   ))}
                 </ul>

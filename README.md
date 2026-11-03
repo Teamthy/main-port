@@ -3,6 +3,8 @@
 Personal site for **Olusanya Timothy** ([@Teamthy](https://github.com/Teamthy)) — a Lagos-based
 software engineer working on AI red teaming and evaluation, plus Go/TypeScript product platforms.
 
+**Live:** https://olusanyatimothy.vercel.app (Vercel project `olusanyatimothy`, production branch `main`).
+
 Built with **Next.js 15 (App Router)**, **React 19**, **TypeScript** and **Tailwind CSS**. Every project
 on the site links to its public repository, and every copy claim is taken from that repository's README,
 docs or committed test output — no invented clients, testimonials or metrics.
@@ -48,7 +50,9 @@ npm run dev            # http://localhost:3000
 npm run build          # type-check + production build
 npm run start          # serve the production build
 npm run resume:build   # regenerate public/olusanya-timothy-resume.pdf
+npm run check          # JSON + content integrity + production build
 npm run check:json     # JSON sanity check (used in CI)
+npm run check:content  # slugs, cross-references and internal links resolve
 ```
 
 ## Environment
@@ -65,7 +69,8 @@ Copy `.env.example` to `.env.local`. Everything is optional for local developmen
 
 ## Deployment
 
-Zero-config on Vercel (see `DEPLOY.md`). Push to `main` deploys production; pull requests get previews.
+Deployed on Vercel as the `olusanyatimothy` project (see `DEPLOY.md`). Because Git-driven deployments
+are disabled on that project, a production release is created explicitly from the `main` branch.
 
 ## CI
 
