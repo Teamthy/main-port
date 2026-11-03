@@ -25,6 +25,9 @@ jobs:
       - name: Validate JSON
         run: npm run check:json
 
+      - name: Content integrity check
+        run: npm run check:content
+
       - name: Regenerate resume PDF
         run: npm run resume:build
 

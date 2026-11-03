@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Services from "../../page-components/Services";
 
 export const metadata: Metadata = {
-  title: "Services — Olusanya Timothy",
+  title: "Services — AI audits, platforms and verification | Olusanya Timothy",
   description:
-    "Web app development, API development, AI red teaming, and maintenance & growth. End-to-end engineering for modern products.",
+    "AI red-team audits, Go and TypeScript platform engineering, and verification work: contracts, ledgers, crash consistency and CI security gates.",
   alternates: { canonical: "/services" },
 };
 

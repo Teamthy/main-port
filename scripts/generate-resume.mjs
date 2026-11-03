@@ -2,9 +2,8 @@
 // Pure-JS (pdfkit ships Helvetica), so it runs anywhere with no system fonts.
 // Re-run with: npm run resume:build
 //
-// NOTE: this is a TEMPLATE populated from the portfolio persona. Replace the
-// placeholder employer names, dates, degree, and links with real details
-// (see DEPLOY.md / the project README for the personalization checklist).
+// Content mirrors the work published on the site: public repositories at
+// github.com/Teamthy, with only claims that appear in those repositories.
 
 import fs from "node:fs";
 import path from "node:path";
@@ -34,7 +33,7 @@ function ensureSpace(needed) {
 
 function header() {
   doc.fillColor(BLACK).fontSize(22).text("OLUSANYA TIMOTHY", { lineGap: 1 });
-  doc.fontSize(11).fillColor(GRAY).text("Software & AI Engineer", { lineGap: 1 });
+  doc.fontSize(11).fillColor(GRAY).text("Software Engineer — AI Red Team & Evaluation", { lineGap: 1 });
   doc.moveDown(0.3);
   doc
     .fontSize(8.5)
@@ -45,7 +44,7 @@ function header() {
     );
   doc
     .fontSize(8.5)
-    .text("github.com/olusanyatimothy  |  linkedin.com/in/olusanyatimothy", { lineGap: 1 });
+    .text("github.com/Teamthy  |  linkedin.com/in/olusanya-timothy", { lineGap: 1 });
   doc.moveDown(0.4);
   doc.moveTo(doc.page.margins.left, doc.y).lineTo(doc.page.width - doc.page.margins.right, doc.y).strokeColor(LINE).lineWidth(1).stroke();
   doc.moveDown(0.5);
@@ -89,7 +88,6 @@ function bullets(items) {
 
 function competency(label, items) {
   ensureSpace(16);
-  const left = doc.page.margins.left;
   doc.fontSize(9.5).fillColor(BLACK).text(label + ":  ", { continued: true });
   doc.fillColor(GRAY).text(items);
   doc.moveDown(0.2);
@@ -99,65 +97,58 @@ function competency(label, items) {
 header();
 
 para(
-  "Software & AI engineer with 8+ years building reliable, secure systems end to end. I specialize in backend architecture and system design, ship polished full-stack products, and harden AI systems through adversarial testing and red teaming. I help startups and enterprises turn complex problems into simple, performant software.",
+  "Software engineer working across two sides of the same problem: production platforms in Go and TypeScript, and the evaluation infrastructure that decides whether an AI system actually held. I build the unglamorous layer — contracts checked in CI, double-entry ledgers in integer kobo, row-level security, dead-letter queues — and open-source harnesses that emit evidence rather than reports.",
   { color: BLACK }
 );
 
 section("Core Competencies");
-competency("Languages", "TypeScript, JavaScript, Go, Python, SQL");
-competency("Backend & Infra", "Node.js, FastAPI, PostgreSQL, Redis, Kafka, Docker, Kubernetes, AWS");
-competency("Frontend", "React, Next.js, Tailwind CSS, accessible component systems");
-competency("AI / Security", "ML pipelines, anomaly detection, AI red teaming, threat modeling, OWASP");
-competency("Practices", "System design, API design (REST/GraphQL/gRPC), CI/CD, observability, TDD");
-
-section("Selected Experience");
-
-role("Software & AI Engineer — Independent / Contract", "2019 – Present  |  Lagos, Nigeria (remote-friendly)");
-bullets([
-  "Designed and built a multi-entity finance platform on a double-entry, event-sourced ledger; cut month-end close by ~60% with zero balance discrepancies across 12 entities.",
-  "Built a high-throughput crypto trading backend in Go (matching engine, wallet controls, multi-sig approvals); sustained 10k matched orders/min at <50ms latency with 99.99% uptime.",
-  "Delivered an ML-powered analytics platform (Kafka + scikit-learn) detecting anomalies across 5M+ events/day at 94% precision, reducing manual review effort by ~80%.",
-  "Performed AI red teaming and threat modeling on AI-powered features, surfacing and mitigating prompt-injection and abuse risks pre-launch; external pentests closed with no critical findings.",
-  "Rebuilt headless e-commerce and mobile banking frontends, lifting conversion +32% and core task completion to 92% through performance and UX work.",
-]);
-
-role("Senior Backend Engineer — Northwind Systems", "2018 – 2019  |  Lagos, Nigeria");
-bullets([
-  "Owned core REST/GraphQL services and the release pipeline; reduced p95 API latency by ~40% via caching, query optimization, and connection pooling.",
-  "Introduced contract testing and structured code review, cutting production regressions and enabling parallel frontend/backend delivery.",
-  "Mentored two junior engineers and led the migration of a monolith module to independently deployable services.",
-]);
-
-role("Software Engineer — BrightPath Labs", "2016 – 2018  |  Lagos, Nigeria");
-bullets([
-  "Shipped customer-facing features across the stack (React + Node + PostgreSQL) on two-week iteration cycles.",
-  "Built internal tooling that automated manual reporting, saving the operations team several hours per week.",
-]);
-
-section("Selected Projects");
-bullets([
-  "Fincash — all-in-one fintech mobile app (React Native): unified dashboard + instant payments; 4× faster key actions, ~60% less navigation time.",
-  "LandSecure — PropTech platform (Next.js + Solidity): on-chain document stamping, escrow, GIS mapping; verification cut to under 72 hours.",
-  "CloudMetrics — real-time analytics dashboard with a typed component library; +45% daily active usage, 2× feature velocity.",
-]);
-
-section("Education");
-role("B.Sc. Computer Science", "University of Lagos  |  2012 – 2016");
-
-section("Focus Areas & Continuous Learning");
-para(
-  "AI safety and red teaming, distributed systems and event-driven architecture, application security (OWASP Top 10, threat modeling), and platform reliability / SRE practices.",
-  { color: GRAY }
+competency("Languages", "Go, TypeScript, Python, SQL, Bash");
+competency(
+  "Backend",
+  "chi, Express 5, Next.js route handlers, Prisma, Drizzle, PostgreSQL (RLS), Redis, SQLite, REST / OpenAPI"
+);
+competency("Frontend", "Next.js 15, React 19, Tailwind CSS, TanStack Query, Expo / React Native");
+competency(
+  "AI & security",
+  "Agent red teaming, prompt injection, LLM-judge auditing, evidence bundles, crash consistency, ONNX Runtime, OWASP Agentic Top 10, MITRE ATLAS, NIST AI RMF"
+);
+competency(
+  "Practices",
+  "API contracts enforced in CI, double-entry ledgers, RBAC and tenant isolation, OpenTelemetry / Prometheus, GitHub Actions, Docker, technical writing"
 );
 
-doc.moveDown(0.6);
-doc
-  .fontSize(7.5)
-  .fillColor("#999999")
-  .text(
-    "Template CV — employer names, dates, degree, and links above are placeholders; replace with verified details before sending.",
-    { align: "center" }
-  );
+section("AI Red Team & Evaluation — Open Source");
+role("Independent research practice", "2026 – Present  |  github.com/Teamthy");
+bullets([
+  "tieout — evidence-grade agent evaluation harness. Every verdict is a bound, chained, re-derivable event; `tieout verify` re-derives 14/14 verdicts from stored raw output with no model, no key and no network. Ships negative controls (0 FP / 0 FN), judge-audit metrics and exact Clopper-Pearson intervals.",
+  "gatecheck — CI security gate for agents that blocks a pull request only when the agent gets easier to break. Fingerprinted findings diffed against a committed baseline; 7 findings from 11 attacks in under a second, including multi-turn escalation; SARIF and PR comments.",
+  "host-failure-benchmark — standard-library benchmark for crash consistency in agent audit trails. Four failure rows, 13 persistence checks, 3 verification checks, and a mutation suite (10 damage modes plus regression cases per audited finding).",
+  "ai-redteam-five-tests — runnable harness for five recurring AI failures (prompt injection, poisoned retrieval, unread tool descriptions, monolingual refusals, unmeasured rates) against any OpenAI-compatible endpoint, including mixed Pidgin/Yoruba refusals.",
+]);
+
+section("Platform Engineering");
+role("Product delivery — Go and TypeScript", "2026");
+bullets([
+  "EduMart OS — exam-preparation platform for Nigerian learners: Go API serving a Next.js web app, PWA and Expo app. 48 documented routes checked against the router in both directions on every CI run; server owns session state, deadlines, scoring and authorisation.",
+  "Famex OS — single-school operating system: 140+ API routes, 70 models, a double-entry ledger in signed kobo with an unbalanced-journal constraint, PostgreSQL row-level security with a CI coverage guard, and a test suite of roughly 900 tests.",
+  "YK Virtual — curriculum-governed tutoring marketplace and virtual school: Go modular monolith with escrow, booking-scoped messaging, staged vetting and an OpenAPI contract as the source of truth; OpenTelemetry and Prometheus from day one.",
+  "I CONFESS — daily confession and audio platform: Go API with a Next.js web app and Flutter client, delivered across eight audited phases with CI/CD workflows.",
+  "VisionForge — computer-vision inference platform: Go API, Python ONNX service, Redis workers with visibility timeouts and a dead-letter queue, presigned S3/MinIO uploads and full Prometheus/Grafana instrumentation.",
+]);
+
+section("Client Backends");
+bullets([
+  "AssetFlow — Express 5 + Drizzle multi-tenant fixed-asset API: permission-based RBAC across seven roles, branch-scoped queries enforced at the data layer, JWT access and refresh tokens, Swagger contract at /api/docs.",
+  "Olasco Autos — request-led vehicle platform for Lagos and Abuja: Zod-validated intake persisted with Prisma/PostgreSQL, one WhatsApp handoff, and documentation that states plainly what the platform does not promise.",
+  "CDRL — pnpm monorepo for the Centre for Digital Risk & Leadership: Next.js site plus Express/Prisma API, CI running typecheck, zero-warning lint, Vitest, production builds, dependency audit and gitleaks.",
+]);
+
+section("Open Source, Writing & Links");
+bullets([
+  "Public repositories and case studies: github.com/Teamthy (115 repositories, Go / TypeScript / Python).",
+  "Long-form notes on evaluation evidence, red-team gates in CI, crash consistency and financial data modelling.",
+  "Portfolio and research: olusanyatimothy.dev",
+]);
 
 doc.end();
 

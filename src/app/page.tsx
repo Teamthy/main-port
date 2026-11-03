@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Home from "../page-components/Home";
 
 export const metadata: Metadata = {
-  title: "Olusanya Timothy — Software & AI Engineer",
+  title: "Olusanya Timothy — Software engineer, AI red team & evaluation",
   description:
-    "Olusanya Timothy is a software & AI engineer specializing in backend systems, system design, AI/ML engineering, and AI red teaming. Based in Lagos, Nigeria.",
+    "Lagos-based software engineer working on Go and TypeScript platforms and evidence-grade AI red teaming and evaluation. Public projects, harnesses and case studies.",
   alternates: { canonical: "/" },
 };
 
