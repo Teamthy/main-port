@@ -39,6 +39,9 @@ docs or committed test output — no invented clients, testimonials or metrics.
 ## Content model
 
 - `src/data/site.ts` — identity, links, capabilities, stack, principles (single source of truth).
+- `scripts/generate-resume.mjs` — the CV, generated with pdfkit. Weighted roughly 70/30 towards AI
+  red teaming, security and evaluation, with platform engineering as the supporting third. Copy is
+  plain hyphens only: the generator throws if an en or em dash reaches the page.
 - `src/data/projects.ts` — the twelve projects: slug, repo, live URL, metrics, problem/build/verification copy.
 - `src/data/research.ts` — artefacts, six pillars, reporting rules, engagement shapes.
 - `src/data/blogs.ts` — long-form posts (sections, tags, motif).
