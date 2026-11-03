@@ -255,7 +255,7 @@ header();
 
 section("Profile");
 paragraph(
-  "I test AI systems, then write down what happened in a form somebody else can check. I have shipped software since 2024, mostly in Go, TypeScript, Node.js and Python. Most of my public work now is agent evaluation and red teaming: harnesses that keep raw output, chain their records and let a reviewer re-derive every verdict without a model, a key or a network. I would rather hand over a named gap than a green report.",
+  "I test AI systems, then write down what happened in a form somebody else can check. I have shipped software since 2024, mostly in Go, TypeScript, Node.js, JavaScript and Python. Most of my public work now is agent evaluation and red teaming: harnesses that keep raw output, chain their records and let a reviewer re-derive every verdict without a model, a key or a network. I would rather hand over a named gap than a green report.",
   { color: BLACK }
 );
 
@@ -294,7 +294,7 @@ bullet(
 );
 
 section("Platform engineering");
-roleLine("Product and client delivery", "Go, TypeScript, Node.js, PostgreSQL", "2024 - 2026");
+roleLine("Product and client delivery", "Go, TypeScript, Node.js, JavaScript, PostgreSQL", "2024 - 2026");
 bullet(
   "Famex OS.",
   " School operating system in production: 140+ API routes, 70 models and 898 tests. Fees are double-entry in signed kobo, an unbalanced journal is rejected by the database, and row-level security has its own CI coverage guard."
