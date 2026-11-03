@@ -1,7 +1,9 @@
 # Deploy runbook
 
-The site is a standard Next.js 15 app with no database and no required secrets. Deploying it is a
-`git push` away.
+The site is a standard Next.js 15 app with no database and no required secrets.
+
+**Current production:** https://olusanyatimothy.vercel.app
+Vercel project `olusanyatimothy` (team `teamthy1`), production branch `main`, region `iad1`.
 
 ---
 
@@ -38,12 +40,25 @@ token with `Contents: Read and write` on this repository.
 
 ## 3. Deploy to Vercel
 
-### Via the dashboard
+### Already configured
+
+The project exists and is linked to `Teamthy/main-port`. Git-driven deployments are disabled on this
+project, so each release is created from `main` explicitly:
+
+```bash
+curl -X POST "https://api.vercel.com/v13/deployments?teamId=$VERCEL_TEAM_ID" \
+  -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: application/json" \
+  -d '{"name":"olusanyatimothy","target":"production","gitSource":{"type":"github","ref":"main","repoId":"1287618184"}}'
+```
+
+Or in the dashboard: **Deployments → Create Deployment → branch `main`**.
+
+### From scratch
 
 1. [vercel.com/new](https://vercel.com/new) → **Import** the repository.
 2. Framework preset auto-detects **Next.js** and keeps the defaults.
 3. Add environment variables (section 4) — optional for a working site, needed for the contact form.
-4. **Deploy.** Pushes to `main` become production; pull requests get preview URLs.
+4. **Deploy.**
 
 ### Via the CLI
 
