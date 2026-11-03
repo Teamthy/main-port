@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SITE } from "../data/site";
+import { Avatar } from "./Portrait";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -124,11 +125,7 @@ export default function Footer() {
         {/* Bottom */}
         <div className="border-t border-[#1F1F1F] pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <svg width="24" height="24" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-              <rect width="32" height="32" rx="8" fill="white" />
-              <path d="M8 10L16 18L24 10" stroke="black" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M8 15L16 23L24 15" stroke="black" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+            <Avatar size={28} className="ring-white/20" />
             <span className="text-white text-sm font-semibold">{SITE.name}</span>
           </div>
           <p className="text-white/50 text-sm text-center sm:text-right">

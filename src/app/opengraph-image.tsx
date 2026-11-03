@@ -1,5 +1,19 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import { SITE } from "../data/site";
+
+/** Monochrome portrait, inlined so the OG route reads nothing over the network. */
+function portraitDataUrl(): string | null {
+  try {
+    const file = readFileSync(join(process.cwd(), "public/portrait/olusanya-timothy-avatar.jpg"));
+    return `data:image/jpeg;base64,${file.toString("base64")}`;
+  } catch {
+    return null;
+  }
+}
+
+const PORTRAIT = portraitDataUrl();
 
 export const alt = "Olusanya Timothy — software engineer, AI red team & evaluation";
 export const size = { width: 1200, height: 630 };
@@ -22,22 +36,33 @@ export default function OpengraphImage() {
       >
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "18px" }}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "58px",
-                height: "58px",
-                borderRadius: "999px",
-                backgroundColor: "#FFFFFF",
-                color: "#0A0A0B",
-                fontSize: "22px",
-                letterSpacing: "1px",
-              }}
-            >
-              {SITE.initials}
-            </div>
+            {PORTRAIT ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={PORTRAIT}
+                alt=""
+                width={58}
+                height={58}
+                style={{ borderRadius: "999px", objectFit: "cover", filter: "grayscale(1)" }}
+              />
+            ) : (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "58px",
+                  height: "58px",
+                  borderRadius: "999px",
+                  backgroundColor: "#FFFFFF",
+                  color: "#0A0A0B",
+                  fontSize: "22px",
+                  letterSpacing: "1px",
+                }}
+              >
+                {SITE.initials}
+              </div>
+            )}
             <div style={{ display: "flex", fontSize: "22px", color: "rgba(255,255,255,0.6)" }}>
               github.com/{SITE.githubHandle}
             </div>
@@ -60,10 +85,27 @@ export default function OpengraphImage() {
         </div>
 
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <div style={{ display: "flex", fontSize: "30px" }}>{SITE.name}</div>
-            <div style={{ display: "flex", fontSize: "20px", color: "rgba(255,255,255,0.45)", marginTop: "6px" }}>
-              {SITE.role} · {SITE.location}
+          <div style={{ display: "flex", alignItems: "flex-end", gap: "28px" }}>
+            {PORTRAIT ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={PORTRAIT}
+                alt=""
+                width={132}
+                height={132}
+                style={{
+                  borderRadius: "999px",
+                  objectFit: "cover",
+                  filter: "grayscale(1)",
+                  border: "2px solid rgba(255,255,255,0.25)",
+                }}
+              />
+            ) : null}
+            <div style={{ display: "flex", flexDirection: "column", paddingBottom: "6px" }}>
+              <div style={{ display: "flex", fontSize: "30px" }}>{SITE.name}</div>
+              <div style={{ display: "flex", fontSize: "20px", color: "rgba(255,255,255,0.45)", marginTop: "6px" }}>
+                {SITE.role} · {SITE.location}
+              </div>
             </div>
           </div>
           <div style={{ display: "flex", height: "6px", width: "260px", backgroundColor: "#C7F24E" }} />

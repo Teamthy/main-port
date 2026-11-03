@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NAV_LINKS, SITE } from "../data/site";
+import { Avatar } from "./Portrait";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -15,7 +16,8 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-[#E9E9EA]">
       <nav className="max-w-[1440px] mx-auto px-6 sm:px-7.5 h-20 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2" aria-label="Olusanya Timothy — home">
+        <Link href="/" className="flex items-center gap-2.5" aria-label="Olusanya Timothy — home">
+          <Avatar size={30} priority />
           <span className="text-black text-lg font-medium">
             Olusanya<span className="italic font-normal"> Timothy</span>
           </span>

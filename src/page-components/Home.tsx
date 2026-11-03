@@ -3,6 +3,7 @@ import ArrowIcon from "../components/ArrowIcon";
 import ProjectVisual from "../components/ProjectVisual";
 import TerminalCard from "../components/TerminalCard";
 import GitHubSignal from "../components/GitHubSignal";
+import { PortraitFigure } from "../components/Portrait";
 import { PROJECTS, FEATURED_PROJECT_IDS } from "../data/projects";
 import { RESEARCH_ARTIFACTS } from "../data/research";
 import { BLOG_POSTS } from "../data/blogs";
@@ -349,7 +350,11 @@ export default function Home() {
                 <ArrowIcon className="transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
             </div>
-            <div className="lg:col-span-6">
+            <div className="lg:col-span-6 flex flex-col gap-8">
+              <PortraitFigure
+                className="w-full max-w-[380px]"
+                caption="Olusanya Timothy · Lagos, NG"
+              />
               <GitHubSignal />
             </div>
           </div>
