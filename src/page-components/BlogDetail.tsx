@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ProjectVisual from "../components/ProjectVisual";
 import Prose from "../components/Prose";
+import { Avatar } from "../components/Portrait";
 import { getRelatedPosts, type BlogPost } from "../data/blogs";
 import { SITE } from "../data/site";
 
@@ -23,9 +24,7 @@ export default function BlogDetail({ post }: { post: BlogPost }) {
             {post.title}
           </h1>
           <div className="flex items-center justify-center gap-3">
-            <div className="grid size-10 place-items-center rounded-full bg-black font-mono text-sm text-white">
-              {SITE.initials}
-            </div>
+            <Avatar size={40} />
             <div className="text-left">
               <p className="text-sm font-medium text-black">{SITE.name}</p>
               <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-gray-500">{SITE.role}</p>

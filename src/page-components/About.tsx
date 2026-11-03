@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ArrowIcon from "../components/ArrowIcon";
 import GitHubSignal from "../components/GitHubSignal";
+import { Avatar, PortraitFigure } from "../components/Portrait";
 import { PRINCIPLES, SITE, STACK } from "../data/site";
 
 const timeline = [
@@ -68,13 +69,14 @@ export default function About() {
               </div>
             </div>
 
-            {/* Profile card instead of a stock portrait */}
             <div className="lg:col-span-5">
-              <div className="rounded-[24px] bg-[#0A0A0B] p-8 ring-1 ring-white/10">
+              <PortraitFigure
+                caption="Olusanya Timothy · software engineer, Lagos"
+                priority
+              />
+              <div className="mt-6 rounded-[24px] bg-[#0A0A0B] p-8 ring-1 ring-white/10">
                 <div className="flex items-center gap-4 mb-7">
-                  <div className="grid size-14 place-items-center rounded-full bg-white font-mono text-lg text-black">
-                    {SITE.initials}
-                  </div>
+                  <Avatar size={56} tone="dark" className="ring-white/20" />
                   <div>
                     <p className="text-white text-lg">{SITE.name}</p>
                     <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-white/40 mt-1">

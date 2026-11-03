@@ -25,8 +25,12 @@ docs or committed test output — no invented clients, testimonials or metrics.
 
 ## Design notes
 
-- **No stock photography.** Project and article artwork is generated as deterministic SVG motifs
-  (`src/components/ProjectVisual.tsx`), so there are no remote image dependencies and no fake screenshots.
+- **One real face, rendered in black and white.** The only photograph on the site is the portrait of
+  Olusanya in `public/portrait` — greyscale, used as the favicon set (512px PNG, 180px Apple icon and a
+  48/32/16 `.ico`), in the navbar and footer, on the About and home "About" sections, on article bylines
+  and inside the generated Open Graph card. Project and article artwork stays as deterministic SVG motifs
+  (`src/components/ProjectVisual.tsx`), so there are no stock images, remote image dependencies or fake
+  screenshots. `scripts/build-brand-assets.sh <photo>` regenerates every portrait and icon derivative.
 - **Fonts are bundled** in `src/fonts` (Inter variable, Anonymous Pro) and loaded with `next/font/local`,
   so builds never depend on a font CDN. Both families are OFL-licensed; provenance is in `src/fonts/README.md`.
 - **GitHub data is fetched at build/revalidate time** (`src/lib/github.ts`, hourly ISR) and the UI degrades

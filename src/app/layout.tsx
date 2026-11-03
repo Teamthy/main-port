@@ -76,6 +76,7 @@ const personJsonLd = {
   jobTitle: 'Software engineer — AI red team & evaluation',
   description: SITE.shortBio,
   url: SITE.siteUrl,
+  image: `${SITE.siteUrl}/portrait/olusanya-timothy-portrait.jpg`,
   email: `mailto:${SITE.email}`,
   address: { '@type': 'PostalAddress', addressLocality: 'Lagos', addressCountry: 'NG' },
   knowsAbout: [
