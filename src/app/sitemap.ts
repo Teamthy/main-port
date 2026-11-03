@@ -1,30 +1,32 @@
 import type { MetadataRoute } from "next";
 import { PROJECTS } from "../data/projects";
 import { BLOG_POSTS } from "../data/blogs";
+import { SITE } from "../data/site";
 
-const BASE = process.env.NEXT_PUBLIC_SITE_URL || "https://olusanyatimothy.dev";
+const BASE = SITE.siteUrl;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: `${BASE}/`, lastModified: now, changeFrequency: "monthly", priority: 1 },
-    { url: `${BASE}/about`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/services`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE}/research`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/portfolio`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/blogs`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${BASE}/services`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE}/about`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE}/blogs`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
     { url: `${BASE}/contact`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
   ];
 
-  const projectRoutes: MetadataRoute.Sitemap = PROJECTS.map((p) => ({
-    url: `${BASE}/portfolio/${p.id}`,
+  const projectRoutes: MetadataRoute.Sitemap = PROJECTS.map((project) => ({
+    url: `${BASE}/portfolio/${project.slug}`,
     lastModified: now,
     changeFrequency: "monthly",
-    priority: 0.7,
+    priority: 0.8,
   }));
 
-  const blogRoutes: MetadataRoute.Sitemap = BLOG_POSTS.map((b) => ({
-    url: `${BASE}/blog/${b.id}`,
+  const blogRoutes: MetadataRoute.Sitemap = BLOG_POSTS.map((post) => ({
+    url: `${BASE}/blog/${post.slug}`,
     lastModified: now,
     changeFrequency: "monthly",
     priority: 0.6,

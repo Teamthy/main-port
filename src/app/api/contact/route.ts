@@ -4,12 +4,22 @@ import { Resend } from "resend";
 export const runtime = "nodejs";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Escape every user-controlled value before it enters the notification HTML.
+const escapeHtml = (value: string) =>
+  value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 const CONTACT_TO = process.env.CONTACT_TO_EMAIL || "olusanyatimothy54@gmail.com";
 
 const BUDGET_LABELS: Record<string, string> = {
-  "under-10k": "Under $10k",
-  "10k-50k": "$10k - $50k",
-  "over-50k": "$50k+",
+  "under-2k": "Under $2k",
+  "2k-10k": "$2k - $10k",
+  "over-10k": "$10k+",
+  unsure: "Not sure yet",
 };
 
 // Simple in-memory rate limiter: max 3 submissions per IP per 10 minutes.
@@ -76,13 +86,18 @@ export async function POST(req: NextRequest) {
   }
 
   const budgetLabel = budget ? BUDGET_LABELS[budget] || budget : "Not specified";
+  const safeName = escapeHtml(name);
+  const safeEmail = escapeHtml(email);
+  const safeCompany = escapeHtml(company || "Not specified");
+  const safeMessage = escapeHtml(message);
+
   const html = `
-    <h2>New project enquiry from ${name}</h2>
-    <p><strong>Email:</strong> ${email}</p>
-    <p><strong>Company:</strong> ${company || "Not specified"}</p>
-    <p><strong>Budget:</strong> ${budgetLabel}</p>
+    <h2>New project enquiry from ${safeName}</h2>
+    <p><strong>Email:</strong> ${safeEmail}</p>
+    <p><strong>Company:</strong> ${safeCompany}</p>
+    <p><strong>Budget:</strong> ${escapeHtml(budgetLabel)}</p>
     <p><strong>Message:</strong></p>
-    <p style="white-space: pre-wrap;">${message}</p>
+    <p style="white-space: pre-wrap;">${safeMessage}</p>
   `;
 
   const apiKey = process.env.RESEND_API_KEY;
@@ -105,7 +120,7 @@ export async function POST(req: NextRequest) {
       from: process.env.CONTACT_FROM_EMAIL || "Portfolio Contact <onboarding@resend.dev>",
       to: CONTACT_TO,
       replyTo: email,
-      subject: `New project enquiry from ${name}`,
+      subject: `New project enquiry from ${name.replace(/[\r\n]/g, " ").slice(0, 120)}`,
       html,
     });
     if (error) {

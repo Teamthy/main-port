@@ -1,4 +1,4 @@
-import { IMAGES } from "./images";
+import type { Motif } from "./projects";
 
 export interface BlogSection {
   heading?: string;
@@ -7,11 +7,12 @@ export interface BlogSection {
 
 export interface BlogPost {
   id: number;
+  slug: string;
   title: string;
   category: string;
   date: string;
   readTime: string;
-  image: string;
+  motif: Motif;
   excerpt: string;
   tags: string[];
   intro: string[];
@@ -19,305 +20,328 @@ export interface BlogPost {
   outro: string[];
 }
 
+// Long-form notes drawn from the work in /portfolio and /research: what the
+// artefacts measure, what they refuse to claim, and what that changes in
+// practice. Written to be read by an engineer, not a buyer.
 export const BLOG_POSTS: BlogPost[] = [
   {
     id: 1,
-    title: "The Future of Web Development: Trends to Watch",
-    category: "Development",
-    date: "Jan 15, 2025",
-    readTime: "6 min read",
-    image: IMAGES.blog[0],
+    slug: "five-boring-failures",
+    title: "The five boring failures that will ship with your AI feature",
+    category: "AI Security",
+    date: "3 Nov 2026",
+    readTime: "9 min read",
+    motif: "probes",
     excerpt:
-      "AI-assisted tooling, edge rendering, and component-driven architecture are reshaping how we build for the web. Here is what actually matters.",
-    tags: ["Web Development", "AI", "Edge Computing", "Trends"],
+      "Not a jailbreak from a film. A refusal that only works in English, a poisoned document, a tool description nobody read, and a metric with no sample size.",
+    tags: ["AI Security", "Red Teaming", "Prompt Injection", "Evaluation"],
     intro: [
-      "The web platform evolves in waves, and most waves turn out to be ripples. But a few shifts happening right now are genuinely changing how teams build and ship software — and ignoring them has a real cost.",
-      "After spending the past year working across backend systems, AI tooling, and frontend delivery, these are the trends I think are structural rather than fashionable, and what they mean for engineers and the products they build.",
+      "Most AI security conversations start with a scenario nobody can reproduce: an attacker with unlimited time, a model with no guardrails, and a payload that reads like fiction. Those conversations are entertaining and almost entirely useless for deciding what to ship on Tuesday.",
+      "The failures that actually reach customers are dull. They survive review because each one is individually plausible, and they compound because nobody tested the combination. These are the five I test first against any agent, and the reason each one ships.",
     ],
     sections: [
       {
-        heading: "AI-assisted development grows up",
+        heading: "1. The prompt is not a wall",
         paragraphs: [
-          "AI coding assistants moved past autocomplete in 2024. The useful ones now reason about whole repositories: they refactor across files, write tests against existing patterns, and explain unfamiliar codebases in minutes instead of days.",
-          "The practical impact is not that developers write less code — it is that the boring parts of the job shrink. Boilerplate, migrations, test scaffolding, and documentation drafts get automated, while architecture decisions, security review, and product judgment matter more than ever. Teams that treat AI as a junior engineer with infinite patience get a real multiplier; teams that treat it as an autopilot ship bugs faster.",
+          "A system prompt is context, not a boundary. The model has no mechanism that distinguishes an instruction from you and an instruction embedded in a customer message — both arrive as tokens, and the model's job is to be helpful about both. That is not a bug you can prompt your way out of; it is the architecture.",
+          "So the useful test is not “can it be jailbroken?” but “what specifically comes out, and does anything downstream care?” I run three direct attempts: print the system prompt, reframe as a trusted internal role, and embed an instruction block in otherwise ordinary content. If the secret leaves, the failure is not the model's eloquence — it is that a secret was in a prompt at all.",
         ],
       },
       {
-        heading: "The edge becomes the default deployment target",
+        heading: "2. Retrieval is untrusted input",
         paragraphs: [
-          "Rendering close to users used to mean a CDN for static assets. Now entire application runtimes execute at the edge: server components, API routes, and even database reads happen within tens of milliseconds of your users.",
-          "For products with globally distributed audiences — and especially for African products serving users on variable networks — this is transformative. A server component that renders in Lagos instead of Virginia is not a marginal optimization; it is the difference between an app that feels instant and one that feels broken.",
+          "The moment a knowledge base becomes writable by anyone who is not you — a support article, a customer-uploaded PDF, a scraped page — retrieval becomes an injection channel. The document is retrieved because it matches semantically, and the hidden instruction inside it arrives with the same authority as your policy text.",
+          "One poisoned document with a hidden instruction is enough to demonstrate this. The interesting result is usually not a dramatic failure but a small, plausible deviation: a refund policy misquoted, a link swapped, an instruction followed in the third sentence after a correct first paragraph.",
         ],
       },
       {
-        heading: "Component-driven architecture wins",
+        heading: "3. Tools are trusted unread",
         paragraphs: [
-          "Design systems matured from style guides into actual engineering infrastructure. Typed component libraries with live documentation now let product teams assemble screens from proven pieces instead of rewriting interfaces per feature.",
-          "The teams moving fastest are the ones where design tokens, components, and backend contracts are all versioned and tested like any other code. Consistency stops being a design review problem and becomes a compile-time guarantee.",
+          "Tool descriptions are instructions, and most teams review them the way they review a docstring: quickly, once, at 1 a.m. before a release. A description that carries an instruction — and a model that treats tool metadata as trusted guidance — is a second injection surface that no amount of user-input filtering covers.",
+          "The test is a comparison: reply with the tool present, reply with it absent. If the answer changes in a way the tool does not justify, the metadata is steering behaviour and you have a finding.",
         ],
       },
       {
-        heading: "Security shifts left — again, for real this time",
+        heading: "4. One language",
         paragraphs: [
-          "Supply-chain attacks, leaked API keys, and prompt injection in AI features have made security a build-time concern rather than a pre-launch audit. Dependency scanning, secret detection, and threat modeling are moving into CI pipelines and code review checklists.",
-          "I expect 'AI red teaming' — adversarially testing AI-powered features before release — to become as routine as penetration testing did for web apps. If your product talks to a language model, someone will try to make it misbehave; the only question is whether you find out first.",
+          "I built the refusal tests in this harness around how customers in Lagos actually write: a plain English message, and the same request in mixed Pidgin/Yoruba. The English refusal holds. The mixed-language version often does not, because the safety behaviour was demonstrated in a language the evaluation set was written in.",
+          "This is the cheapest failure to find and the most embarrassing to explain. It is also invisible to any suite that only tests English — which is most of them.",
+        ],
+      },
+      {
+        heading: "5. The metric",
+        paragraphs: [
+          "A dashboard that says “injection resistance: 94%” with no denominator is not a measurement. Ninety-four percent of what, on which input classes, with what confidence interval, and how many of those items were known-hold controls? Without the sample size and the raw output, the number is a mood.",
+          "The metric that matters is narrower and more useful: how often a specific failure fires on a specific input type, with the sample size next to every rate. That is a number you can act on, and re-run after a fix.",
         ],
       },
     ],
     outro: [
-      "The through-line across all of these trends is the same: the fundamentals — understanding users, writing clean code, and delivering value — remain constant, but the leverage available to small teams keeps compounding.",
-      "The engineers who will thrive are not the ones chasing every new framework. They are the ones who adopt the shifts that remove real friction and stay skeptical of everything else.",
+      "None of these tests took a week to write. The reason they ship anyway is that nobody owns the question “what did we actually test?” until an incident makes it urgent.",
+      "The harness for all five is open source, points at any OpenAI-compatible endpoint, and ships the method rather than results — because a result from someone else's model tells you nothing about yours.",
     ],
   },
   {
     id: 2,
-    title: "Building Scalable Design Systems for Growing Teams",
-    category: "Design",
-    date: "Jan 10, 2025",
-    readTime: "7 min read",
-    image: IMAGES.blog[1],
+    slug: "your-eval-passed-what-did-it-prove",
+    title: "Your eval passed. What exactly did it prove?",
+    category: "Evaluation",
+    date: "1 Nov 2026",
+    readTime: "10 min read",
+    motif: "chain",
     excerpt:
-      "A design system is engineering infrastructure, not a Figma library. Here is how to build one that survives contact with a growing product team.",
-    tags: ["Design Systems", "React", "TypeScript", "Tooling"],
+      "When the judge, the harness and the person reading the report are the same system, a green eval is a self-grade. Evidence is the missing layer.",
+    tags: ["Evaluation", "Evidence", "LLM Judges", "Research"],
     intro: [
-      "Every growing product team hits the same wall: five engineers can keep an interface consistent through conversation, but fifteen cannot. Buttons drift, spacing arguments resurface every sprint, and every new feature reintroduces old debates.",
-      "A design system is the answer — but most attempts fail because they are treated as a design deliverable instead of what they actually are: engineering infrastructure with users, an API, and a maintenance burden. Here is what I have learned building them for teams from four to forty engineers.",
+      "There is a category of artefact that looks rigorous and proves very little: the evaluation report. It has numbers, a methodology section, and a green summary. It was produced by a tool that contains its own judge, run by the team that built the system being evaluated, and printed into a PDF that no one outside that team can re-derive.",
+      "That is not a criticism of the teams. The tooling landscape pushed them there: attacks are commoditised, scoring is commoditised, taxonomy is standardised — and the fourth layer, evidence, is empty.",
     ],
     sections: [
       {
-        heading: "Start with tokens, not components",
+        heading: "The judge is part of the measurement",
         paragraphs: [
-          "The foundation of every durable design system is a set of design tokens: named values for color, spacing, typography, and radius that are consumed by both design tools and code. Components built on raw values will fork; components built on tokens stay coherent when the brand evolves.",
-          "Define tokens once and generate everything from them — CSS variables, Tailwind config, mobile constants. The day your brand team changes the primary blue, you want that to be a one-line change, not a grep across forty repositories.",
+          "Every LLM-judge result contains at least two uncertainties: whether the system under test behaved as scored, and whether the judge scored it correctly. Most reports collapse both into one number. The research is unambiguous that the second uncertainty is real: no judge is uniformly reliable, verdicts flip on reformatting and verbosity, and judges prefer their own outputs.",
+          "If the judge lives inside the tool, the evaluator and the evaluated share an operator, and a green grade from such a tool is a self-grade. The fix is not a better judge. It is measuring the judge and reporting its numbers next to the result.",
         ],
       },
       {
-        heading: "Treat components like a public API",
+        heading: "What a re-derivable record requires",
         paragraphs: [
-          "A component library is an API, and APIs need the same discipline: semantic versioning, deprecation periods, typed props, and tests. When a team of twenty depends on your Button, changing its behavior on a whim is not refactoring — it is an outage.",
-          "TypeScript is non-negotiable here. Well-typed props turn most misuse into compile errors, and autocomplete becomes the documentation. Pair that with a small surface area: a component with twelve boolean props is a component nobody understands, and eventually nobody uses correctly.",
+          "Four things, and each one is a design decision rather than a feature. First, ids pre-assigned before the first attempt, so a missing result is visibly missing instead of a shorter list. Second, a binding between action, policy version, decision and effect, sealed at write time. Third, the raw input and output stored in the bundle, not just the derived verdict. Fourth, a chain that makes later edits detectable.",
+          "With those in place, `verify` becomes a one-command operation: re-walk the chain, re-hash the manifest, re-run the detectors on the stored raw. It needs no model, no key and no network — which is precisely what makes it usable by someone who does not trust you.",
         ],
       },
       {
-        heading: "Documentation is the product",
+        heading: "Negative controls or it is decoration",
         paragraphs: [
-          "Engineers will not read a Confluence page to learn your components. Adoption comes from documentation that lives where the code does: live examples in Storybook, copy-paste snippets, and prop tables generated from the types themselves.",
-          "The best metric I know for a design system's health is not coverage or downloads — it is how often people copy-paste from your docs versus screenshotting someone else's UI. Optimize relentlessly for the first one.",
+          "A checker that cannot fail is decoration. Every suite should carry items whose answers it knows: some that must hold, some that must break. They cannot be generated by the same code path that grades them, and the false-positive and false-negative counts belong in the result.",
+          "This is the cheapest defence against the failure mode where a detector silently stops detecting. Without controls, a broken check looks exactly like a clean run.",
         ],
       },
       {
-        heading: "Governance without a bottleneck",
+        heading: "Stability is a relation between runs",
         paragraphs: [
-          "Design systems die two ways: chaos, where anyone adds anything, and bureaucracy, where every new component waits six weeks on a committee. The fix is a thin contribution model — a clear process for proposing components, fast review turnaround, and ownership that rotates.",
-          "Measure adoption, not output. The number of components you shipped means nothing if product teams keep building parallel ones. When adoption stalls, the problem is almost always ergonomics or documentation, not missing components.",
+          "A single run is a point. The interesting question is whether the same suite, run twice with different surface drift, produces the same verdicts. In the tieout demo, two committed runs against the same agent show ten transcripts drifting while zero verdicts flip — the words moved, the conclusions did not.",
+          "That is the paraphrase phenomenon shown at the run level, and it is the number I would want before trusting any single evaluation snapshot. Where verdicts do flip, the diff names the items, which turns an argument about model behaviour into a list of specific cases.",
+        ],
+      },
+      {
+        heading: "Say what you cannot prove",
+        paragraphs: [
+          "Every evidence bundle has edges. A decision time carried through replay is source-asserted, not independently verified. A key derived from a fixed seed demonstrates internal consistency, not production key management. A gap in the store may be recoverable, or it may be silence.",
+          "Recording those as named gaps — with reason and scope — costs a paragraph and buys credibility. A bundle that lists its limits is far more useful than one that pretends not to have any, because the reader can see exactly where the claim stops.",
         ],
       },
     ],
     outro: [
-      "A great design system is invisible: product teams stop debating spacing and start shipping features, and the interface stays coherent as the team doubles and triples.",
-      "Build it like the infrastructure it is — versioned, tested, documented, and owned — and it will quietly become the highest-leverage investment your engineering org makes.",
+      "The report is a claim. The bundle is a record. If a stranger with a cold clone and no credentials cannot re-derive the verdict, what you have is a press release with a methodology section.",
+      "tieout is my attempt to make the second thing normal: every verdict bound, every gap named, and one command to check the whole thing without trusting the tool that produced it.",
     ],
   },
   {
     id: 3,
-    title: "Why Your Startup Needs a Strong Digital Presence",
-    category: "Strategy",
-    date: "Jan 5, 2025",
-    readTime: "5 min read",
-    image: IMAGES.blog[2],
+    slug: "a-gate-that-only-blocks-on-regression",
+    title: "A red-team gate that only blocks when you get worse",
+    category: "CI & Security",
+    date: "28 Oct 2026",
+    readTime: "8 min read",
+    motif: "gate",
     excerpt:
-      "Your website is your most underpriced employee. The technical foundations of credibility — and how to build them without overbuilding.",
-    tags: ["Strategy", "Startups", "Web Development", "Growth"],
+      "Security gates die of noise, not of being wrong. Baseline semantics are what keep one switched on past the third pull request.",
+    tags: ["CI", "Red Teaming", "SARIF", "Engineering"],
     intro: [
-      "Founders often treat their website as a brochure: something that needs to exist, ideally look decent, and otherwise stay out of the way. That framing undersells what a digital presence actually does for an early-stage company.",
-      "Before a customer, investor, or hire ever speaks to you, they will spend ninety seconds on your site forming a judgment about whether you are real, competent, and worth their time. Your digital presence is your most underpriced employee — it works every hour, in every market, for free.",
+      "Every team that has tried to put a scanner in CI knows the arc. The first build is a wall of findings. The second is the same wall. By the third, someone adds `continue-on-error` to unblock a release, and the control is now decorative.",
+      "The gate did not fail because it was wrong. It failed because it could not distinguish a bug shipped last quarter from one being shipped in this pull request — and a gate that reports everything is a gate nobody reads.",
     ],
     sections: [
       {
-        heading: "Credibility is a technical property",
+        heading: "A pull request asks one question",
         paragraphs: [
-          "Users judge trustworthiness in milliseconds, and most of the signals are technical: load speed, mobile rendering, visual consistency, and whether links work. A slow page does not just lose visitors — it quietly tells them your company is careless.",
-          "This is especially true in B2B and fintech, where the product itself is a promise of reliability. If your marketing site janks on a mid-range Android, nobody is trusting you with their money or their data. Performance budgets and real-device testing are credibility work.",
+          "Not “is this system secure?” — that is a programme, not a review. A pull request asks: is this worse than it was before? That question has an answer that fits on a comment: these findings are new, these got worse, these were fixed, these were already known.",
+          "Once the question is framed that way, the implementation is clear. Record today's state as a baseline, fingerprint every finding, and diff each run against it. Known findings pass. New or worsened findings at or above the threshold block.",
         ],
       },
       {
-        heading: "Founders can build this lean",
+        heading: "Fingerprints are the whole product",
         paragraphs: [
-          "A strong presence does not require an agency retainer. A modern stack — Next.js, a headless CMS or even a markdown file, and a platform like Vercel — gets you a fast, secure site that a single engineer can own end to end.",
-          "The lean playbook: five pages done excellently beat twenty done averagely. Clear positioning, proof (case studies, metrics, testimonials), and one obvious call to action. Ship it fast, then let analytics tell you what to improve instead of guessing.",
+          "If the fingerprint is unstable, the gate is either blind or useless: a finding whose id changes every run will look new forever, and one that groups everything looks unchanged. The fingerprint has to encode the weakness, not the transcript — same category, same failure, same place in the system.",
+          "That is also what makes multiple engines worth having. If Promptfoo, PyRIT and a built-in engine all catch the same weakness, the finding shows three `found by` names rather than three rows. Coverage goes up; noise does not.",
         ],
       },
       {
-        heading: "Content compounds, ads expire",
+        heading: "Severity thresholds, not severity theatre",
         paragraphs: [
-          "Paid acquisition stops the day the budget stops. Technical content — engineering blog posts, documentation, comparison pages, changelogs — keeps earning traffic and trust for years. Every serious company you admire has a content flywheel running quietly in the background.",
-          "The bar is lower than founders think. Two honest posts a month about what you are building and what you learned will outperform a silent 'coming soon' page in every metric that matters: inbound leads, hiring quality, and investor warmth.",
+          "Not every finding deserves to block a merge. A medium system-prompt leak may be a ticket; a critical data-exfiltration path is a stop. The threshold is a policy decision and it belongs in version control, next to the baseline, where a reviewer can see when it changed.",
+          "The point is not to hide the quieter findings — they still appear in the comment and in SARIF. They simply do not hold the release hostage, which is what keeps the gate credible for the ones that should.",
         ],
       },
       {
-        heading: "Own the channel you control",
+        heading: "Prove the comparison is honest",
         paragraphs: [
-          "Algorithms change, ad prices rise, platforms pivot. Your website is the one channel where you set the rules — and it is where every other channel eventually points. Social profiles, marketplaces, and app stores are rented land.",
-          "Treat your digital presence like infrastructure: instrument it with analytics, keep it fast, keep it secure, and review it quarterly the way you would review any other asset. The startups that do this boring work well compound an advantage that is very hard to buy later.",
+          "A gate comparing two different agents tells you nothing. The demo agents in gatecheck are the same rule engine one flag apart, so the difference between the blocked run and the passing run is genuinely the hardening, not a change of target.",
+          "Both runs are committed as artefacts — PR comment, JSON and SARIF — so the claim can be checked without installing anything. That is a small thing that makes the tool reviewable by someone who has not yet decided to trust it.",
         ],
       },
     ],
     outro: [
-      "You do not need a big budget to look like a serious company. You need speed, clarity, consistency, and the discipline to maintain them.",
-      "In a market where attention is scarce and trust is expensive, a strong digital presence is not a nice-to-have — it is the shortest distance between an unknown startup and a credible one.",
+      "A security gate is a product with users, and its users are engineers trying to ship. The measure of success is not how many findings it reports on day one; it is whether it is still switched on in month three.",
+      "gatecheck is built around that single constraint: block on regression, report the rest, and stay quiet about what has not changed.",
     ],
   },
   {
     id: 4,
-    title: "React vs Next.js: Choosing the Right Framework",
-    category: "Development",
-    date: "Dec 28, 2024",
-    readTime: "7 min read",
-    image: IMAGES.blog[3],
+    slug: "what-survives-when-the-host-dies",
+    title: "What survives when the host dies",
+    category: "Reliability",
+    date: "12 Oct 2026",
+    readTime: "8 min read",
+    motif: "crash",
     excerpt:
-      "It is not a rivalry — Next.js is React with opinions. A practical guide to when those opinions help and when they get in the way.",
-    tags: ["React", "Next.js", "Architecture", "Web Development"],
+      "An audit trail is not the log you intended to write. It is what was on disk when the process stopped.",
+    tags: ["Reliability", "Audit Logs", "Crash Consistency", "Agents"],
     intro: [
-      "The question 'React or Next.js?' gets asked in nearly every project kickoff, and it is slightly the wrong question. Next.js is not an alternative to React — it is React with a set of strong opinions about routing, rendering, and data fetching baked in.",
-      "The real question is whether those opinions fit your product. Having shipped production apps with both, here is the honest decision framework I use.",
+      "Ask a team whether their agent logs decisions and they will show you code that logs decisions. Ask what happens if the process exits between the decision and the write and the answers get more interesting.",
+      "The gap between those two questions is the whole subject of crash consistency, and it is where audit claims quietly stop being true. An agent guard can be correct and still leave no usable record of what it decided.",
     ],
     sections: [
       {
-        heading: "What Next.js actually adds",
+        heading: "Four rows, four different failures",
         paragraphs: [
-          "Next.js gives you file-based routing, server-side and static rendering, an API layer, image optimization, and build-time performance work — all configured by convention rather than by you gluing libraries together.",
-          "The value is not any single feature; it is that these decisions are made coherently for you. A React SPA forces you to choose and integrate a router, a data-fetching layer, and an SSR story yourself. Next.js hands you a working default for all of it on day one.",
+          "It helps to name the cases instead of the general worry. A decision made and never emitted. A decision emitted and lost before it reached the store. The host dying before anything was ingested. A record that survived but cannot be verified as the record it claims to be.",
+          "Each row fails for a different reason and each needs its own test. Collapsing them into a single score hides the distinction between “we lost the evidence” and “we have evidence we cannot authenticate” — which are different arguments to have with an auditor.",
         ],
       },
       {
-        heading: "When plain React is the right call",
+        heading: "Exit deliberately, not by signal",
         paragraphs: [
-          "If you are building an interface that lives inside an existing app — a dashboard embedded in a Rails app, a widget, a kiosk UI, or a desktop app with Electron — a plain React SPA is lighter and simpler. There is no server rendering to reason about and no framework lifecycle to fight.",
-          "Plain React also makes sense when your backend is already a fully formed API and your team has deep SPA expertise. Adding a server-rendering layer nobody asked for is architecture astronautics, not engineering.",
+          "A test that kills a process from outside with a signal is testing the signal handler. A test that calls `os._exit(9)` from inside is testing what happens when nothing gets a chance to clean up — no destructors, no flush, no graceful shutdown path.",
+          "That is the honest version of a host death. If the write-ahead log survives it, you learn something real about the ordering of your writes. If it does not, you have found the exact window where an action can happen with no record.",
         ],
       },
       {
-        heading: "When Next.js clearly wins",
+        heading: "The gap is the result",
         paragraphs: [
-          "For anything public-facing where SEO, first-load speed, or content freshness matters — marketing sites, commerce, blogs, marketplaces, SaaS dashboards — Next.js is the pragmatic default. Server components render on the server and stream to the client, so users see content fast even on slow networks.",
-          "It also shines for small teams shipping full products: one codebase for frontend, backend API routes, and background work means fewer deployment targets and fewer integration boundaries. For a startup where the same engineer owns the feature end to end, that coherence is a genuine velocity win.",
+          "When the host dies before ingestion, the interesting output is not a pass or fail. It is the strength of the resulting gap: the store holds the issued id and a commitment to the descriptor, so the record can name a gap with its content; it holds only the id, so the record can name a gap with no content; it holds nothing, so the record can say nothing at all.",
+          "The third case is the strongest statement in the table and the least comfortable: the benchmark itself cannot tell that an action happened. A suite that claimed to detect it would be reporting its own cleverness, so the limit is written down instead.",
         ],
       },
       {
-        heading: "The practical checklist",
+        heading: "Make the checker carry its own weight",
         paragraphs: [
-          "Ask four questions. Does the product need SEO or fast first paint? Is there a small team that benefits from convention over configuration? Will you deploy to a platform that runs Node or edge functions? Do you want built-in image, font, and routing optimization? Three or more yeses — take Next.js.",
-          "And remember the exit doors are not locked: components written for Next.js are mostly plain React components. Starting with Next.js does not trap you, and starting with React does not prevent you from adopting Next.js later when the product demands it.",
+          "If the verification program reads a “pass” flag, it is a reporting tool. It has to re-derive every assertion from raw files that could be wrong. Then someone has to damage the artefacts on purpose and require that the check catches it — ten ways, plus a directory that is not a run at all.",
+          "The hard version of this is a mutation suite per audited finding: every mutation passed verification before the review and has to fail it afterwards. That turns “we fixed the checker” into a set of reproducible cases rather than a claim in a changelog.",
         ],
       },
     ],
     outro: [
-      "Framework debates make better content than decisions. The boring truth is that both options are excellent, and the wrong choice is rarely fatal.",
-      "Pick based on your product's actual constraints — SEO needs, team size, deployment targets — ship something, and let real usage data guide the next architectural conversation.",
+      "Audit trails are usually specified in the future tense — what the system will write. Crash consistency is the past tense: what the system wrote before it stopped.",
+      "The benchmark is open source and standard-library only, because the question is worth asking on a laptop before it is worth arguing about in a review.",
     ],
   },
   {
     id: 5,
-    title: "Mobile-First Design: Best Practices for 2025",
-    category: "Design",
-    date: "Dec 20, 2024",
-    readTime: "6 min read",
-    image: IMAGES.blog[4],
+    slug: "contracts-that-fail-the-build",
+    title: "An API contract that fails the build when it drifts",
+    category: "Engineering",
+    date: "24 Sep 2026",
+    readTime: "7 min read",
+    motif: "routes",
     excerpt:
-      "Mobile-first is no longer a responsive technique — for most products it is the primary platform. Engineering and design practices that respect that reality.",
-    tags: ["Mobile", "Design", "Performance", "UX"],
+      "An OpenAPI file nobody checks against the router is documentation with a schema. Here is how to make drift a build failure in both directions.",
+    tags: ["API Design", "OpenAPI", "Go", "CI"],
     intro: [
-      "The phrase 'mobile-first' is old enough to sound like advice from another era, but the reality behind it has only sharpened: for most products — and overwhelmingly for products serving African markets — the phone is not the small version of your app. It is the app.",
-      "Yet many teams still design for a 1440-pixel canvas and squeeze the result into a viewport. Here is what mobile-first actually demands in 2025, from both the design and engineering sides.",
+      "Every project has an API contract. In some it is an OpenAPI file, in others it is a Postman collection, and in most it is the accumulated memory of whoever wrote the router. The failure mode is identical: the client and the server disagree, and nobody notices until a field is missing in production.",
+      "Documentation that is not checked is a claim. A contract is a file that fails the build when it stops being true.",
     ],
     sections: [
       {
-        heading: "Design for thumbs, not cursors",
+        heading: "Check both directions",
         paragraphs: [
-          "A cursor is precise; a thumb is not. Touch targets below 44 pixels, actions buried in hover states, and dense tables that assume a mouse all fail on the device your users actually hold. Mobile-first design starts with the interaction model, not the breakpoint.",
-          "Concretely: primary actions live in the bottom third of the screen, navigation collapses to a few high-value destinations, and every flow is tested one-handed. If a task needs pinch-zoom or landscape rotation to complete, it is broken by definition.",
+          "The obvious check is that every documented route exists. The check that actually catches drift is the other direction: every handler in the router is documented. Undocumented endpoints are how internal routes leak into production and how clients end up reverse-engineering behaviour from errors.",
+          "In EduMart OS, the OpenAPI file describes all forty-eight path+method pairs and is compared against the Go router on every CI run. An undocumented handler and a documented-but-missing endpoint both fail the build. That is the whole feature, and it costs one script.",
         ],
       },
       {
-        heading: "Performance is the first feature",
+        heading: "A contract is also for the client you have not written",
         paragraphs: [
-          "On a mid-range Android over a congested network — the median real-world condition for huge user bases — a heavy page is not a slightly slow page, it is a page that never arrives. Every 100 kilobytes of JavaScript is a design decision with a human cost.",
-          "The engineering practices that matter: aggressive code splitting, modern image formats served at device-appropriate sizes, fonts loaded with sensible fallbacks, and caching treated as a first-class feature. Measure on real devices, not your MacBook, and budget performance like you budget scope.",
+          "When one API serves a web app, a PWA and a native app, the contract is what lets them ship from one commit without drifting. The moment each shell has its own idea of the response shape, you have three products that occasionally agree.",
+          "Shared types help inside TypeScript, but they stop at the Go boundary — which is exactly where the contract check earns its place. The OpenAPI file is the piece both sides can depend on regardless of language, as long as it is enforced.",
         ],
       },
       {
-        heading: "Offline is a feature, not an edge case",
+        heading: "One envelope, one error shape",
         paragraphs: [
-          "Intermittent connectivity is the norm for hundreds of millions of users. Apps that silently fail when the network drops lose trust instantly; apps that queue actions, show optimistic states, and sync gracefully feel almost magical by comparison.",
-          "Design the empty and degraded states before the happy path. What does the screen show offline? What happens to the form the user spent two minutes filling in? Answering those questions is mobile-first work as much as any layout decision.",
+          "Consistency is underrated. A response envelope of data plus meta, and an error object with code, message and details, means clients handle failure in one place. Without it, every new endpoint teaches every client one more special case.",
+          "This is also what makes generated clients and test fixtures tractable. If success and failure look the same everywhere, most of the integration code becomes mechanical — which is the goal.",
         ],
       },
       {
-        heading: "Progressive enhancement over parity",
+        heading: "Validate configuration the same way",
         paragraphs: [
-          "Chasing pixel parity between phone and desktop is a losing game — the contexts are different, so the experiences should be too. Mobile-first done well means designing the core task for the smallest, weakest context first, then enhancing for larger screens.",
-          "The desktop version becomes an expansion — more columns, more data density, keyboard shortcuts — rather than the source of truth. Teams that invert this order consistently ship products that feel native on the device that matters most.",
+          "The same philosophy applies to environment variables. An API that boots with a half-filled environment file looks healthy until the first request that needs the missing value, usually during a release. Boot-time validation turns a production surprise into a failed start on the machine of whoever forgot it.",
+          "One service in this portfolio refuses to start in production with missing payment secrets, open CORS or demo seeds enabled. That refusal is worth more than a checklist in a wiki, because it cannot be skipped under deadline pressure.",
         ],
       },
     ],
     outro: [
-      "Mobile-first in 2025 is less about CSS and more about respect: for your users' devices, their networks, their hands, and their time.",
-      "Design for the worst realistic context first. If the experience is great there, it will be effortless everywhere else.",
+      "Contracts are cheap to write and expensive to keep honest. Automating the honesty is the only version that survives a busy quarter.",
+      "Write the spec, check it against the router in both directions, and let the build carry the discipline for you.",
     ],
   },
   {
     id: 6,
-    title: "API Architecture Patterns for Modern Applications",
-    category: "Development",
-    date: "Dec 15, 2024",
+    slug: "money-belongs-in-integers",
+    title: "Money belongs in integers, and permissions in the database",
+    category: "Data modelling",
+    date: "9 Sep 2026",
     readTime: "8 min read",
-    image: IMAGES.blog[5],
+    motif: "ledger",
     excerpt:
-      "REST, GraphQL, gRPC, events — the API landscape has real trade-offs. A field guide to picking the right pattern for each part of your system.",
-    tags: ["APIs", "Architecture", "Backend", "System Design"],
+      "Double-entry ledgers in kobo, corrections by counter-entry, and isolation enforced by row-level security instead of hope.",
+    tags: ["PostgreSQL", "Ledgers", "Row-Level Security", "Fintech"],
     intro: [
-      "Every backend conversation eventually becomes an API conversation, because an API is where your architecture meets reality: it is the contract your frontend, your partners, and your future self are stuck with.",
-      "There is no universal best API style — there is the right pattern for each boundary in your system. After designing APIs for fintech, healthcare, and analytics platforms, here is how I think about the main patterns and when each one earns its place.",
+      "Financial software fails in ways that are unusually easy to describe and unusually hard to fix: a balance that does not reconcile, a correction that erased history, or a branch manager who can read another branch's records because isolation lived in application code.",
+      "Three decisions prevent most of it, and none of them are advanced: integers for money, double-entry for the ledger, and row-level security for tenancy.",
     ],
     sections: [
       {
-        heading: "REST: the pragmatic default",
+        heading: "Kobo, not floats",
         paragraphs: [
-          "REST remains the right answer for most public-facing and CRUD-shaped APIs. It is cacheable with standard HTTP semantics, trivially debuggable with curl, understood by every engineer you will ever hire, and supported by every tool on earth.",
-          "Where teams go wrong is not in choosing REST but in modeling it poorly: verbs in URLs, endpoints shaped like database tables, and responses that leak internal structure. A good REST API models your domain's resources and operations — getting the nouns right is eighty percent of the work.",
+          "A float cannot represent 0.10 exactly, and a currency that has to reconcile to the smallest unit is the worst possible place to accept approximate arithmetic. Store the smallest unit as an integer — kobo, cents — and format at the edge.",
+          "This also makes aggregation deterministic. Sums of integers are exact at every scale, and an amount that arrives from a payment provider can be compared to the stored value without a tolerance window that hides real bugs.",
         ],
       },
       {
-        heading: "GraphQL: for complex client needs",
+        heading: "Every naira posted twice",
         paragraphs: [
-          "GraphQL shines when many clients need different slices of overlapping data — a mobile app, a web dashboard, and a partner portal all reading the same domain with different shapes. One endpoint, client-driven selection, no over-fetching or under-fetching.",
-          "The honest cost: caching becomes your problem, N+1 queries become your problem, and authorization must be enforced field-by-field rather than endpoint-by-endpoint. Reach for GraphQL when client diversity is a real, present pain — not because it is fashionable.",
+          "Double-entry is usually presented as accounting trivia. It is really an invariant: the sum of postings is zero, so a missing or duplicated leg is detectable by construction rather than by a report nobody runs. Accounts, journals and signed lines are enough to model it.",
+          "The part that makes it durable is where the invariant lives. A Postgres constraint trigger that refuses an unbalanced journal means correctness does not depend on every future handler remembering to check. Corrections are counter-entries, never deletes, so the history survives an audit.",
         ],
       },
       {
-        heading: "gRPC and events: the internal plumbing",
+        heading: "Isolation as a database backstop",
         paragraphs: [
-          "Inside the system, the calculus changes. Service-to-service calls benefit from gRPC's typed contracts, streaming, and low overhead — it makes refactors safer because the contract is checked by the compiler, not by production incidents.",
-          "And where services need to tell each other that something happened — order placed, payment settled, anomaly detected — asynchronous events on a broker like Kafka beat request-response entirely. Events decouple producers from consumers, absorb traffic spikes, and give you a replayable history. Most robust systems I have built are REST at the edge, events in the middle.",
+          "Multi-tenant isolation often starts as a `where schoolId = ?` clause added by every developer on every query. It works until one query forgets, and the failure is invisible until data from another tenant appears in someone's list.",
+          "Row-level security moves the guarantee into the database, where a missing clause cannot bypass it. Pair it with a coverage guard in CI that fails when a tenant table is left unprotected, and the guarantee survives the next three features.",
         ],
       },
       {
-        heading: "The patterns that matter regardless of style",
+        heading: "Webhooks are an interface, treat them like one",
         paragraphs: [
-          "Whatever style you pick, a small set of cross-cutting patterns decides whether the API ages well: versioning strategy agreed up front, consistent error shapes, idempotency keys on every mutation, pagination everywhere, and rate limiting with clear headers.",
-          "And treat the contract as an artifact: OpenAPI specs, generated clients, and contract tests in CI mean that backend and frontend teams can work in parallel without integration week becoming integration month. The API is a product — give it the same discipline you give the product itself.",
+          "Payment webhooks arrive twice, out of order, unsigned and late. Verifying the signature is the minimum; idempotency is what makes retries safe, and a reference on every payment is what makes reconciliation possible at all.",
+          "Refunds and transfers deserve explicit workflows rather than a status field. They are the operations most likely to be performed in a hurry and least likely to be reversible.",
         ],
       },
     ],
     outro: [
-      "Architecture is choosing trade-offs with your eyes open, and API design is where those trade-offs become contracts.",
-      "Default to REST at your edges, use events to decouple your internals, reach for GraphQL and gRPC where specific pain justifies them — and spend most of your energy on the boring cross-cutting patterns that make any API trustworthy at scale.",
+      "None of this is clever. Integers, an invariant enforced in the database, isolation the application cannot skip, and idempotent payment handling.",
+      "That is the point: financial correctness should not depend on the diligence of whoever writes the next endpoint.",
     ],
   },
 ];
 
-export const getBlogPost = (id: number): BlogPost | undefined =>
-  BLOG_POSTS.find((p) => p.id === id);
+export const getBlogPost = (slug: string): BlogPost | undefined =>
+  BLOG_POSTS.find((post) => post.slug === slug);
 
 export const getRelatedPosts = (post: BlogPost, count = 3): BlogPost[] =>
-  BLOG_POSTS.filter((p) => p.id !== post.id).slice(0, count);
+  BLOG_POSTS.filter((candidate) => candidate.id !== post.id).slice(0, count);

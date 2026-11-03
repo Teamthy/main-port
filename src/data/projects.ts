@@ -1,6 +1,22 @@
-import { IMAGES } from "./images";
+// Real, shipped work. Every project below links to its public repository
+// (github.com/Teamthy) and every claim in the copy is taken from that
+// repository's README, docs or committed test output.
 
-export type ProjectCategory = "Web Apps" | "Mobile Apps" | "AI & ML" | "SaaS";
+export type ProjectCategory = "AI Security & Evaluation" | "Platform Engineering" | "Backend & APIs";
+
+export type Motif =
+  | "chain"
+  | "gate"
+  | "crash"
+  | "probes"
+  | "routes"
+  | "ledger"
+  | "layers"
+  | "boxes"
+  | "waveform"
+  | "docs"
+  | "register"
+  | "request";
 
 export interface ProjectMetric {
   value: string;
@@ -9,347 +25,525 @@ export interface ProjectMetric {
 
 export interface Project {
   id: number;
+  slug: string;
   title: string;
-  type: string;
+  kicker: string;
   category: ProjectCategory;
-  date: string;
-  image: string;
-  cover: string;
-  gallery: string[];
-  service: string;
-  industry: string;
-  client: string;
-  summary: string;
-  description: string[];
-  challenges: string[];
-  solutions: string[];
-  results: string[];
-  metrics: ProjectMetric[];
+  year: string;
+  status: string;
+  repo: string;
+  live?: string;
   stack: string[];
+  tagline: string;
+  summary: string;
+  metrics: ProjectMetric[];
+  problem: string[];
+  approach: string[];
+  evidence: string[];
+  highlights: string[];
+  motif: Motif;
   similar: number[];
 }
 
-export const PROJECT_CATEGORIES: ProjectCategory[] = ["Web Apps", "Mobile Apps", "AI & ML", "SaaS"];
+export const PROJECT_CATEGORIES: ProjectCategory[] = [
+  "AI Security & Evaluation",
+  "Platform Engineering",
+  "Backend & APIs",
+];
 
 export const PROJECTS: Project[] = [
   {
     id: 1,
-    title: "Fincash — Modern Fintech Mobile App",
-    type: "MOBILE APP",
-    category: "Mobile Apps",
-    date: "3 July 2026",
-    image: IMAGES.fincash1.src,
-    cover: IMAGES.fincash1.src,
-    gallery: [IMAGES.fincash2.src, IMAGES.fincash3.src],
-    service: "MOBILE APP DEVELOPMENT",
-    industry: "Fintech / Personal Finance",
-    client: "Fincash Inc.",
+    slug: "tieout",
+    title: "tieout",
+    kicker: "Evidence-grade agent evaluation",
+    category: "AI Security & Evaluation",
+    year: "2026",
+    status: "Open source · MIT · v0.3.0",
+    repo: "https://github.com/Teamthy/Tie-out-",
+    live: "https://tie-out-five.vercel.app",
+    stack: ["Python 3.10+", "Pydantic", "FastAPI", "SHA-256 hash chain", "Clopper-Pearson CI"],
+    tagline: "The report is a claim. The bundle is a record a stranger can re-derive.",
     summary:
-      "An all-in-one personal finance app that tracks spending, automates saving, and turns financial data into confident decisions — from a single unified dashboard.",
-    description: [
-      "Building a modern fintech mobile experience requires clarity, security, and seamless money flow. Fincash is an all-in-one financial app that tracks spending, automates saving, and provides insights to help users grow their wealth with confidence — all from a single unified dashboard.",
-      "I owned the experience end to end: an intuitive home screen that consolidates balance, transactions, and quick actions, instant payment flows, integrated card management, and an onboarding journey reduced to three simple steps.",
-    ],
-    challenges: [
-      "Users needed a way to manage multiple financial tools — payments, transfers, cards, and analytics — without switching between disconnected apps. Every extra tap was a place people dropped off.",
-      "Security was a critical concern, as the platform would handle thousands of daily transactions and manage significant user assets. Trust had to be engineered into every screen, not bolted on at the end.",
-    ],
-    solutions: [
-      "I designed an intelligent unified dashboard that consolidates balance, transactions, and quick actions into a single intuitive home screen, so the most common tasks are always one tap away.",
-      "I built instant payment flows, integrated card management, and streamlined onboarding into three simple steps — backed by a secure session layer, biometric auth, and clear, jargon-free explanations of every fee and movement of money.",
-    ],
-    results: [
-      "The launched platform significantly improved user financial control. Users reported 4× faster access to key financial actions, and the streamlined dashboard reduced navigation time by nearly 60% compared to traditional finance apps.",
-      "The combination of a calm, legible interface and a secure-by-default flow translated into stronger activation and retention, with onboarding completion and repeat usage both climbing after release.",
-    ],
+      "An open harness for agent evaluation and red-team runs that emits evidence, not reports. Every verdict is one bound, chained, re-derivable event: the action, the check version, the decision and the effect reference in a single record, with the raw inputs and outputs stored alongside it.",
     metrics: [
-      { value: "4×", label: "Faster key actions" },
-      { value: "-60%", label: "Navigation time" },
-      { value: "3", label: "Step onboarding" },
-      { value: "1", label: "Unified dashboard" },
+      { value: "14/14", label: "Verdicts re-derived from stored raw" },
+      { value: "22", label: "Chained records in the demo bundle" },
+      { value: "0", label: "False positives / negatives on 8 controls" },
+      { value: "1", label: "Command for a stranger to verify" },
     ],
-    stack: ["React Native", "TypeScript", "Node.js", "PostgreSQL", "Redis", "AWS"],
-    similar: [2, 6],
+    problem: [
+      "The 2026 tooling landscape is crowded in three layers and empty in the fourth. Attacks are commoditised, evals are commoditised at the scoring level, and taxonomy is standardised. Evidence is empty: every tool uses a judge that lives inside the tool, the evaluator and the evaluated share an operator, and a green eval from such a tool is a self-grade.",
+      "The research says what those artefacts cannot show: no judge is uniformly reliable, verdicts flip on reformatting and verbosity, and where raw outputs were not shipped the numbers cannot be re-audited. Nobody emits an artefact that survives contact with a stranger.",
+    ],
+    approach: [
+      "tieout records one event per check result with a four-part binding — action, policy version, decision, effect reference — and pre-assigns every id before the first agent call, so a missing item is a gap rather than a shorter history. Records are sealed into a hash chain at write time, and the manifest hashes the bundle.",
+      "`tieout verify` re-walks the chain, re-hashes the manifest and re-runs the detectors on the stored raw output: no model, no key, no network. Every suite carries negative controls it does not generate, and the check cannot write its own grade. Stability is measured across runs, not assumed — two committed runs against the same suite with different surface-drift seeds show ten transcripts drifting while zero verdicts flip.",
+    ],
+    evidence: [
+      "The committed demo bundle re-derives end to end: 22 records in an intact chain, 14/14 pre-assigned ids present, 14/14 verdicts re-derived from stored raw output, 8 controls re-derived with zero false positives and zero false negatives, and a PASS that names re-derivability by a stranger as the criterion.",
+      "The metric itself is honest about its own uncertainty. Rates ship with an exact Clopper-Pearson interval computed by bisection on the binomial CDF before the bundle is closed, and anything unverifiable is recorded as a named gap with its reason and scope rather than dropped. The judge gets its own numbers every run: anchor agreement, perturbation flips, disagreement rate and a self-preference probe.",
+    ],
+    highlights: [
+      "Six pillars in code: verdict events, provenance, negative controls, named gaps, re-derivation and judge audit.",
+      "Keyless demo run against a deterministic sample agent: 13 pass, 1 fail, 0 undetermined — the fail is documented in the fixture, not discovered after the fact.",
+      "Intervals, not just percentages: 13/14 with a 95% interval of 0.6613–0.9982.",
+      "Documentation site ships with an export contract that is checked on 26 pages.",
+    ],
+    motif: "chain",
+    similar: [2, 3, 5],
   },
   {
     id: 2,
-    title: "LandSecure — Verified Property Infrastructure Platform",
-    type: "FULL-STACK PLATFORM",
-    category: "Web Apps",
-    date: "3 July 2026",
-    image: IMAGES.land1.src,
-    cover: IMAGES.land1.src,
-    gallery: [IMAGES.land2.src, IMAGES.land3.src],
-    service: "FULL-STACK PLATFORM DEVELOPMENT (Web + Mobile + Blockchain)",
-    industry: "PropTech / Fintech / LegalTech",
-    client: "LandSecure Technologies",
+    slug: "gatecheck",
+    title: "gatecheck",
+    kicker: "A PR gate for AI agents",
+    category: "AI Security & Evaluation",
+    year: "2026",
+    status: "Open source · MIT",
+    repo: "https://github.com/Teamthy/gatecheck",
+    stack: ["Python", "PyYAML", "SARIF", "GitHub Actions"],
+    tagline: "It blocks a pull request only when the agent got easier to break.",
     summary:
-      "A PropTech platform that verifies land ownership, secures transactions with escrow, and permanently protects property documents on-chain.",
-    description: [
-      "Building secure real estate infrastructure in Nigeria requires more than listings — it requires trust, verification, and financial protection. LandSecure is an all-in-one PropTech platform that verifies land ownership, secures transactions with escrow, and permanently protects property documents using blockchain technology.",
-      "I built the verified property marketplace, the verification and document-authentication pipeline, GIS boundary mapping, escrow smart contracts, an AI valuation engine, and a BankDesk API for institutional workflows — a full-stack system spanning web, mobile, and on-chain components.",
-    ],
-    challenges: [
-      "Property transactions relied heavily on paper documentation that could be lost or forged. Fraud and duplicate sales were common, and payments lacked escrow protection, creating high financial risk for buyers.",
-      "Institutional partners needed verifiable, auditable records and a way to integrate the platform into existing banking and legal workflows without manual reconciliation.",
-    ],
-    solutions: [
-      "I developed a verified property marketplace with GIS boundary mapping, document authentication, blockchain stamping, and escrow smart contracts — so ownership, boundaries, and payments are all provable rather than asserted.",
-      "An AI valuation engine and a BankDesk API were added to support institutional workflows, giving banks and legal teams the structured, auditable data they need to plug LandSecure into their own processes.",
-    ],
-    results: [
-      "The platform reduced verification turnaround to under 72 hours, eliminated direct-transfer payment risk with escrow, and provided tamper-proof document records, improving confidence and reliability in real estate transactions.",
-      "Buyers and institutions gained a single source of truth for each property — verified, time-stamped, and protected — turning a historically high-risk process into one with a clear, auditable trail from search to settlement.",
-    ],
+      "A security gate for AI agents that answers the only question a pull request asks: is this worse than it was before? Find a bug, store it in a baseline, and from then on only new or worsened findings block. Fixed ones are reported as fixed.",
     metrics: [
-      { value: "<72h", label: "Verification turnaround" },
-      { value: "100%", label: "Escrow-protected payments" },
-      { value: "On-chain", label: "Tamper-proof records" },
-      { value: "GIS", label: "Boundary mapping" },
+      { value: "7", label: "Findings from 11 attacks in under a second" },
+      { value: "2", label: "Multi-turn escalations only an engine catches" },
+      { value: "1", label: "Dependency (PyYAML)" },
+      { value: "0", label: "New findings on a known-broken agent" },
     ],
-    stack: ["Next.js", "TypeScript", "Solidity", "PostgreSQL", "Node.js", "AWS"],
-    similar: [1, 4],
+    problem: [
+      "Red-team tools report everything, every time. Run one in CI and the first build is a wall of findings, the second is the same wall, and by the third the team has added `continue-on-error`. The gate did not fail because it was wrong — it failed because it could not tell the difference between a bug you shipped yesterday and one you are shipping now.",
+      "The same weakness found by three tools is one finding, not three. Without a baseline and a stable fingerprint, every run regresses the team's tolerance instead of the model's behaviour.",
+    ],
+    approach: [
+      "gatecheck runs a corpus of attacks against an agent endpoint, fingerprints every finding, and diffs the run against a committed baseline. Findings at or above the configured threshold that are new or worse block the build; everything already known passes; anything fixed is announced as fixed.",
+      "The core engine is part of the package — prompt injection, system-prompt leakage, data exfiltration and tool misuse, plus a multi-turn engine that catches sequences of individually-allowed turns ending in a disallowed action. Optional Promptfoo, PyRIT and DeepTeam engines feed the same fingerprint space, so extra tooling adds coverage rather than duplicate noise.",
+    ],
+    evidence: [
+      "Both demo runs are committed as artefacts, so the claim can be checked without running anything: the vulnerable agent's blocked run as a PR comment, JSON and SARIF, and the fixed agent's passing run on the same corpus.",
+      "The two demo agents are the same rule engine one flag apart, which makes the comparison honest. First run: 7 findings, blocked and recorded as today's state. Same agent again: 0 new, pass. Fixed agent: 0 findings, 7 fixed.",
+    ],
+    highlights: [
+      "Baseline semantics: known findings stop being news, so the gate stays switched on.",
+      "SARIF output and a GitHub Action, so results land on the pull request that caused them.",
+      "Multi-turn escalation detection in the default engine, not an optional extra.",
+      "One finding per weakness across engines, with `found by` attribution instead of duplicate rows.",
+    ],
+    motif: "gate",
+    similar: [1, 3, 4],
   },
   {
     id: 3,
-    title: "Crypto Trading Platform",
-    type: "WEB APP",
-    category: "Web Apps",
-    date: "Aug 2024",
-    image: IMAGES.projects[2],
-    cover: IMAGES.projects[2],
-    gallery: [IMAGES.projects[3], IMAGES.projects[5]],
-    service: "BACKEND ENGINEERING",
-    industry: "Fintech",
-    client: "CryptoVault",
+    slug: "host-failure-benchmark",
+    title: "host-failure-benchmark",
+    kicker: "Crash consistency for agent audit trails",
+    category: "AI Security & Evaluation",
+    year: "2026",
+    status: "Open source · MIT",
+    repo: "https://github.com/Teamthy/host-failure-benchmark",
+    stack: ["Python 3.9+", "Standard library only", "Sockets", "SHA-256"],
+    tagline: "What survives when the host dies mid-decision?",
     summary:
-      "A high-throughput trading backend with a matching engine, hardened wallet flows, and the security posture of an exchange.",
-    description: [
-      "CryptoVault was launching a trading product for retail users in emerging markets and needed a backend that could match orders quickly, survive traffic spikes, and treat security as a first-class requirement rather than an afterthought.",
-      "I built the core trading services in Go: a matching engine, an order lifecycle API, and a wallet service with withdrawal controls and multi-signature approvals. Everything is instrumented, rate-limited, and covered by automated abuse-detection checks.",
-    ],
-    challenges: [
-      "Order matching had to stay consistent under bursty traffic — a double-spend or a lost order on a trading platform is not a bug, it is a liability. The team also had to integrate multiple liquidity providers with very different API contracts.",
-      "Security was the constant constraint: wallet endpoints are prime targets for attackers, and the platform needed to pass an external penetration test before launch without delaying the roadmap.",
-    ],
-    solutions: [
-      "I designed the matching engine around a single-writer event log with idempotent order operations, so retries and network failures can never produce duplicate fills. Balances are enforced with database-level constraints, not application-level checks.",
-      "I hardened the wallet layer with withdrawal allowlists, time-locks, multi-sig approval above thresholds, and anomaly alerts on unusual patterns. I then ran structured red-team exercises against the APIs before the external pentest, so we entered it already knowing our weak points.",
-    ],
-    results: [
-      "The platform sustained 10,000 matched orders per minute in load testing with sub-50ms matching latency, and it handled launch-week traffic spikes without intervention.",
-      "The external penetration test closed with zero critical or high findings — a direct result of the internal red-teaming pass — and the platform has run since launch with no security incidents.",
-    ],
+      "A local, dependency-free suite that answers one question: when an agent's guard decides something and the record of that decision does not reach the audit store, what can still be known afterwards?",
     metrics: [
-      { value: "10k", label: "Orders matched / min" },
-      { value: "<50ms", label: "Matching latency" },
-      { value: "0", label: "Critical pentest findings" },
-      { value: "99.99%", label: "Uptime since launch" },
+      { value: "4", label: "Failure rows, each with its own test" },
+      { value: "13", label: "Persistence and recovery checks" },
+      { value: "3", label: "Verification checks on surviving records" },
+      { value: "10", label: "Ways the challenge script damages a run" },
     ],
-    stack: ["Golang", "PostgreSQL", "Redis", "Kafka", "Kubernetes"],
-    similar: [1, 8],
+    problem: [
+      "Audit trails are usually argued about in the abstract: does the system log decisions? The useful question is narrower and harder. If the process dies between the decision and the write, what is left — and can anyone prove what is missing?",
+      "Most suites answer with a single score, which hides the fact that persistence failures and verification frauds fail for completely different reasons. A record that survived but cannot be verified is not a weaker version of a record that survived intact; it is a different kind of problem.",
+    ],
+    approach: [
+      "Two processes talk over loopback for about a second; one exits deliberately mid-work with `os._exit(9)` rather than a signal from outside; a separate program checks the artefacts and trusts none of them. There is no model, no external key and no network beyond loopback.",
+      "The suite reports two classes separately: Class P for persistence and recovery, and Class V for verification — whether a record that survived is the record it says it is, from who it says, under the policy version it names. The three gap cases are reported as their own dimension: C knows the issued id and a commitment to the descriptor, C' knows the id only, and C'' knows nothing at all.",
+    ],
+    evidence: [
+      "`verify.py` re-derives every assertion from the raw files — the store journal, the write-ahead log, the per-scenario host journals — and never reads a pass flag, because nothing writes one. `challenge.py` damages a finished run ten ways and requires that the check claiming to catch each kind of damage catches it, and refuses a directory that is not a run.",
+      "`audit/regressions.py` holds the harder mutations, one per finding in the November 2026 review. Each of them passed verification before that review and has to be caught now. The whole thing runs in seconds, inside the thirty minutes the spec allowed.",
+    ],
+    highlights: [
+      "The named gap is the result, not a footnote — including the case where the benchmark itself cannot tell that an action happened.",
+      "Replay-carried decision time is labelled source-asserted, never independently verified, in both the printed result and the JSON report.",
+      "Findings register with dispositions, and evidence logs committed per review date.",
+      "Standard library only, so it runs from a cold clone on Windows, macOS or Linux.",
+    ],
+    motif: "crash",
+    similar: [1, 2, 4],
   },
   {
     id: 4,
-    title: "E-commerce Redesign",
-    type: "WEB APP",
-    category: "Web Apps",
-    date: "May 2024",
-    image: IMAGES.projects[3],
-    cover: IMAGES.projects[3],
-    gallery: [IMAGES.projects[4], IMAGES.projects[6]],
-    service: "FULL-STACK DEVELOPMENT",
-    industry: "E-commerce",
-    client: "ShopNova",
+    slug: "ai-redteam-five-tests",
+    title: "ai-redteam-five-tests",
+    kicker: "The five boring failures",
+    category: "AI Security & Evaluation",
+    year: "2026",
+    status: "Open source · MIT",
+    repo: "https://github.com/Teamthy/ai-redteam-five-tests",
+    stack: ["Python", "OpenAI-compatible APIs", "Recorded JSON output"],
+    tagline: "It ships the method, not pre-baked results.",
     summary:
-      "A headless storefront rebuild that cut page load times in half and lifted conversion by nearly a third.",
-    description: [
-      "ShopNova's monolithic store had grown slow and brittle — product pages took over four seconds to load on mid-range phones, which is exactly where most of their customer base shops. Conversion had plateaued while traffic kept growing.",
-      "I rebuilt the storefront as a headless Next.js application talking to their existing commerce backend through a thin API layer, with aggressive caching, image optimization, and a checkout flow rewritten to remove three unnecessary steps.",
-    ],
-    challenges: [
-      "The old storefront coupled rendering, business logic, and third-party scripts into one slow pipeline, and any change risked breaking checkout. Mobile performance was the biggest revenue leak, but the team could not ship a long feature freeze to fix it.",
-      "Checkout abandonment data showed users dropping at payment and address steps. The flow had accumulated years of edge cases and had never been redesigned end-to-end.",
-    ],
-    solutions: [
-      "I moved to a headless architecture: Next.js handles presentation, product pages are statically generated and revalidated in the background, and images are served in modern formats at the right size per device. Time to interactive on mid-range phones dropped from over four seconds to around one.",
-      "I rebuilt checkout as a single, progressive flow with saved addresses, inline validation, and payment options that work reliably in low-bandwidth conditions. Every step is measured, so the team can now run experiments on the funnel directly.",
-    ],
-    results: [
-      "Conversion rate rose by 32% in the first quarter after launch, with the largest gains coming from mobile sessions — exactly where the old site was losing customers.",
-      "Bounce rate fell by 28% and average revenue per session climbed by 21%. The team now ships storefront changes daily through CI/CD instead of coordinating risky weekly releases.",
-    ],
+      "A runnable harness for the five failure checks described in “The five boring failures that will ship with your AI feature”. It points at any OpenAI-compatible model, runs the tests, and records the output for review — your model, your results.",
     metrics: [
-      { value: "+32%", label: "Conversion rate" },
-      { value: "1.1s", label: "Mobile LCP" },
-      { value: "-28%", label: "Bounce rate" },
-      { value: "+21%", label: "Revenue per session" },
+      { value: "5", label: "Failure classes, each with a test" },
+      { value: "3", label: "Direct injection attempts" },
+      { value: "3", label: "Languages: English, Pidgin, Yoruba" },
+      { value: "Any", label: "OpenAI-compatible endpoint" },
     ],
-    stack: ["Next.js", "TypeScript", "Stripe", "PostgreSQL", "Vercel"],
-    similar: [2, 7],
+    problem: [
+      "The failures that ship are rarely cinematic. They are a prompt treated as a wall, retrieval treated as trusted input, a tool description nobody read, a refusal that only works in one language, and a metric that records no sample size.",
+      "Each of these is cheap to test and expensive to discover in production — especially in a market where customers write in English, Pidgin and Yoruba in the same sentence, and the support bot was evaluated on none of it.",
+    ],
+    approach: [
+      "The harness exercises prompt injection three ways (print the system prompt, trusted-role framing, an embedded instruction block), a poisoned knowledge-base document carrying a hidden instruction, and a tool whose description carries one — with the reply compared with the tool present and absent.",
+      "Refusals are tested in plain English and in mixed Pidgin/Yoruba messages that mirror how real customers write. The results are tallied into the metric that matters: how often a specific failure fires on a specific input type, with the sample size next to every rate.",
+    ],
+    evidence: [
+      "By default the harness tests a sample support bot — a known system prompt with a secret and three policies — so the failure modes reproduce on a common model and the baseline is inspectable. Point `MY_SYSTEM_PROMPT_FILE` at your real prompt, or `OPENAI_BASE_URL` at your bot's endpoint, and the same checks run against your system.",
+      "Output is recorded for review rather than summarised into a green badge, and there are no pre-baked results in the repository to mistake for your own.",
+    ],
+    highlights: [
+      "Five checks you can run in an afternoon, not a platform to procure.",
+      "Multilingual refusal testing as a first-class case, not a localisation afterthought.",
+      "Works against hosted models and local models with any non-empty key.",
+      "The written companion piece explains why each failure is boring, and therefore why it ships.",
+    ],
+    motif: "probes",
+    similar: [1, 2, 3],
   },
   {
     id: 5,
-    title: "Health & Fitness App",
-    type: "MOBILE APP",
-    category: "Mobile Apps",
-    date: "Jan 2024",
-    image: IMAGES.projects[4],
-    cover: IMAGES.projects[4],
-    gallery: [IMAGES.projects[0], IMAGES.projects[7]],
-    service: "MOBILE APP DEVELOPMENT",
-    industry: "Healthcare",
-    client: "HealthSync",
+    slug: "edumart-os",
+    title: "EduMart OS",
+    kicker: "Exam preparation for Nigerian learners",
+    category: "Platform Engineering",
+    year: "2026",
+    status: "Product · deployed demo",
+    repo: "https://github.com/Teamthy/EduMart-OS",
+    live: "https://edumart-os.vercel.app",
+    stack: ["Go 1.27", "chi", "SQLite / PostgreSQL", "Next.js 15", "Tailwind v4", "Expo"],
+    tagline: "One API, three shells, deadlines the server actually owns.",
     summary:
-      "A cross-platform health companion with offline-first syncing, medication reminders, and privacy-conscious data handling.",
-    description: [
-      "HealthSync wanted a companion app for patients managing chronic conditions: logging vitals, tracking medication, and sharing summaries with clinicians. Reliability offline mattered as much as design, since many users have intermittent connectivity.",
-      "I built the app in React Native with an offline-first architecture — every action writes to a local store first and syncs when the network allows, with conflict resolution rules agreed on with their clinical team. Sensitive records are encrypted on-device and in transit.",
-    ],
-    challenges: [
-      "Patients could not be told their log was lost because the network dropped, so the app had to work fully offline and reconcile data later without creating duplicate or contradictory records.",
-      "Health data demanded careful handling: consent flows, encryption at rest, and strict access rules for the clinician portal. The app also had to stay simple enough for non-technical users of all ages.",
-    ],
-    solutions: [
-      "I implemented an offline-first sync engine: actions queue locally, sync incrementally when connectivity returns, and server-side rules resolve conflicts deterministically. Users see instant feedback regardless of network state, and nothing is ever silently dropped.",
-      "I layered in device-level encryption for health records, granular consent controls per data type, and a read-only clinician view that only sees explicitly shared summaries. Reminder scheduling runs locally so medication alerts fire even offline.",
-    ],
-    results: [
-      "The app passed 50,000 downloads in its first six months with a 4.7 store rating, and 30-day retention landed at 89% — well above the category average for health apps.",
-      "Sync reliability measured at 99.5% of queued actions reconciled without user intervention, and the clinician portal became the primary channel for patient check-ins at two pilot clinics.",
-    ],
+      "Timed mocks, adaptive practice, class assessments, a verified-payment store, learning analytics and an operations console — served by one Go API to a web app, a PWA and a native app.",
     metrics: [
-      { value: "50k+", label: "Downloads in 6 months" },
-      { value: "4.7★", label: "Store rating" },
-      { value: "89%", label: "30-day retention" },
-      { value: "99.5%", label: "Sync success rate" },
+      { value: "48", label: "Contract-checked route pairs" },
+      { value: "3", label: "Shells on one versioned API" },
+      { value: "2", label: "Database backends, one query layer" },
+      { value: "1", label: "Commit ships web and native together" },
     ],
-    stack: ["React Native", "Node.js", "PostgreSQL", "SQLite", "AWS"],
-    similar: [1, 6],
+    problem: [
+      "Exam preparation products lose trust at exactly the moment they matter: a timed mock. If the client owns the deadline, a determined student owns the deadline. If the web app and the mobile app each implement scoring, the two products disagree about a grade.",
+      "The commercial side has the same shape. A “verified payment” store only means something if verification happens server-side, once, against a source of truth — not when a learner taps a button.",
+    ],
+    approach: [
+      "The Go service owns session state, the deadline, scoring and authorisation. Both shells are thin clients of one versioned REST API, which is what lets the web app and the native app ship from one commit without drifting.",
+      "SQLite is embedded for development and CI while PostgreSQL runs in production behind the same query layer, so there is no second implementation to keep honest. The web app proxies `/v1/*` to the API, keeping the session cookie first-party and the API origin out of the browser.",
+    ],
+    evidence: [
+      "`packages/contracts/openapi.yaml` describes all 48 path+method pairs and is checked against the Go router in both directions on every CI run. An undocumented handler and a documented-but-missing endpoint both fail the build.",
+      "Seeded demo accounts cover student, teacher, content editor and platform admin, with a class join code and referral flow, so the whole product is testable from a cold clone. A load-test command ships alongside the API.",
+    ],
+    highlights: [
+      "Server-owned deadlines, scoring and authorisation — the client cannot grant itself time.",
+      "Adaptive practice and timed mocks drawing on the same question bank.",
+      "Contract check in both directions prevents client/server drift while three surfaces are built.",
+      "Workspace layout with shared wire types and design tokens in `packages/shared`.",
+    ],
+    motif: "routes",
+    similar: [6, 7, 8],
   },
   {
     id: 6,
-    title: "Banking App Interaction",
-    type: "MOBILE APP",
-    category: "Mobile Apps",
-    date: "Jun 2023",
-    image: IMAGES.projects[6],
-    cover: IMAGES.projects[6],
-    gallery: [IMAGES.projects[1], IMAGES.projects[5]],
-    service: "MOBILE APP DEVELOPMENT",
-    industry: "Banking",
-    client: "NeoBank",
+    slug: "famex-os",
+    title: "Famex OS",
+    kicker: "A single-school operating system",
+    category: "Platform Engineering",
+    year: "2026",
+    status: "Product · client deployment",
+    repo: "https://github.com/Teamthy/Famex-OS",
+    stack: ["Next.js", "TypeScript", "PostgreSQL", "Row-Level Security", "Paystack", "Expo"],
+    tagline: "One install, one school, ~3,000 users over five years.",
     summary:
-      "A redesigned mobile banking experience with biometric auth, instant transfers, and flows rebuilt around task completion.",
-    description: [
-      "NeoBank's mobile app worked, but analytics showed users abandoning core tasks — transfers, bill payments, card controls — halfway through. They hired me to rebuild the interaction layer and the API contracts behind it.",
-      "I reworked the key flows around measured task-completion funnels, added biometric authentication with a secure session layer, and rebuilt the backend-for-frontend so each screen gets exactly the data it needs in one round trip.",
-    ],
-    challenges: [
-      "Funnel data showed a 40% drop-off during transfers: users faced redundant confirmation screens, unclear fee displays, and slow loading between steps. Support tickets about 'stuck' transactions were the app's top complaint.",
-      "The backend returned large, generic payloads per screen, which made every interaction feel slow on modest devices and networks — the reality for much of their user base.",
-    ],
-    solutions: [
-      "I rebuilt transfers, bill payments, and card controls as progressive flows with optimistic UI: actions confirm instantly and reconcile with the server in the background, with clear recovery paths when something genuinely fails.",
-      "I introduced a BFF layer that assembles per-screen payloads, cutting response sizes dramatically, and moved authentication to biometrics backed by short-lived tokens and device binding. Every flow is instrumented so the product team can watch task completion in real time.",
-    ],
-    results: [
-      "Task completion on core flows rose to 92%, and transfer-related support calls dropped by 38% in the first quarter after release. App store reviews shifted from complaints about stuck transfers to praise for speed.",
-      "New-user onboarding now completes in about 90 seconds on average, down from several minutes, contributing to a 4.8 store rating and materially lower cost-to-serve per customer.",
-    ],
+      "A school operating system for a Nigerian secondary school: a public site, role-based portals, CBT examinations, admissions, fees and results — backed by a Postgres schema with row-level security and integer-kobo money.",
     metrics: [
-      { value: "92%", label: "Task completion rate" },
-      { value: "-38%", label: "Transfer support calls" },
-      { value: "90s", label: "Avg. onboarding time" },
-      { value: "4.8★", label: "Store rating" },
+      { value: "140+", label: "API routes" },
+      { value: "70", label: "Database models" },
+      { value: "898", label: "Tests gating the build" },
+      { value: "2×", label: "Postings per naira (double-entry)" },
     ],
-    stack: ["React Native", "Golang", "PostgreSQL", "Redis", "OAuth 2.0"],
-    similar: [1, 5],
+    problem: [
+      "School software in this market is usually a pile of spreadsheets with a login screen. The money is where that hurts: fees arrive as transfers with no reference, balances are computed in the browser, and corrections are made by deleting rows.",
+      "Multi-tenancy is the other trap. A product that starts single-school and later adds a campus often discovers its isolation was a convention in application code, and every new query is a chance to leak another school's records.",
+    ],
+    approach: [
+      "Every naira is posted twice through a double-entry ledger — accounts, journals and signed-kobo lines — with invoices and payments inside their own transactions, corrections by counter-entry instead of deletion, and a Postgres constraint trigger that refuses an unbalanced journal. Staff get a trial balance and per-account statements.",
+      "Tenant hygiene is enforced at the database: `schoolId` on every business table plus Postgres row-level security as an isolation backstop, with a CI coverage guard that fails if any tenant table is left unprotected. Paystack webhooks are signature-verified and idempotent, and refund and transfer workflows are explicit.",
+    ],
+    evidence: [
+      "CI verifies schema drift, tenant isolation, ledger reconciliation and load behaviour, and the suite is roughly nine hundred tests. Admissions run draft → document upload via presigned S3 → application fee → submit, with staff paper-intake and enrolment for the queues that still arrive at the gate.",
+      "The whole product is rebuilt from a school portal base with the SaaS layer removed: no cross-school console, no subscription tier, no vendor branding. School name, colours, logo and contacts are brand tokens in one file rather than literals in templates, so a second school is configuration, not a fork.",
+    ],
+    highlights: [
+      "Double-entry ledger in signed kobo, with an unbalanced journal rejected by the database.",
+      "CBT exams: question banks, timed sittings, auto-grading, retakes and XLSX/DOCX/TXT import.",
+      "Role portals for admin, director, coordinator, bursar, teacher, HOD, student and parent behind one session with per-route authorisation and revocation.",
+      "Companion Expo mobile app, offline-first, sharing the same API.",
+    ],
+    motif: "ledger",
+    similar: [5, 7, 10],
   },
   {
     id: 7,
-    title: "SaaS Dashboard UI",
-    type: "WEB APP",
-    category: "SaaS",
-    date: "Nov 2024",
-    image: IMAGES.projects[1],
-    cover: IMAGES.projects[1],
-    gallery: [IMAGES.projects[7], IMAGES.projects[0]],
-    service: "FRONTEND ENGINEERING",
-    industry: "SaaS",
-    client: "CloudMetrics Inc.",
+    slug: "ykay-virtual",
+    title: "YK Virtual",
+    kicker: "A curriculum-governed virtual school",
+    category: "Platform Engineering",
+    year: "2026",
+    status: "Product · client build",
+    repo: "https://github.com/Teamthy/ykay-virtual",
+    stack: ["Next.js 15", "TanStack Query", "Go 1.26", "PostgreSQL", "Redis", "OpenTelemetry", "k6"],
+    tagline: "British and Nigerian curricula, escrow between strangers.",
     summary:
-      "A real-time product analytics dashboard with role-based views, live charts, and a component system that cut feature delivery time in half.",
-    description: [
-      "CloudMetrics sells infrastructure analytics, but their dashboard had grown into a slow, inconsistent interface that customers complained about weekly. They needed a rebuild that could stream live metrics without freezing the browser.",
-      "I rebuilt the dashboard in Next.js with a WebSocket layer for live updates and a small internal component library so every chart, table, and filter behaves consistently. Role-based views ensure operators, admins, and executives each see exactly what matters to them.",
-    ],
-    challenges: [
-      "The legacy dashboard polled the API every few seconds and re-rendered the entire page, which made it unusable for accounts with high-volume data. Feature delivery was also slow because every screen reimplemented its own charts and filters.",
-      "Customer churn interviews pointed directly at the interface: it felt sluggish, looked inconsistent, and hid key metrics behind too many clicks. The team needed a rebuild that would not pause new feature work for months.",
-    ],
-    solutions: [
-      "I replaced polling with a WebSocket feed and virtualized every large table and chart, so the UI stays responsive even with tens of thousands of live data points. Updates are batched and diffed to avoid unnecessary renders.",
-      "I extracted a typed component library — charts, metric cards, filters, and data tables — documented with live examples. New screens are now assembled from proven building blocks, which cut average feature delivery time roughly in half.",
-    ],
-    results: [
-      "Daily active usage of the dashboard rose by 45% within two months of launch, and dashboard-related support tickets fell by roughly a third. Customers specifically called out the speed improvement in reviews.",
-      "The internal component library is now used across three product areas, and the engineering team ships interface features in days instead of weeks while keeping a consistent look and feel.",
-    ],
+      "A tutoring marketplace and virtual school — exam preparation, private tuition, live cohorts — with escrow, booking-scoped messaging, staged vetting, an LMS, referrals and a B2B path.",
     metrics: [
-      { value: "+45%", label: "Daily active usage" },
-      { value: "-33%", label: "Support tickets" },
-      { value: "95+", label: "Lighthouse performance" },
-      { value: "2x", label: "Faster feature delivery" },
+      { value: "2", label: "Curricula: British and Nigerian" },
+      { value: "1", label: "OpenAPI contract as source of truth" },
+      { value: "4", label: "Test layers: Go, Vitest, Playwright, k6" },
+      { value: "0", label: "Production boot with demo seeds or open CORS" },
     ],
-    stack: ["Next.js", "TypeScript", "Tailwind CSS", "WebSockets", "Recharts"],
-    similar: [4, 8],
+    problem: [
+      "Marketplaces break at the trust boundary. A parent is paying a tutor they have never met, for lessons delivered over a connection they cannot audit — and the platform's job is to hold the money, vet the tutor and keep the conversation attached to the booking.",
+      "Most attempts bolt these onto a CRUD app and discover later that messaging is a separate graph, escrow is a state machine, and vetting is a staged process with evidence. Retrofitting any of the three is a rewrite.",
+    ],
+    approach: [
+      "A Go modular monolith serves a documented REST API, with PostgreSQL and Redis behind it and a Next.js 15 client on TanStack Query. The API contract in `api/openapi.yaml` is the source of truth, with a consistent envelope for data and errors so every client handles failure the same way.",
+      "Escrow, booking-scoped messaging, staged vetting, the LMS, referrals and B2B are modelled as first-class domains. Infrastructure is Docker Compose with S3-compatible storage, OpenTelemetry traces and Prometheus/Grafana dashboards; the API refuses to start in production if payment secrets are missing, CORS is open, or demo seeds are enabled.",
+    ],
+    evidence: [
+      "Four test layers cover different risks: Go tests for the domain, Vitest for the client, Playwright for critical journeys and k6 for load. Security posture is written down in `docs/SECURITY.md` and architecture in `docs/architecture.md`, both shipped with the code.",
+      "A production checklist is executable rather than aspirational: the boot-time validation makes the dangerous configuration unshippable, and every secret in the production example is a visible `CHANGE_ME`.",
+    ],
+    highlights: [
+      "Escrow tied to the booking lifecycle, not to a payment button.",
+      "Messaging scoped to a booking, which removes the usual moderation problem by construction.",
+      "Staged tutor vetting with evidence, so approval is a record rather than an opinion.",
+      "Observability from day one: OpenTelemetry, Prometheus metrics and Grafana dashboards.",
+    ],
+    motif: "layers",
+    similar: [5, 6, 8],
   },
   {
     id: 8,
-    title: "Analytics Dashboard",
-    type: "WEB APP",
-    category: "AI & ML",
-    date: "Mar 2023",
-    image: IMAGES.projects[7],
-    cover: IMAGES.projects[7],
-    gallery: [IMAGES.projects[2], IMAGES.projects[6]],
-    service: "AI / DATA ENGINEERING",
-    industry: "Analytics",
-    client: "DataPulse",
+    slug: "visionforge",
+    title: "VisionForge",
+    kicker: "Computer-vision inference platform",
+    category: "Backend & APIs",
+    year: "2026",
+    status: "Open source · MIT",
+    repo: "https://github.com/Teamthy/VisionForge",
+    stack: ["Go 1.23", "Python 3.11", "ONNX Runtime", "PostgreSQL", "Redis", "MinIO / S3", "Next.js 14", "Grafana"],
+    tagline: "Real ONNX inference, with the failure paths built first.",
     summary:
-      "An ML-powered analytics platform that detects anomalies in event streams and turns millions of daily events into actionable alerts.",
-    description: [
-      "DataPulse ingested millions of business events a day, but their dashboards only showed what analysts already knew to look for. Genuine anomalies — fraud spikes, broken funnels, data pipeline failures — were discovered hours late, usually by a customer.",
-      "I built a streaming pipeline that scores events with anomaly-detection models in near real time, and a dashboard that surfaces the anomalies that matter with explainable context: what changed, versus what baseline, and which segment is affected.",
-    ],
-    challenges: [
-      "The volume — over five million events a day — made manual review impossible, and naive threshold alerting produced so many false positives that the team had started ignoring alerts altogether.",
-      "Analysts also needed to trust the system: a black-box alert that says something is anomalous without explaining why would never be acted on in time. Explainability was a hard requirement, not a nice-to-have.",
-    ],
-    solutions: [
-      "I built a Kafka-based streaming pipeline feeding seasonal decomposition and isolation-forest models tuned per metric, which cut false positives dramatically compared with static thresholds. Alerts fire within two minutes of an anomaly starting.",
-      "Every alert ships with an explanation — contribution scores showing which dimensions drove the anomaly — and a one-click drill-down into the affected segment. Analysts can confirm or dismiss alerts, and that feedback continuously retrains the detectors.",
-    ],
-    results: [
-      "Anomaly detection precision reached 94% with feedback-driven retraining, and mean time to detect real incidents fell from hours to under two minutes.",
-      "Manual data review effort dropped by roughly 80%, freeing the analytics team to work on strategy instead of watching dashboards — and the alert explanations became the feature customers cited most in renewal conversations.",
-    ],
+      "A multi-project CV inference platform: uploads direct to object storage, synchronous inference for fast requests, and a worker pool for everything else — with a model registry, dead-letter handling and metrics for every stage.",
     metrics: [
-      { value: "94%", label: "Detection precision" },
-      { value: "<2min", label: "Time to detect" },
-      { value: "5M+", label: "Events processed / day" },
-      { value: "-80%", label: "Manual review effort" },
+      { value: "2", label: "Inference modes: sync and queued" },
+      { value: "2", label: "Real models: YOLOv8n and MobileNet-style" },
+      { value: "1", label: "Dead-letter queue with visibility timeouts" },
+      { value: "4", label: "Stacks built in CI: Go, Python, Next.js, Docker" },
     ],
-    stack: ["Python", "FastAPI", "Kafka", "PostgreSQL", "scikit-learn", "Docker"],
-    similar: [3, 7],
+    problem: [
+      "Machine-learning demos stop at the notebook. The platform questions start after: how does a 20 MB image reach the service, what happens when the worker dies mid-inference, how is a model deprecated, and how would you know the queue is backing up before customers do?",
+      "The same is true of security. Presigned uploads without MIME sniffing, size limits and safe key generation are an incident waiting for a filename.",
+    ],
+    approach: [
+      "Uploads go directly to MinIO or S3 via presigned URLs, so the API never proxies image bytes. A Redis-backed queue with visibility timeouts, exponential backoff with jitter, idempotency keys and a dead-letter path handles asynchronous work, while the model registry versions artefacts with ONNX/PyTorch metadata and an active/staging/deprecated lifecycle.",
+      "The Python service runs real ONNX inference — YOLOv8n for detection and a MobileNet-style classifier — with a documented deterministic fallback when no artefact is mounted, so CI and reviewers can exercise the whole path without a model download.",
+    ],
+    evidence: [
+      "Every stage is instrumented: structured JSON logs, Prometheus metrics for HTTP, database, Redis, queue depth, worker and inference, OpenTelemetry tracing hooks, health and ready probes, and Grafana dashboards that ship with the Compose stack.",
+      "Security is in the request path, not a checklist: upload validation with MIME sniffing, size limits, safe filenames and generated keys, plus rate limiting, request validation, CORS and audit logging. The frontend is a developer-style dashboard with bounding-box visualisation and confidence filtering.",
+    ],
+    highlights: [
+      "One `docker compose up` brings up the API, ML service, database, queue, storage, Prometheus and Grafana, then migrates and seeds.",
+      "Model download script verifies the ONNX artefact by SHA-256.",
+      "Worker idempotency prevents duplicate inference charges on retries.",
+      "CI builds all four surfaces, including every Docker image.",
+    ],
+    motif: "boxes",
+    similar: [7, 5, 10],
+  },
+  {
+    id: 9,
+    slug: "i-confess",
+    title: "I CONFESS",
+    kicker: "Daily confession and audio platform",
+    category: "Platform Engineering",
+    year: "2026",
+    status: "Product · live",
+    repo: "https://github.com/Teamthy/i-confess",
+    live: "https://iconfessmain.vercel.app",
+    stack: ["Go API", "Next.js 15.5", "React 19", "Flutter", "CI/CD workflows"],
+    tagline: "Scripture, audio and habit in one return loop.",
+    summary:
+      "A daily confession, scripture meditation and audio-session platform built around a single loop: discover, choose, create or schedule a session, listen, confess, complete, return.",
+    metrics: [
+      { value: "8", label: "Build phases closed before launch" },
+      { value: "3", label: "Surfaces: public site, app, admin console" },
+      { value: "1", label: "Same-origin API proxy for the web app" },
+      { value: "1", label: "Loop the whole product is designed around" },
+    ],
+    problem: [
+      "A habit product fails on the second day, not the first. If the path from opening the app to hearing today's session involves a search, a filter and a decision, most people never get there — and the audio is the reason they came.",
+      "For a faith product there is a second constraint: the content has to be right, and the admin console has to make it easy for non-engineers to keep it right without shipping code.",
+    ],
+    approach: [
+      "The loop is the architecture: discover → choose → create/schedule → listen → confess → complete → return. The Next.js application serves the public site, the authenticated app and the admin console from one codebase, consuming the Go API through a same-origin proxy so sessions stay first-party.",
+      "A native Flutter app ships alongside the web experience from the same API, and the audio/voice engine was audited separately before launch rather than folded into a general QA pass.",
+    ],
+    evidence: [
+      "Phases 0–8 were closed with dedicated audit notes and completion reports committed alongside the code — including an audio-platform status, a content-domain completion record and a voice-engine audit.",
+      "GitHub Actions handle CI and deployment, and a golden-update workflow keeps generated fixtures current instead of letting them rot.",
+    ],
+    highlights: [
+      "Three surfaces, one API, one deploy pipeline.",
+      "Admin console designed for content editors, not engineers.",
+      "Audio sessions and voice-engine behaviour audited before launch.",
+      "Public site, app and admin console in a single Next.js application.",
+    ],
+    motif: "waveform",
+    similar: [5, 7, 10],
+  },
+  {
+    id: 10,
+    slug: "cdrl",
+    title: "CDRL",
+    kicker: "Digital risk & leadership platform",
+    category: "Platform Engineering",
+    year: "2026",
+    status: "Client work · live",
+    repo: "https://github.com/Teamthy/CDRL",
+    live: "https://cdrl-web.vercel.app",
+    stack: ["Next.js 15", "Express", "Prisma", "PostgreSQL", "pnpm workspaces", "Vitest", "Docker"],
+    tagline: "A marketing site and an API that fail loudly at boot.",
+    summary:
+      "Monorepo for the Centre for Digital Risk & Leadership: a statically rendered Next.js site with a learning-plan UI, and an Express + Prisma API behind it — with quality gates that run on every commit.",
+    metrics: [
+      { value: "2", label: "Apps in one pnpm workspace" },
+      { value: "5", label: "Quality gates before merge" },
+      { value: "0", label: "Tolerated lint warnings" },
+      { value: "1", label: "Command to reproduce production" },
+    ],
+    problem: [
+      "A small organisation needs a public site that loads instantly and an API that handles enquiries and learning plans — without hiring a platform team to keep them aligned. Configuration drift and stale migrations are the usual result.",
+      "The subtler problem is configuration itself. An API that starts with a half-filled environment file looks healthy until the first request that needs the missing value.",
+    ],
+    approach: [
+      "A pnpm 9 workspace holds the Next.js site and the Express + Prisma API, with a shared Prisma schema and migrations applied by a one-shot container before the API starts. The site uses static/ISR rendering for marketing pages; the API owns `/api/v1`.",
+      "Configuration is validated at boot and the process fails fast on invalid values. Server-side fetches use an internal URL on the container network while the browser uses the public one, which keeps the API off the public origin path for page rendering.",
+    ],
+    evidence: [
+      "CI runs typecheck in both apps, ESLint with `--max-warnings=0`, Vitest, a production build of both apps, a dependency audit that fails on high-severity advisories, `prisma migrate deploy` plus seed against a fresh database, and a gitleaks secrets scan.",
+      "The production stack is committed as Compose: Postgres internal-only, a one-shot migration container, an API with health and readiness endpoints, Redis-backed rate limiting and graceful shutdown, and a standalone Next.js server behind TLS.",
+    ],
+    highlights: [
+      "`pnpm audit:prod` fails the build on high-severity advisories in production dependencies.",
+      "Fresh-database migration and seed run in CI, so drift cannot hide.",
+      "Secrets scanning in CI with gitleaks.",
+      "Environment examples document every variable; real values never enter the repository.",
+    ],
+    motif: "docs",
+    similar: [6, 7, 8],
+  },
+  {
+    id: 11,
+    slug: "assetflow",
+    title: "AssetFlow",
+    kicker: "Multi-tenant fixed-asset register",
+    category: "Backend & APIs",
+    year: "2026",
+    status: "Client work · API",
+    repo: "https://github.com/Teamthy/assetflowserver",
+    stack: ["Express 5", "TypeScript", "Drizzle ORM", "PostgreSQL", "JWT", "Swagger"],
+    tagline: "Seven roles, branch scoping, and a permission model you can read.",
+    summary:
+      "The API behind a fixed-asset register for multi-branch organisations: organisations, assets, branches, maintenance and audit roles, with JWT access and refresh tokens and a permission-based RBAC model.",
+    metrics: [
+      { value: "7", label: "Roles from admin to standard staff" },
+      { value: "2", label: "Token lifetimes: access and refresh" },
+      { value: "1", label: "Documented contract at /api/docs" },
+      { value: "0", label: "Routes callable without a JWT" },
+    ],
+    problem: [
+      "Asset registers are cross-functional by nature. Finance cares about depreciation, operations about location, auditors about history and maintenance about work orders — and each of those roles should see a different slice of the same records.",
+      "Bolting permissions onto handlers one at a time produces a system where nobody can answer which roles can do what, and a branch manager in Lagos can quietly read Abuja's register.",
+    ],
+    approach: [
+      "Permissions are modelled as named capabilities attached to roles (`admin`, `asset_manager`, `finance`, `auditor`, `branch_manager`, `maintenance_staff`, `standard_staff`), with branch scoping applied at the query layer rather than in the UI. Authentication is mandatory on every route; JWT access tokens pair with refresh tokens.",
+      "The contract is documented with Swagger at `/api/docs`, and the service exposes health at `/api/health`, so deployment checks are trivial. An optional worker handles background work when Redis/Valkey is configured, without making it a hard dependency for local development.",
+    ],
+    evidence: [
+      "A deployment switch (`ENFORCE_RBAC`) makes the security posture explicit rather than implicit: it is off only for a specific deployment, and the README says so, while JWT authentication is always required. Turning it on restores permission and branch-scope checks without a code change.",
+      "The auth contract is documented with concrete response shapes for login, register, org-login, refresh and invitation acceptance, so client implementations do not have to guess.",
+    ],
+    highlights: [
+      "Permission-based RBAC instead of role checks scattered through handlers.",
+      "Branch scoping at the query layer.",
+      "Swagger documentation generated from the running service.",
+      "Health endpoint plus optional worker for background jobs.",
+    ],
+    motif: "register",
+    similar: [10, 5, 12],
+  },
+  {
+    id: 12,
+    slug: "olasco-autos",
+    title: "Olasco Autos",
+    kicker: "Request-led vehicle platform",
+    category: "Backend & APIs",
+    year: "2026",
+    status: "Client work · web platform",
+    repo: "https://github.com/Teamthy/olasco",
+    stack: ["Next.js App Router", "TypeScript", "Zod", "Prisma", "PostgreSQL", "WhatsApp Cloud API"],
+    tagline: "A request platform that refuses to pretend it is a checkout.",
+    summary:
+      "A mobile-first site for a Lagos and Abuja vehicle rental and sales business: rental discovery, car-sales enquiries, chauffeur, corporate, event and interstate requests, with a single WhatsApp handoff backed by database intake.",
+    metrics: [
+      { value: "2", label: "Cities: Lagos and Abuja" },
+      { value: "5", label: "Request types on one intake model" },
+      { value: "1", label: "WhatsApp handoff, not five inboxes" },
+      { value: "0", label: "Payments taken before confirmation" },
+    ],
+    problem: [
+      "Vehicle hire is a conversation, not a cart. Availability, rate, requirements and terms depend on a human check — and a website that implies instant confirmation creates disputes the business then has to absorb.",
+      "The operational risk is fragmentation: enquiries across WhatsApp, phone calls and Instagram DMs, with no record of what was asked, by whom, or what was quoted.",
+    ],
+    approach: [
+      "Every request type funnels into one intake model with Zod validation and Postgres persistence via Prisma, then a single configured WhatsApp handoff with notifications to the operations team. Listings stay empty until verified inventory is entered, instead of being filled with placeholder cars.",
+      "The README states the boundary plainly: this is a request platform, and a request is not confirmed until the team checks availability, rate, requirements and terms. Editorial photography is labelled as placeholder imagery, not as a record of stock.",
+    ],
+    evidence: [
+      "Architecture, sitemap, data model, API and component design, responsive strategy and phases are documented before implementation, together with an owner-inputs file listing every approval required before launch.",
+      "Image sourcing and replacement notes live with the assets, so the business can swap editorial photography for its own verified inventory without a developer.",
+    ],
+    highlights: [
+      "Server-side validation with Zod on every request type.",
+      "One WhatsApp handoff with server-only API credentials.",
+      "Local JSON adapter for development, PostgreSQL for anything real.",
+      "Documentation that separates what is live from what still needs owner approval.",
+    ],
+    motif: "request",
+    similar: [11, 10, 5],
   },
 ];
 
-export const getProject = (id: number): Project | undefined =>
-  PROJECTS.find((p) => p.id === id);
+export const getProject = (slug: string): Project | undefined =>
+  PROJECTS.find((project) => project.slug === slug);
 
 export const getSimilarProjects = (project: Project): Project[] =>
   project.similar
-    .map((id) => getProject(id))
-    .filter((p): p is Project => Boolean(p));
+    .map((id) => PROJECTS.find((candidate) => candidate.id === id))
+    .filter((candidate): candidate is Project => Boolean(candidate));
+
+export const FEATURED_PROJECT_IDS = [1, 5, 6, 8];

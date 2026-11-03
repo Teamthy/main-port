@@ -1,90 +1,35 @@
 "use client";
 
-import { ChangeEvent, FormEvent, useMemo, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { SITE } from "../data/site";
 
 const BUDGET_OPTIONS = [
-  { value: "", label: "Select budget" },
-  { value: "under-10k", label: "Under $10k" },
-  { value: "10k-50k", label: "$10k - $50k" },
-  { value: "over-50k", label: "$50k+" },
+  { value: "", label: "Budget (optional)" },
+  { value: "under-2k", label: "Under $2k" },
+  { value: "2k-10k", label: "$2k – $10k" },
+  { value: "over-10k", label: "$10k+" },
+  { value: "unsure", label: "Not sure yet" },
 ];
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function buildCalendar(offset: number) {
-  const now = new Date();
-  const base = new Date(now.getFullYear(), now.getMonth() + offset, 1);
-  const month = base.toLocaleString("en-US", { month: "long" });
-  const year = base.getFullYear();
-  const firstDay = base.getDay();
-  const daysInMonth = new Date(year, base.getMonth() + 1, 0).getDate();
-  const offsetCells = firstDay === 0 ? 6 : firstDay - 1; // week starts Monday
-  const cells: (number | null)[] = [];
-  for (let i = 0; i < offsetCells; i++) cells.push(null);
-  for (let i = 1; i <= daysInMonth; i++) cells.push(i);
-  const isCurrentMonth = offset === 0;
-  return { month, year, cells, isCurrentMonth, today: now.getDate() };
-}
-
-function MiniCalendar() {
-  const [offset, setOffset] = useState(0);
-  const cal = useMemo(() => buildCalendar(offset), [offset]);
-  const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-
-  return (
-    <div>
-      <div className="flex items-center justify-between mb-4">
-        <h4 className="text-white text-base font-medium">{cal.month} {cal.year}</h4>
-        <div className="flex gap-2">
-          <button
-            type="button"
-            onClick={() => setOffset((o) => o - 1)}
-            aria-label="Previous month"
-            className="text-white/60 hover:text-white transition"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
-          </button>
-          <button
-            type="button"
-            onClick={() => setOffset((o) => Math.min(o + 1, 11))}
-            aria-label="Next month"
-            className="text-white/60 hover:text-white transition disabled:opacity-30 disabled:cursor-not-allowed"
-            disabled={offset >= 11}
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6" /></svg>
-          </button>
-        </div>
-      </div>
-      <div className="grid grid-cols-7 gap-1 mb-2">
-        {days.map((d) => (
-          <div key={d} className="text-center text-xs text-white/40 font-mono py-1">{d}</div>
-        ))}
-      </div>
-      <div className="grid grid-cols-7 gap-1">
-        {cal.cells.map((day, i) => (
-          <div
-            key={i}
-            className={`text-center text-sm py-2 rounded-lg transition ${
-              day && cal.isCurrentMonth && day === cal.today
-                ? "bg-white text-black font-medium"
-                : day
-                  ? "text-white/80"
-                  : ""
-            }`}
-          >
-            {day || ""}
-          </div>
-        ))}
-      </div>
-      <p className="text-white/40 text-xs mt-4">
-        After you send the form, I'll reply within 24 hours with available call slots.
-      </p>
-    </div>
-  );
-}
+const NEXT_STEPS = [
+  {
+    title: "I read it properly",
+    body: "Every enquiry gets a reply from me, not a template — usually within two working days.",
+  },
+  {
+    title: "We scope the claim",
+    body: "A short call to establish what you need to be able to say, and to whom. If it is not a fit, I say so.",
+  },
+  {
+    title: "You get a written scope",
+    body: "Deliverables, timeline and price before any work starts. No retainer surprises.",
+  },
+];
 
 const inputClass =
-  "px-8 py-3 rounded-full border border-[#E9E9EA] focus:outline-none focus:border-black focus:ring-2 focus:ring-offset-2 focus:ring-black/30 h-16 text-base w-full bg-white";
+  "px-6 py-3 rounded-full border border-[#E9E9EA] focus:outline-none focus:border-black focus:ring-2 focus:ring-offset-2 focus:ring-black/30 h-14 text-base w-full bg-white";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", company: "", budget: "", message: "", website: "" });
@@ -102,7 +47,7 @@ export default function Contact() {
     if (!form.name.trim()) next.name = "Please enter your name.";
     if (!form.email.trim()) next.email = "Please enter your email.";
     else if (!EMAIL_RE.test(form.email)) next.email = "That doesn't look like a valid email.";
-    if (!form.message.trim()) next.message = "Please tell me a little about your project.";
+    if (!form.message.trim()) next.message = "Please tell me a little about the system.";
     else if (form.message.trim().length < 20) next.message = "A bit more detail helps me prepare (20+ characters).";
     setErrors(next);
     return Object.keys(next).length === 0;
@@ -143,16 +88,19 @@ export default function Contact() {
   if (status === "success") {
     return (
       <main id="main-content" tabIndex={-1} className="outline-none">
-        <section className="pt-15 lg:pt-30 lg:pb-30 pb-20">
+        <section className="pt-24 lg:pt-32 pb-24">
           <div className="max-w-3xl mx-auto px-6 text-center">
             <div className="size-12 rounded-full bg-black flex items-center justify-center mx-auto mb-8">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5" /></svg>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
             </div>
-            <h1 className="text-3xl lg:text-5xl font-normal -tracking-[2.88px] mb-6 text-black">
+            <h1 className="text-3xl lg:text-5xl font-normal -tracking-[2.4px] mb-6 text-black">
               Message <span className="italic">received</span>
             </h1>
             <p className="text-lg text-gray-700 leading-7 -tracking-[0.2px] mb-10">
-              Thanks for reaching out. I'll get back to you within 24 hours to schedule a discovery call.
+              Thanks for reaching out. I&apos;ll reply within two working days with questions and a suggested
+              scope.
             </p>
             <button onClick={() => setStatus("idle")} className="btn btn-primary uppercase">
               Send another message
@@ -166,31 +114,33 @@ export default function Contact() {
   return (
     <main id="main-content" tabIndex={-1} className="outline-none">
       {/* Hero */}
-      <section className="pt-15 lg:pt-30 lg:pb-20 pb-10">
+      <section className="pt-16 lg:pt-32 lg:pb-16 pb-10">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-3xl">
             <p className="font-mono text-sm uppercase text-[#1D1F2C] -tracking-[0.18px] mb-3">Contact</p>
-            <h1 className="text-3xl lg:text-5xl font-normal -tracking-[2.88px] mb-6 text-black">
-              Let's discuss your <span className="italic">project</span>
+            <h1 className="text-3xl lg:text-5xl font-normal -tracking-[2.4px] mb-6 text-black">
+              Tell me what you&apos;re <span className="italic">checking</span>
             </h1>
             <p className="text-lg text-gray-700 leading-7 -tracking-[0.2px]">
-              Tell me about your project and I'll schedule a discovery call to discuss timelines, budget, and the best approach.
+              An agent in production, a product to build, or an eval that needs to survive a review — describe
+              the system and what you would not want to find out later. I will reply with a scope.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Form Section */}
+      {/* Form + sidebar */}
       <section className="pb-20 sm:pb-25">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col lg:flex-row gap-10 lg:gap-16">
-            {/* Form */}
-            <div className="lg:w-8/12">
+            <div className="lg:w-7/12">
               <form onSubmit={handleSubmit} noValidate>
                 <div className="space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
-                      <label htmlFor="name" className="block text-sm font-medium text-black mb-2">Full Name *</label>
+                      <label htmlFor="name" className="block text-sm font-medium text-black mb-2">
+                        Full name *
+                      </label>
                       <input
                         id="name"
                         type="text"
@@ -204,7 +154,9 @@ export default function Contact() {
                       {errors.name && <p className="text-sm text-red-600 mt-2">{errors.name}</p>}
                     </div>
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-black mb-2">Email *</label>
+                      <label htmlFor="email" className="block text-sm font-medium text-black mb-2">
+                        Email *
+                      </label>
                       <input
                         id="email"
                         type="email"
@@ -218,50 +170,60 @@ export default function Contact() {
                       {errors.email && <p className="text-sm text-red-600 mt-2">{errors.email}</p>}
                     </div>
                   </div>
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
-                      <label htmlFor="company" className="block text-sm font-medium text-black mb-2">Company</label>
+                      <label htmlFor="company" className="block text-sm font-medium text-black mb-2">
+                        Company
+                      </label>
                       <input
                         id="company"
                         type="text"
                         name="company"
                         value={form.company}
                         onChange={handleChange}
-                        placeholder="Your company"
+                        placeholder="Company or team"
                         className={inputClass}
                       />
                     </div>
                     <div>
-                      <label htmlFor="budget" className="block text-sm font-medium text-black mb-2">Budget</label>
+                      <label htmlFor="budget" className="block text-sm font-medium text-black mb-2">
+                        Budget
+                      </label>
                       <div className="relative">
                         <select
                           id="budget"
                           name="budget"
                           value={form.budget}
                           onChange={handleChange}
-                          className="px-8 py-3 rounded-full border border-[#E9E9EA] focus:outline-none focus:border-black focus:ring-2 focus:ring-offset-2 focus:ring-black/30 h-16 text-base w-full appearance-none bg-white cursor-pointer"
+                          className="px-6 py-3 rounded-full border border-[#E9E9EA] focus:outline-none focus:border-black focus:ring-2 focus:ring-offset-2 focus:ring-black/30 h-14 text-base w-full appearance-none bg-white cursor-pointer"
                         >
-                          {BUDGET_OPTIONS.map((o) => (
-                            <option key={o.value} value={o.value}>{o.label}</option>
+                          {BUDGET_OPTIONS.map((option) => (
+                            <option key={option.value} value={option.value}>
+                              {option.label}
+                            </option>
                           ))}
                         </select>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none" className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                          <path d="M5.54779 9.09467C5.84069 8.80178 6.31556 8.80178 6.60846 9.09467L12.3281 14.8143L18.0478 9.09467C18.3407 8.80178 18.8156 8.80178 19.1085 9.09467C19.4013 9.38756 19.4013 9.86244 19.1085 10.1553L12.8585 16.4053C12.5656 16.6982 12.0907 16.6982 11.7978 16.4053L5.54779 10.1553C5.2549 9.86244 5.2549 9.38756 5.54779 9.09467Z" fill="#323544" />
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none" className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true">
+                          <path d="M5.548 9.095a.75.75 0 0 1 1.06 0l5.72 5.72 5.72-5.72a.75.75 0 1 1 1.06 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0l-6.25-6.25a.75.75 0 0 1 0-1.06Z" fill="#323544" />
                         </svg>
                       </div>
                     </div>
                   </div>
+
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-black mb-2">Project Details *</label>
+                    <label htmlFor="message" className="block text-sm font-medium text-black mb-2">
+                      What are we looking at? *
+                    </label>
                     <textarea
                       id="message"
                       name="message"
                       value={form.message}
                       onChange={handleChange}
-                      placeholder="Tell me about your project..."
-                      rows={5}
+                      placeholder="What the system does, who depends on it, what has been tested so far, and what worries you."
+                      rows={6}
                       aria-invalid={Boolean(errors.message)}
-                      className="px-8 py-4 rounded-3xl border border-[#E9E9EA] focus:outline-none focus:border-black focus:ring-2 focus:ring-offset-2 focus:ring-black/30 text-base w-full bg-white resize-none"
+                      className="px-6 py-4 rounded-3xl border border-[#E9E9EA] focus:outline-none focus:border-black focus:ring-2 focus:ring-offset-2 focus:ring-black/30 text-base w-full bg-white resize-none"
                     />
                     {errors.message && <p className="text-sm text-red-600 mt-2">{errors.message}</p>}
                   </div>
@@ -281,66 +243,106 @@ export default function Contact() {
                   </div>
 
                   {status === "error" && (
-                    <p role="alert" className="text-sm text-red-600">{serverError}</p>
+                    <p role="alert" className="text-sm text-red-600">
+                      {serverError}
+                    </p>
                   )}
 
-                  <div>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                     <button
                       type="submit"
                       disabled={status === "submitting"}
                       className="btn btn-primary uppercase disabled:opacity-60 disabled:cursor-not-allowed"
                     >
-                      {status === "submitting" ? "Sending..." : "Book a Call"}
+                      {status === "submitting" ? "Sending..." : "Send message"}
                     </button>
+                    <p className="text-sm text-gray-500">
+                      Or email{" "}
+                      <a href={`mailto:${SITE.email}`} className="underline underline-offset-4 hover:text-black">
+                        {SITE.email}
+                      </a>
+                    </p>
                   </div>
                 </div>
               </form>
             </div>
 
             {/* Sidebar */}
-            <div className="lg:w-4/12 ml-auto">
-              <div className="bg-[#070707] rounded-[20px] p-8">
-                <h3 className="text-white mb-4 text-2xl font-medium">Schedule a Discovery Call</h3>
-                <p className="text-white/60 text-base mb-6">During this call we do a quick intro and discuss your project and its specific needs.</p>
-                <MiniCalendar />
+            <div className="lg:w-5/12">
+              <div className="bg-[#0A0A0B] rounded-[20px] p-8 ring-1 ring-white/10">
+                <h3 className="text-white mb-2 text-2xl font-medium">What happens next</h3>
+                <p className="text-white/50 text-base mb-7">
+                  No funnel, no discovery deck. Three steps, in this order.
+                </p>
+                <ol className="space-y-5">
+                  {NEXT_STEPS.map((step, i) => (
+                    <li key={step.title} className="flex gap-4">
+                      <span className="font-mono text-xs text-[#C7F24E] pt-1">0{i + 1}</span>
+                      <div>
+                        <p className="text-white text-base mb-1">{step.title}</p>
+                        <p className="text-white/50 text-sm leading-6">{step.body}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+                <div className="mt-8 border-t border-white/10 pt-6">
+                  <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-white/30 mb-3">
+                    Or read first
+                  </p>
+                  <div className="flex flex-wrap gap-5 font-mono text-[11px] uppercase tracking-[0.14em]">
+                    <a href={SITE.github} target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition">
+                      GitHub ↗
+                    </a>
+                    <a href={SITE.linkedin} target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition">
+                      LinkedIn ↗
+                    </a>
+                    <a href={SITE.resume} download className="text-white/60 hover:text-white transition">
+                      CV ↓
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Contact Info */}
+      {/* Contact info */}
       <section className="py-20 sm:py-25 bg-[#FBFBFB]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             <div className="rounded-[20px] border border-[#E9E9EA] bg-white p-8">
               <div className="size-12 rounded-xl bg-[#FBFBFB] flex items-center justify-center mb-5">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                   <polyline points="22,6 12,13 2,6" />
                 </svg>
               </div>
               <h3 className="text-lg font-medium text-black mb-2">Email</h3>
-              <p className="text-base text-gray-500 font-mono">olusanyatimothy54@gmail.com</p>
+              <a href={`mailto:${SITE.email}`} className="text-base text-gray-500 font-mono hover:text-black transition">
+                {SITE.email}
+              </a>
             </div>
             <div className="rounded-[20px] border border-[#E9E9EA] bg-white p-8">
               <div className="size-12 rounded-xl bg-[#FBFBFB] flex items-center justify-center mb-5">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
                 </svg>
               </div>
-              <h3 className="text-lg font-medium text-black mb-2">Call Me</h3>
-              <p className="text-base text-gray-500 font-mono">+234 812 786 8211</p>
+              <h3 className="text-lg font-medium text-black mb-2">GitHub</h3>
+              <a href={SITE.github} target="_blank" rel="noopener noreferrer" className="text-base text-gray-500 font-mono hover:text-black transition">
+                github.com/{SITE.githubHandle} ↗
+              </a>
             </div>
             <div className="rounded-[20px] border border-[#E9E9EA] bg-white p-8">
               <div className="size-12 rounded-xl bg-[#FBFBFB] flex items-center justify-center mb-5">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
                   <circle cx="12" cy="10" r="3" />
                 </svg>
               </div>
-              <h3 className="text-lg font-medium text-black mb-2">Visit Me</h3>
-              <p className="text-base text-gray-500 font-mono">Lagos, Nigeria</p>
+              <h3 className="text-lg font-medium text-black mb-2">Location</h3>
+              <p className="text-base text-gray-500 font-mono">{SITE.location} (WAT) · remote</p>
             </div>
           </div>
         </div>

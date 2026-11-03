@@ -3,32 +3,32 @@ import { notFound } from "next/navigation";
 import PortfolioDetail from "../../../page-components/PortfolioDetail";
 import { PROJECTS, getProject } from "../../../data/projects";
 
-type RouteParams = { id: string };
+type RouteParams = { slug: string };
 
 export function generateStaticParams(): RouteParams[] {
-  return PROJECTS.map((project) => ({ id: String(project.id) }));
+  return PROJECTS.map((project) => ({ slug: project.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<RouteParams> }): Promise<Metadata> {
-  const { id } = await params;
-  const project = getProject(Number(id));
+  const { slug } = await params;
+  const project = getProject(slug);
   if (!project) return { title: "Project Not Found — Olusanya Timothy" };
   return {
-    title: `${project.title} — Olusanya Timothy`,
+    title: `${project.title} — ${project.kicker} | Olusanya Timothy`,
     description: project.summary,
+    alternates: { canonical: `/portfolio/${project.slug}` },
     openGraph: {
-      title: project.title,
+      title: `${project.title} — ${project.kicker}`,
       description: project.summary,
       type: "article",
-      images: [project.cover],
     },
   };
 }
 
 export default async function Page({ params }: { params: Promise<RouteParams> }) {
-  const { id } = await params;
-  const project = getProject(Number(id));
+  const { slug } = await params;
+  const project = getProject(slug);
   if (!project) notFound();
 
-  return <PortfolioDetail params={{ id }} />;
+  return <PortfolioDetail project={project} />;
 }
