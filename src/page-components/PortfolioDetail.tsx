@@ -72,7 +72,7 @@ export default function PortfolioDetail({ project }: { project: Project }) {
               <p className="font-mono text-xs uppercase tracking-[0.18em] text-[#C7F24E] mb-4">
                 {project.kicker} · {project.status}
               </p>
-              <h1 className="text-white text-4xl sm:text-5xl lg:text-6xl font-normal -tracking-[2.4px] mb-5">
+              <h1 className="text-white text-4xl sm:text-4xl lg:text-5xl font-normal -tracking-[2.4px] mb-5">
                 {project.title}
               </h1>
               <p className="text-lg text-white/60 leading-7 -tracking-[0.2px]">{project.tagline}</p>
@@ -103,7 +103,7 @@ export default function PortfolioDetail({ project }: { project: Project }) {
             <ProjectVisual
               motif={project.motif}
               index={String(project.id).padStart(2, "0")}
-              caption={`${project.title} — ${project.kicker}`}
+              caption={`${project.title} · ${project.kicker}`}
               className="h-[260px] sm:h-[380px] lg:h-[440px]"
             />
           </div>
@@ -228,7 +228,7 @@ export default function PortfolioDetail({ project }: { project: Project }) {
         <div className="py-20 sm:py-25 bg-black rounded-t-4xl">
           <div className="max-w-7xl mx-auto px-6">
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-12">
-              <h2 className="text-white text-3xl sm:text-5xl font-normal -tracking-[2.4px]">
+              <h2 className="text-white text-3xl sm:text-4xl font-normal -tracking-[2.4px]">
                 Related <span className="italic">work</span>
               </h2>
               <Link href="/portfolio" className="btn btn-secondary group">

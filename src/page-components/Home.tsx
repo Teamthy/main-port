@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ArrowIcon from "../components/ArrowIcon";
+import CapabilityIcon from "../components/CapabilityIcon";
 import ProjectVisual from "../components/ProjectVisual";
 import TerminalCard from "../components/TerminalCard";
 import GitHubSignal from "../components/GitHubSignal";
@@ -43,30 +44,6 @@ const tools = [
   "Vercel",
 ];
 
-/** Service icons kept from the previous design system. */
-function CapabilityIcon({ id }: { id: string }) {
-  if (id === "red-team")
-    return (
-      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-        <path d="M20 5L32 10V18C32 25.5 26.8 32.3 20 35C13.2 32.3 8 25.5 8 18V10L20 5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M15 20L18.5 23.5L25 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    );
-  if (id === "platform")
-    return (
-      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-        <rect x="5" y="8.333" width="30" height="16.667" rx="2" stroke="currentColor" strokeWidth="2" />
-        <path d="M13.332 30H26.665M20 25V30" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      </svg>
-    );
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-      <circle cx="20" cy="20" r="13.333" stroke="currentColor" strokeWidth="2" />
-      <path d="M20 8.333V31.666M26.667 13.333L20 8.333L13.333 13.333M33.333 20H6.667" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
 export default function Home() {
   const featured = FEATURED_PROJECT_IDS.map((id) => PROJECTS.find((project) => project.id === id)).filter(
     (project): project is NonNullable<typeof project> => Boolean(project),
@@ -81,9 +58,9 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
             <div className="lg:col-span-7">
               <p className="font-mono text-xs sm:text-sm uppercase tracking-[0.2em] text-[#1D1F2C] mb-6">
-                {SITE.role} · {SITE.city}, NG
+                Software engineer since {SITE.since} · AI red team & evaluation · {SITE.city}, NG
               </p>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-normal -tracking-[2.4px] mb-6 text-black leading-[1.05]">
+              <h1 className="text-4xl sm:text-4xl lg:text-5xl font-normal -tracking-[2.4px] mb-6 text-black leading-[1.05]">
                 I build the system,
                 <br />
                 then try to <span className="italic">break it.</span>
@@ -157,7 +134,7 @@ export default function Home() {
               <p className="font-mono text-sm uppercase text-[#1D1F2C] -tracking-[0.18px] mb-3">
                 Research practice
               </p>
-              <h2 className="text-3xl sm:text-5xl font-normal -tracking-[1.92px] text-black">
+              <h2 className="text-3xl sm:text-4xl font-normal -tracking-[1.92px] text-black">
                 The report is a claim. <span className="italic">Evidence is the gap.</span>
               </h2>
               <p className="mt-5 text-lg text-gray-700 leading-7 -tracking-[0.2px]">
@@ -207,7 +184,7 @@ export default function Home() {
               <p className="font-mono text-sm uppercase text-[#1D1F2C] -tracking-[0.18px] mb-3">
                 Selected work
               </p>
-              <h2 className="text-3xl sm:text-5xl font-normal -tracking-[1.92px] text-black">
+              <h2 className="text-3xl sm:text-4xl font-normal -tracking-[1.92px] text-black">
                 Shipped, not <span className="italic">screenshotted</span>
               </h2>
             </div>
@@ -293,7 +270,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-14">
             <p className="font-mono text-sm uppercase text-[#1D1F2C] -tracking-[0.18px] mb-3">What I do</p>
-            <h2 className="text-3xl sm:text-5xl font-normal -tracking-[1.92px] text-black">
+            <h2 className="text-3xl sm:text-4xl font-normal -tracking-[1.92px] text-black">
               Three kinds of <span className="italic">work</span>
             </h2>
           </div>
@@ -324,18 +301,21 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             <div className="lg:col-span-6">
               <p className="font-mono text-sm uppercase text-[#1D1F2C] -tracking-[0.18px] mb-3">About</p>
-              <h2 className="text-3xl sm:text-5xl font-normal -tracking-[1.92px] text-black mb-6">
+              <h2 className="text-3xl sm:text-4xl font-normal -tracking-[1.92px] text-black mb-6">
                 I care about what <span className="italic">survives</span>
               </h2>
               <p className="text-lg text-gray-700 leading-7 -tracking-[0.2px] mb-5">
-                I work in Lagos, building products for Nigerian schools, churches, marketplaces and
-                consultancies — and building the verification around them, because “it works on my machine” is
-                not a claim anyone can audit.
+                I have worked in Lagos since 2024, building products in Go, TypeScript, Node.js, JavaScript and
+                Python for schools, churches, marketplaces and consultancies, and building the verification
+                around them, because “it works on my machine” is not a claim anyone can audit.
               </p>
               <p className="text-lg text-gray-700 leading-7 -tracking-[0.2px] mb-8">
                 My research practice grew out of a specific frustration: evaluations that could not be checked,
                 audit logs that could not be trusted, and security tools that report everything until nobody
                 reads them.
+              </p>
+              <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-gray-400 mb-8">
+                Larger red-team engagements are private under NDA
               </p>
               <ul className="space-y-5 mb-8">
                 {PRINCIPLES.slice(0, 3).map((principle) => (
@@ -367,7 +347,7 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-14 gap-6">
             <div>
               <p className="font-mono text-sm uppercase text-[#1D1F2C] -tracking-[0.18px] mb-3">Writing</p>
-              <h2 className="text-3xl sm:text-5xl font-normal -tracking-[1.92px] text-black">
+              <h2 className="text-3xl sm:text-4xl font-normal -tracking-[1.92px] text-black">
                 Notes from the <span className="italic">work</span>
               </h2>
             </div>
@@ -416,7 +396,7 @@ export default function Home() {
             </div>
             <div className="relative z-10 max-w-3xl mx-auto">
               <p className="font-mono text-sm uppercase text-white/60 -tracking-[0.18px] mb-5">Start here</p>
-              <h2 className="text-3xl sm:text-5xl lg:text-[60px] font-normal text-white -tracking-[2.88px] leading-tight mb-6">
+              <h2 className="text-3xl sm:text-4xl lg:text-[52px] font-normal text-white -tracking-[2.88px] leading-tight mb-6">
                 Test the claims, or <span className="italic">build the thing</span>
               </h2>
               <p className="text-base text-white/60 leading-7 -tracking-[0.2px] mb-10 max-w-xl mx-auto">

@@ -12,9 +12,9 @@ export function generateStaticParams(): RouteParams[] {
 export async function generateMetadata({ params }: { params: Promise<RouteParams> }): Promise<Metadata> {
   const { slug } = await params;
   const post = getBlogPost(slug);
-  if (!post) return { title: "Post Not Found — Olusanya Timothy" };
+  if (!post) return { title: "Post Not Found · Olusanya Timothy" };
   return {
-    title: `${post.title} — Olusanya Timothy`,
+    title: `${post.title} · Olusanya Timothy`,
     description: post.excerpt,
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {

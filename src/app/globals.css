@@ -4,17 +4,50 @@
 
 :root {
   color-scheme: light;
-  font-family: var(--font-sans), 'Inter', system-ui, sans-serif;
+  /* The site is monospace end to end. A slightly smaller root keeps the wider
+     glyphs from inflating every block of copy. */
+  font-size: 15px;
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
   background: white;
-  font-family: var(--font-sans), 'Inter', system-ui, sans-serif;
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-optical-sizing: auto;
   font-style: normal;
   font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* A visible keyboard focus ring, on brand and never removed. */
+:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Mono headings sit tight against each other without a little air. */
+h1,
+h2,
+h3 {
+  letter-spacing: -0.03em;
+}
+
+/* The newsletter of gradients: no animation for people who ask for none. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 button {

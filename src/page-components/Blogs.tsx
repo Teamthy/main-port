@@ -12,7 +12,7 @@ export default function Blogs() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-3xl">
             <p className="font-mono text-sm uppercase text-[#1D1F2C] -tracking-[0.18px] mb-3">Writing</p>
-            <h1 className="text-3xl lg:text-5xl font-normal -tracking-[2.4px] mb-6 text-black">
+            <h1 className="text-3xl lg:text-4xl font-normal -tracking-[2.4px] mb-6 text-black">
               Notes from the <span className="italic">work</span>
             </h1>
             <p className="text-lg text-gray-700 leading-7 -tracking-[0.2px]">

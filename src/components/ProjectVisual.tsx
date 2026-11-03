@@ -25,7 +25,7 @@ export default function ProjectVisual({
       className={`w-full ${className}`}
       style={{ backgroundColor: "#0A0A0B" }}
       role="img"
-      aria-label={caption ? `${caption} — schematic illustration` : "Project schematic illustration"}
+      aria-label={caption ? `${caption}, schematic illustration` : "Project schematic illustration"}
       preserveAspectRatio="xMidYMid meet"
     >
       <defs>

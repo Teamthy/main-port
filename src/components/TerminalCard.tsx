@@ -14,7 +14,7 @@ const LINES: { label?: string; value: string; accent?: boolean; muted?: boolean 
 
 /**
  * The hero panel: a real verification transcript from the tieout demo bundle.
- * It is the shortest honest description of how this engineer works — the
+ * It is the shortest honest description of how this engineer works: the
  * claim, the record, and the command anyone can run to check it.
  */
 export default function TerminalCard({ className = "" }: { className?: string }) {

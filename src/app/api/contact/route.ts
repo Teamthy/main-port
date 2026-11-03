@@ -23,7 +23,7 @@ const BUDGET_LABELS: Record<string, string> = {
 };
 
 // Simple in-memory rate limiter: max 3 submissions per IP per 10 minutes.
-// Resets on redeploy / serverless cold start — adequate for a portfolio site.
+// Resets on redeploy / serverless cold start, adequate for a portfolio site.
 const attempts = new Map<string, number[]>();
 const WINDOW_MS = 10 * 60 * 1000;
 const MAX_ATTEMPTS = 3;
@@ -60,7 +60,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true });
   }
 
-  // Server-side validation — never trust the client.
+  // Server-side validation: never trust the client.
   const fieldErrors: Record<string, string> = {};
   if (!name) fieldErrors.name = "Name is required.";
   if (!email) fieldErrors.email = "Email is required.";
@@ -104,7 +104,7 @@ export async function POST(req: NextRequest) {
 
   if (!apiKey) {
     // Development fallback: no API key configured, so log instead of sending.
-    console.info("[contact] RESEND_API_KEY not set — message not emailed:", {
+    console.info("[contact] RESEND_API_KEY not set, message not emailed:", {
       name,
       email,
       company,

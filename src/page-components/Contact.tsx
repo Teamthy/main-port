@@ -2,6 +2,7 @@
 
 import { ChangeEvent, FormEvent, useState } from "react";
 import { SITE } from "../data/site";
+import Icon from "../components/Icon";
 
 const BUDGET_OPTIONS = [
   { value: "", label: "Budget (optional)" },
@@ -16,7 +17,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const NEXT_STEPS = [
   {
     title: "I read it properly",
-    body: "Every enquiry gets a reply from me, not a template — usually within two working days.",
+    body: "Every enquiry gets a reply from me, not a template, usually within two working days.",
   },
   {
     title: "We scope the claim",
@@ -70,7 +71,7 @@ export default function Contact() {
           company: form.company,
           budget: form.budget,
           message: form.message,
-          website: form.website, // honeypot — humans never fill this
+          website: form.website, // honeypot, humans never fill this
         }),
       });
       if (!res.ok) {
@@ -91,11 +92,9 @@ export default function Contact() {
         <section className="pt-24 lg:pt-32 pb-24">
           <div className="max-w-3xl mx-auto px-6 text-center">
             <div className="size-12 rounded-full bg-black flex items-center justify-center mx-auto mb-8">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M20 6L9 17l-5-5" />
-              </svg>
+              <Icon name="check" size={24} className="text-white" />
             </div>
-            <h1 className="text-3xl lg:text-5xl font-normal -tracking-[2.4px] mb-6 text-black">
+            <h1 className="text-3xl lg:text-4xl font-normal -tracking-[2.4px] mb-6 text-black">
               Message <span className="italic">received</span>
             </h1>
             <p className="text-lg text-gray-700 leading-7 -tracking-[0.2px] mb-10">
@@ -118,11 +117,11 @@ export default function Contact() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-3xl">
             <p className="font-mono text-sm uppercase text-[#1D1F2C] -tracking-[0.18px] mb-3">Contact</p>
-            <h1 className="text-3xl lg:text-5xl font-normal -tracking-[2.4px] mb-6 text-black">
+            <h1 className="text-3xl lg:text-4xl font-normal -tracking-[2.4px] mb-6 text-black">
               Tell me what you&apos;re <span className="italic">checking</span>
             </h1>
             <p className="text-lg text-gray-700 leading-7 -tracking-[0.2px]">
-              An agent in production, a product to build, or an eval that needs to survive a review — describe
+              An agent in production, a product to build, or an eval that needs to survive a review, describe
               the system and what you would not want to find out later. I will reply with a scope.
             </p>
           </div>
@@ -204,9 +203,11 @@ export default function Contact() {
                             </option>
                           ))}
                         </select>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none" className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true">
-                          <path d="M5.548 9.095a.75.75 0 0 1 1.06 0l5.72 5.72 5.72-5.72a.75.75 0 1 1 1.06 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0l-6.25-6.25a.75.75 0 0 1 0-1.06Z" fill="#323544" />
-                        </svg>
+                        <Icon
+                          name="keyboard_arrow_down"
+                          size={24}
+                          className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[#323544]"
+                        />
                       </div>
                     </div>
                   </div>
@@ -228,7 +229,7 @@ export default function Contact() {
                     {errors.message && <p className="text-sm text-red-600 mt-2">{errors.message}</p>}
                   </div>
 
-                  {/* Honeypot — hidden from humans, catches bots */}
+                  {/* Honeypot, hidden from humans and catches bots */}
                   <div className="hidden" aria-hidden="true">
                     <label htmlFor="website">Website</label>
                     <input
@@ -313,10 +314,7 @@ export default function Contact() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             <div className="rounded-[20px] border border-[#E9E9EA] bg-white p-8">
               <div className="size-12 rounded-xl bg-[#FBFBFB] flex items-center justify-center mb-5">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                  <polyline points="22,6 12,13 2,6" />
-                </svg>
+                <Icon name="mail" size={24} />
               </div>
               <h3 className="text-lg font-medium text-black mb-2">Email</h3>
               <a href={`mailto:${SITE.email}`} className="text-base text-gray-500 font-mono hover:text-black transition">
@@ -325,9 +323,7 @@ export default function Contact() {
             </div>
             <div className="rounded-[20px] border border-[#E9E9EA] bg-white p-8">
               <div className="size-12 rounded-xl bg-[#FBFBFB] flex items-center justify-center mb-5">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-                </svg>
+                <Icon name="code" size={24} />
               </div>
               <h3 className="text-lg font-medium text-black mb-2">GitHub</h3>
               <a href={SITE.github} target="_blank" rel="noopener noreferrer" className="text-base text-gray-500 font-mono hover:text-black transition">
@@ -336,10 +332,7 @@ export default function Contact() {
             </div>
             <div className="rounded-[20px] border border-[#E9E9EA] bg-white p-8">
               <div className="size-12 rounded-xl bg-[#FBFBFB] flex items-center justify-center mb-5">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
-                  <circle cx="12" cy="10" r="3" />
-                </svg>
+                <Icon name="location_on" size={24} />
               </div>
               <h3 className="text-lg font-medium text-black mb-2">Location</h3>
               <p className="text-base text-gray-500 font-mono">{SITE.location} (WAT) · remote</p>

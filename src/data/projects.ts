@@ -77,8 +77,8 @@ export const PROJECTS: Project[] = [
       "The research says what those artefacts cannot show: no judge is uniformly reliable, verdicts flip on reformatting and verbosity, and where raw outputs were not shipped the numbers cannot be re-audited. Nobody emits an artefact that survives contact with a stranger.",
     ],
     approach: [
-      "tieout records one event per check result with a four-part binding — action, policy version, decision, effect reference — and pre-assigns every id before the first agent call, so a missing item is a gap rather than a shorter history. Records are sealed into a hash chain at write time, and the manifest hashes the bundle.",
-      "`tieout verify` re-walks the chain, re-hashes the manifest and re-runs the detectors on the stored raw output: no model, no key, no network. Every suite carries negative controls it does not generate, and the check cannot write its own grade. Stability is measured across runs, not assumed — two committed runs against the same suite with different surface-drift seeds show ten transcripts drifting while zero verdicts flip.",
+      "tieout records one event per check result with a four-part binding (action, policy version, decision, effect reference) and pre-assigns every id before the first agent call, so a missing item is a gap rather than a shorter history. Records are sealed into a hash chain at write time, and the manifest hashes the bundle.",
+      "`tieout verify` re-walks the chain, re-hashes the manifest and re-runs the detectors on the stored raw output: no model, no key, no network. Every suite carries negative controls it does not generate, and the check cannot write its own grade. Stability is measured across runs, not assumed: two committed runs against the same suite with different surface-drift seeds show ten transcripts drifting while zero verdicts flip.",
     ],
     evidence: [
       "The committed demo bundle re-derives end to end: 22 records in an intact chain, 14/14 pre-assigned ids present, 14/14 verdicts re-derived from stored raw output, 8 controls re-derived with zero false positives and zero false negatives, and a PASS that names re-derivability by a stranger as the criterion.",
@@ -86,7 +86,7 @@ export const PROJECTS: Project[] = [
     ],
     highlights: [
       "Six pillars in code: verdict events, provenance, negative controls, named gaps, re-derivation and judge audit.",
-      "Keyless demo run against a deterministic sample agent: 13 pass, 1 fail, 0 undetermined — the fail is documented in the fixture, not discovered after the fact.",
+      "Keyless demo run against a deterministic sample agent: 13 pass, 1 fail, 0 undetermined. The fail is documented in the fixture, not discovered after the fact.",
       "Intervals, not just percentages: 13/14 with a 95% interval of 0.6613–0.9982.",
       "Documentation site ships with an export contract that is checked on 26 pages.",
     ],
@@ -113,12 +113,12 @@ export const PROJECTS: Project[] = [
       { value: "0", label: "New findings on a known-broken agent" },
     ],
     problem: [
-      "Red-team tools report everything, every time. Run one in CI and the first build is a wall of findings, the second is the same wall, and by the third the team has added `continue-on-error`. The gate did not fail because it was wrong — it failed because it could not tell the difference between a bug you shipped yesterday and one you are shipping now.",
+      "Red-team tools report everything, every time. Run one in CI and the first build is a wall of findings, the second is the same wall, and by the third the team has added `continue-on-error`. The gate did not fail because it was wrong; it failed because it could not tell the difference between a bug you shipped yesterday and one you are shipping now.",
       "The same weakness found by three tools is one finding, not three. Without a baseline and a stable fingerprint, every run regresses the team's tolerance instead of the model's behaviour.",
     ],
     approach: [
       "gatecheck runs a corpus of attacks against an agent endpoint, fingerprints every finding, and diffs the run against a committed baseline. Findings at or above the configured threshold that are new or worse block the build; everything already known passes; anything fixed is announced as fixed.",
-      "The core engine is part of the package — prompt injection, system-prompt leakage, data exfiltration and tool misuse, plus a multi-turn engine that catches sequences of individually-allowed turns ending in a disallowed action. Optional Promptfoo, PyRIT and DeepTeam engines feed the same fingerprint space, so extra tooling adds coverage rather than duplicate noise.",
+      "The core engine is part of the package: prompt injection, system-prompt leakage, data exfiltration and tool misuse, plus a multi-turn engine that catches sequences of individually-allowed turns ending in a disallowed action. Optional Promptfoo, PyRIT and DeepTeam engines feed the same fingerprint space, so extra tooling adds coverage rather than duplicate noise.",
     ],
     evidence: [
       "Both demo runs are committed as artefacts, so the claim can be checked without running anything: the vulnerable agent's blocked run as a PR comment, JSON and SARIF, and the fixed agent's passing run on the same corpus.",
@@ -153,19 +153,19 @@ export const PROJECTS: Project[] = [
       { value: "10", label: "Ways the challenge script damages a run" },
     ],
     problem: [
-      "Audit trails are usually argued about in the abstract: does the system log decisions? The useful question is narrower and harder. If the process dies between the decision and the write, what is left — and can anyone prove what is missing?",
+      "Audit trails are usually argued about in the abstract: does the system log decisions? The useful question is narrower and harder. If the process dies between the decision and the write, what is left, and can anyone prove what is missing?",
       "Most suites answer with a single score, which hides the fact that persistence failures and verification frauds fail for completely different reasons. A record that survived but cannot be verified is not a weaker version of a record that survived intact; it is a different kind of problem.",
     ],
     approach: [
       "Two processes talk over loopback for about a second; one exits deliberately mid-work with `os._exit(9)` rather than a signal from outside; a separate program checks the artefacts and trusts none of them. There is no model, no external key and no network beyond loopback.",
-      "The suite reports two classes separately: Class P for persistence and recovery, and Class V for verification — whether a record that survived is the record it says it is, from who it says, under the policy version it names. The three gap cases are reported as their own dimension: C knows the issued id and a commitment to the descriptor, C' knows the id only, and C'' knows nothing at all.",
+      "The suite reports two classes separately: Class P for persistence and recovery, and Class V for verification: whether a record that survived is the record it says it is, from who it says, under the policy version it names. The three gap cases are reported as their own dimension: C knows the issued id and a commitment to the descriptor, C' knows the id only, and C'' knows nothing at all.",
     ],
     evidence: [
-      "`verify.py` re-derives every assertion from the raw files — the store journal, the write-ahead log, the per-scenario host journals — and never reads a pass flag, because nothing writes one. `challenge.py` damages a finished run ten ways and requires that the check claiming to catch each kind of damage catches it, and refuses a directory that is not a run.",
+      "`verify.py` re-derives every assertion from the raw files (the store journal, the write-ahead log, the per-scenario host journals) and never reads a pass flag, because nothing writes one. `challenge.py` damages a finished run ten ways and requires that the check claiming to catch each kind of damage catches it, and refuses a directory that is not a run.",
       "`audit/regressions.py` holds the harder mutations, one per finding in the November 2026 review. Each of them passed verification before that review and has to be caught now. The whole thing runs in seconds, inside the thirty minutes the spec allowed.",
     ],
     highlights: [
-      "The named gap is the result, not a footnote — including the case where the benchmark itself cannot tell that an action happened.",
+      "The named gap is the result, not a footnote. It includes the case where the benchmark itself cannot tell that an action happened.",
       "Replay-carried decision time is labelled source-asserted, never independently verified, in both the printed result and the JSON report.",
       "Findings register with dispositions, and evidence logs committed per review date.",
       "Standard library only, so it runs from a cold clone on Windows, macOS or Linux.",
@@ -185,7 +185,7 @@ export const PROJECTS: Project[] = [
     stack: ["Python", "OpenAI-compatible APIs", "Recorded JSON output"],
     tagline: "It ships the method, not pre-baked results.",
     summary:
-      "A runnable harness for the five failure checks described in “The five boring failures that will ship with your AI feature”. It points at any OpenAI-compatible model, runs the tests, and records the output for review — your model, your results.",
+      "A runnable harness for the five failure checks described in “The five boring failures that will ship with your AI feature”. It points at any OpenAI-compatible model, runs the tests, and records the output for review. Your model, your results.",
     metrics: [
       { value: "5", label: "Failure classes, each with a test" },
       { value: "3", label: "Direct injection attempts" },
@@ -194,14 +194,14 @@ export const PROJECTS: Project[] = [
     ],
     problem: [
       "The failures that ship are rarely cinematic. They are a prompt treated as a wall, retrieval treated as trusted input, a tool description nobody read, a refusal that only works in one language, and a metric that records no sample size.",
-      "Each of these is cheap to test and expensive to discover in production — especially in a market where customers write in English, Pidgin and Yoruba in the same sentence, and the support bot was evaluated on none of it.",
+      "Each of these is cheap to test and expensive to discover in production, especially in a market where customers write in English, Pidgin and Yoruba in the same sentence, and the support bot was evaluated on none of it.",
     ],
     approach: [
-      "The harness exercises prompt injection three ways (print the system prompt, trusted-role framing, an embedded instruction block), a poisoned knowledge-base document carrying a hidden instruction, and a tool whose description carries one — with the reply compared with the tool present and absent.",
+      "The harness exercises prompt injection three ways (print the system prompt, trusted-role framing, an embedded instruction block), a poisoned knowledge-base document carrying a hidden instruction, and a tool whose description carries one, with the reply compared with the tool present and absent.",
       "Refusals are tested in plain English and in mixed Pidgin/Yoruba messages that mirror how real customers write. The results are tallied into the metric that matters: how often a specific failure fires on a specific input type, with the sample size next to every rate.",
     ],
     evidence: [
-      "By default the harness tests a sample support bot — a known system prompt with a secret and three policies — so the failure modes reproduce on a common model and the baseline is inspectable. Point `MY_SYSTEM_PROMPT_FILE` at your real prompt, or `OPENAI_BASE_URL` at your bot's endpoint, and the same checks run against your system.",
+      "By default the harness tests a sample support bot (a known system prompt with a secret and three policies), so the failure modes reproduce on a common model and the baseline is inspectable. Point `MY_SYSTEM_PROMPT_FILE` at your real prompt, or `OPENAI_BASE_URL` at your bot's endpoint, and the same checks run against your system.",
       "Output is recorded for review rather than summarised into a green badge, and there are no pre-baked results in the repository to mistake for your own.",
     ],
     highlights: [
@@ -226,7 +226,7 @@ export const PROJECTS: Project[] = [
     stack: ["Go 1.27", "chi", "SQLite / PostgreSQL", "Next.js 15", "Tailwind v4", "Expo"],
     tagline: "One API, three shells, deadlines the server actually owns.",
     summary:
-      "Timed mocks, adaptive practice, class assessments, a verified-payment store, learning analytics and an operations console — served by one Go API to a web app, a PWA and a native app.",
+      "Timed mocks, adaptive practice, class assessments, a verified-payment store, learning analytics and an operations console, served by one Go API to a web app, a PWA and a native app.",
     metrics: [
       { value: "48", label: "Contract-checked route pairs" },
       { value: "3", label: "Shells on one versioned API" },
@@ -235,7 +235,7 @@ export const PROJECTS: Project[] = [
     ],
     problem: [
       "Exam preparation products lose trust at exactly the moment they matter: a timed mock. If the client owns the deadline, a determined student owns the deadline. If the web app and the mobile app each implement scoring, the two products disagree about a grade.",
-      "The commercial side has the same shape. A “verified payment” store only means something if verification happens server-side, once, against a source of truth — not when a learner taps a button.",
+      "The commercial side has the same shape. A “verified payment” store only means something if verification happens server-side, once, against a source of truth, not when a learner taps a button.",
     ],
     approach: [
       "The Go service owns session state, the deadline, scoring and authorisation. Both shells are thin clients of one versioned REST API, which is what lets the web app and the native app ship from one commit without drifting.",
@@ -246,7 +246,7 @@ export const PROJECTS: Project[] = [
       "Seeded demo accounts cover student, teacher, content editor and platform admin, with a class join code and referral flow, so the whole product is testable from a cold clone. A load-test command ships alongside the API.",
     ],
     highlights: [
-      "Server-owned deadlines, scoring and authorisation — the client cannot grant itself time.",
+      "Server-owned deadlines, scoring and authorisation. The client cannot grant itself time.",
       "Adaptive practice and timed mocks drawing on the same question bank.",
       "Contract check in both directions prevents client/server drift while three surfaces are built.",
       "Workspace layout with shared wire types and design tokens in `packages/shared`.",
@@ -266,7 +266,7 @@ export const PROJECTS: Project[] = [
     stack: ["Next.js", "TypeScript", "PostgreSQL", "Row-Level Security", "Paystack", "Expo"],
     tagline: "One install, one school, ~3,000 users over five years.",
     summary:
-      "A school operating system for a Nigerian secondary school: a public site, role-based portals, CBT examinations, admissions, fees and results — backed by a Postgres schema with row-level security and integer-kobo money.",
+      "A school operating system for a Nigerian secondary school: a public site, role-based portals, CBT examinations, admissions, fees and results, backed by a Postgres schema with row-level security and integer-kobo money.",
     metrics: [
       { value: "140+", label: "API routes" },
       { value: "70", label: "Database models" },
@@ -278,7 +278,7 @@ export const PROJECTS: Project[] = [
       "Multi-tenancy is the other trap. A product that starts single-school and later adds a campus often discovers its isolation was a convention in application code, and every new query is a chance to leak another school's records.",
     ],
     approach: [
-      "Every naira is posted twice through a double-entry ledger — accounts, journals and signed-kobo lines — with invoices and payments inside their own transactions, corrections by counter-entry instead of deletion, and a Postgres constraint trigger that refuses an unbalanced journal. Staff get a trial balance and per-account statements.",
+      "Every naira is posted twice through a double-entry ledger (accounts, journals and signed-kobo lines), with invoices and payments inside their own transactions, corrections by counter-entry instead of deletion, and a Postgres constraint trigger that refuses an unbalanced journal. Staff get a trial balance and per-account statements.",
       "Tenant hygiene is enforced at the database: `schoolId` on every business table plus Postgres row-level security as an isolation backstop, with a CI coverage guard that fails if any tenant table is left unprotected. Paystack webhooks are signature-verified and idempotent, and refund and transfer workflows are explicit.",
     ],
     evidence: [
@@ -306,7 +306,7 @@ export const PROJECTS: Project[] = [
     stack: ["Next.js 15", "TanStack Query", "Go 1.26", "PostgreSQL", "Redis", "OpenTelemetry", "k6"],
     tagline: "British and Nigerian curricula, escrow between strangers.",
     summary:
-      "A tutoring marketplace and virtual school — exam preparation, private tuition, live cohorts — with escrow, booking-scoped messaging, staged vetting, an LMS, referrals and a B2B path.",
+      "A tutoring marketplace and virtual school (exam preparation, private tuition, live cohorts) with escrow, booking-scoped messaging, staged vetting, an LMS, referrals and a B2B path.",
     metrics: [
       { value: "2", label: "Curricula: British and Nigerian" },
       { value: "1", label: "OpenAPI contract as source of truth" },
@@ -314,7 +314,7 @@ export const PROJECTS: Project[] = [
       { value: "0", label: "Production boot with demo seeds or open CORS" },
     ],
     problem: [
-      "Marketplaces break at the trust boundary. A parent is paying a tutor they have never met, for lessons delivered over a connection they cannot audit — and the platform's job is to hold the money, vet the tutor and keep the conversation attached to the booking.",
+      "Marketplaces break at the trust boundary. A parent is paying a tutor they have never met, for lessons delivered over a connection they cannot audit, and the platform's job is to hold the money, vet the tutor and keep the conversation attached to the booking.",
       "Most attempts bolt these onto a CRUD app and discover later that messaging is a separate graph, escrow is a state machine, and vetting is a staged process with evidence. Retrofitting any of the three is a rewrite.",
     ],
     approach: [
@@ -346,7 +346,7 @@ export const PROJECTS: Project[] = [
     stack: ["Go 1.23", "Python 3.11", "ONNX Runtime", "PostgreSQL", "Redis", "MinIO / S3", "Next.js 14", "Grafana"],
     tagline: "Real ONNX inference, with the failure paths built first.",
     summary:
-      "A multi-project CV inference platform: uploads direct to object storage, synchronous inference for fast requests, and a worker pool for everything else — with a model registry, dead-letter handling and metrics for every stage.",
+      "A multi-project CV inference platform: uploads direct to object storage, synchronous inference for fast requests, and a worker pool for everything else, with a model registry, dead-letter handling and metrics for every stage.",
     metrics: [
       { value: "2", label: "Inference modes: sync and queued" },
       { value: "2", label: "Real models: YOLOv8n and MobileNet-style" },
@@ -359,7 +359,7 @@ export const PROJECTS: Project[] = [
     ],
     approach: [
       "Uploads go directly to MinIO or S3 via presigned URLs, so the API never proxies image bytes. A Redis-backed queue with visibility timeouts, exponential backoff with jitter, idempotency keys and a dead-letter path handles asynchronous work, while the model registry versions artefacts with ONNX/PyTorch metadata and an active/staging/deprecated lifecycle.",
-      "The Python service runs real ONNX inference — YOLOv8n for detection and a MobileNet-style classifier — with a documented deterministic fallback when no artefact is mounted, so CI and reviewers can exercise the whole path without a model download.",
+      "The Python service runs real ONNX inference (YOLOv8n for detection and a MobileNet-style classifier), with a documented deterministic fallback when no artefact is mounted, so CI and reviewers can exercise the whole path without a model download.",
     ],
     evidence: [
       "Every stage is instrumented: structured JSON logs, Prometheus metrics for HTTP, database, Redis, queue depth, worker and inference, OpenTelemetry tracing hooks, health and ready probes, and Grafana dashboards that ship with the Compose stack.",
@@ -395,7 +395,7 @@ export const PROJECTS: Project[] = [
       { value: "1", label: "Loop the whole product is designed around" },
     ],
     problem: [
-      "A habit product fails on the second day, not the first. If the path from opening the app to hearing today's session involves a search, a filter and a decision, most people never get there — and the audio is the reason they came.",
+      "A habit product fails on the second day, not the first. If the path from opening the app to hearing today's session involves a search, a filter and a decision, most people never get there. The audio is the reason they came.",
       "For a faith product there is a second constraint: the content has to be right, and the admin console has to make it easy for non-engineers to keep it right without shipping code.",
     ],
     approach: [
@@ -403,7 +403,7 @@ export const PROJECTS: Project[] = [
       "A native Flutter app ships alongside the web experience from the same API, and the audio/voice engine was audited separately before launch rather than folded into a general QA pass.",
     ],
     evidence: [
-      "Phases 0–8 were closed with dedicated audit notes and completion reports committed alongside the code — including an audio-platform status, a content-domain completion record and a voice-engine audit.",
+      "Phases 0–8 were closed with dedicated audit notes and completion reports committed alongside the code, including an audio-platform status, a content-domain completion record and a voice-engine audit.",
       "GitHub Actions handle CI and deployment, and a golden-update workflow keeps generated fixtures current instead of letting them rot.",
     ],
     highlights: [
@@ -428,7 +428,7 @@ export const PROJECTS: Project[] = [
     stack: ["Next.js 15", "Express", "Prisma", "PostgreSQL", "pnpm workspaces", "Vitest", "Docker"],
     tagline: "A marketing site and an API that fail loudly at boot.",
     summary:
-      "Monorepo for the Centre for Digital Risk & Leadership: a statically rendered Next.js site with a learning-plan UI, and an Express + Prisma API behind it — with quality gates that run on every commit.",
+      "Monorepo for the Centre for Digital Risk & Leadership: a statically rendered Next.js site with a learning-plan UI, and an Express + Prisma API behind it, with quality gates that run on every commit.",
     metrics: [
       { value: "2", label: "Apps in one pnpm workspace" },
       { value: "5", label: "Quality gates before merge" },
@@ -436,7 +436,7 @@ export const PROJECTS: Project[] = [
       { value: "1", label: "Command to reproduce production" },
     ],
     problem: [
-      "A small organisation needs a public site that loads instantly and an API that handles enquiries and learning plans — without hiring a platform team to keep them aligned. Configuration drift and stale migrations are the usual result.",
+      "A small organisation needs a public site that loads instantly and an API that handles enquiries and learning plans, without hiring a platform team to keep them aligned. Configuration drift and stale migrations are the usual result.",
       "The subtler problem is configuration itself. An API that starts with a half-filled environment file looks healthy until the first request that needs the missing value.",
     ],
     approach: [
@@ -476,7 +476,7 @@ export const PROJECTS: Project[] = [
       { value: "0", label: "Routes callable without a JWT" },
     ],
     problem: [
-      "Asset registers are cross-functional by nature. Finance cares about depreciation, operations about location, auditors about history and maintenance about work orders — and each of those roles should see a different slice of the same records.",
+      "Asset registers are cross-functional by nature. Finance cares about depreciation, operations about location, auditors about history and maintenance about work orders. Each of those roles should see a different slice of the same records.",
       "Bolting permissions onto handlers one at a time produces a system where nobody can answer which roles can do what, and a branch manager in Lagos can quietly read Abuja's register.",
     ],
     approach: [
@@ -516,7 +516,7 @@ export const PROJECTS: Project[] = [
       { value: "0", label: "Payments taken before confirmation" },
     ],
     problem: [
-      "Vehicle hire is a conversation, not a cart. Availability, rate, requirements and terms depend on a human check — and a website that implies instant confirmation creates disputes the business then has to absorb.",
+      "Vehicle hire is a conversation, not a cart. Availability, rate, requirements and terms depend on a human check, and a website that implies instant confirmation creates disputes the business then has to absorb.",
       "The operational risk is fragmentation: enquiries across WhatsApp, phone calls and Instagram DMs, with no record of what was asked, by whom, or what was quoted.",
     ],
     approach: [

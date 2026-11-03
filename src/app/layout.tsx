@@ -6,21 +6,17 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { SITE } from '../data/site';
 
-// Self-hosted variable fonts (OFL), bundled in src/fonts so builds never depend
-// on a font CDN: no render-blocking third-party CSS and no layout shift.
-const inter = localFont({
-  src: '../fonts/inter-latin-wght-normal.woff2',
-  weight: '100 900',
-  variable: '--font-sans',
-  display: 'swap',
-});
+// A single self-hosted family: JetBrains Mono (OFL), bundled as a variable
+// woff2 in src/fonts. The whole site is monospace by design, so there is no
+// second family to download and no render-blocking request to a font CDN.
 const mono = localFont({
-  src: [
-    { path: '../fonts/anonymous-pro-latin-400-normal.woff2', weight: '400', style: 'normal' },
-    { path: '../fonts/anonymous-pro-latin-700-normal.woff2', weight: '700', style: 'normal' },
-  ],
+  src: '../fonts/jetbrains-mono-latin-wght-normal.woff2',
+  weight: '100 800',
   variable: '--font-mono',
   display: 'swap',
+  preload: true,
+  fallback: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
+  adjustFontFallback: false,
 });
 
 export const viewport: Viewport = {
@@ -32,7 +28,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.siteUrl),
   title: {
-    default: 'Olusanya Timothy — Software engineer, AI red team & evaluation',
+    default: 'Olusanya Timothy · Software engineer, AI red team & evaluation',
     template: '%s',
   },
   description:
@@ -55,13 +51,13 @@ export const metadata: Metadata = {
     siteName: SITE.name,
     locale: 'en_NG',
     url: SITE.siteUrl,
-    title: 'Olusanya Timothy — Software engineer, AI red team & evaluation',
+    title: 'Olusanya Timothy · Software engineer, AI red team & evaluation',
     description:
       'I build the system, then try to break it. Go and TypeScript platforms, and open harnesses that make AI evaluations re-derivable.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Olusanya Timothy — Software engineer, AI red team & evaluation',
+    title: 'Olusanya Timothy · Software engineer, AI red team & evaluation',
     description:
       'I build the system, then try to break it. Go and TypeScript platforms, and open harnesses that make AI evaluations re-derivable.',
   },
@@ -73,7 +69,7 @@ const personJsonLd = {
   '@type': 'Person',
   name: SITE.name,
   alternateName: 'Teamthy',
-  jobTitle: 'Software engineer — AI red team & evaluation',
+  jobTitle: 'Software engineer, AI red team & evaluation',
   description: SITE.shortBio,
   url: SITE.siteUrl,
   image: `${SITE.siteUrl}/portrait/olusanya-timothy-portrait.jpg`,
@@ -97,14 +93,14 @@ const personJsonLd = {
 const websiteJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: `${SITE.name} — portfolio`,
+  name: `${SITE.name} · portfolio`,
   url: SITE.siteUrl,
   author: { '@type': 'Person', name: SITE.name, url: SITE.siteUrl },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${mono.variable}`}>
+    <html lang="en" className={mono.variable}>
       <body>
         <a
           href="#main-content"

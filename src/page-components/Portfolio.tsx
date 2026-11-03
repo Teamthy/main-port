@@ -22,12 +22,12 @@ export default function Portfolio() {
           <p className="font-mono text-sm uppercase text-[#1D1F2C] -tracking-[0.18px] mb-3">Work</p>
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
             <div className="max-w-3xl">
-              <h1 className="text-black text-3xl sm:text-5xl font-normal -tracking-[2.4px] mb-5">
+              <h1 className="text-black text-3xl sm:text-4xl font-normal -tracking-[2.4px] mb-5">
                 Twelve projects, all <span className="italic">public</span>
               </h1>
               <p className="text-lg text-gray-700 leading-7 -tracking-[0.2px]">
                 Four red-team harnesses, five product platforms and three backend builds. Every card links to
-                the repository it came from — including the ones where the honest answer is “this is a request
+                the repository it came from, including the ones where the honest answer is “this is a request
                 platform, not a checkout”.
               </p>
             </div>

@@ -2,6 +2,7 @@ import Link from "next/link";
 import ProjectVisual from "../components/ProjectVisual";
 import Prose from "../components/Prose";
 import { Avatar } from "../components/Portrait";
+import Icon from "../components/Icon";
 import { getRelatedPosts, type BlogPost } from "../data/blogs";
 import { SITE } from "../data/site";
 
@@ -20,7 +21,7 @@ export default function BlogDetail({ post }: { post: BlogPost }) {
             <span className="text-xs text-gray-400">·</span>
             <span className="font-mono text-xs text-gray-500">{post.readTime}</span>
           </div>
-          <h1 className="text-3xl lg:text-5xl font-normal -tracking-[2.4px] mb-7 text-black leading-tight">
+          <h1 className="text-3xl lg:text-4xl font-normal -tracking-[2.4px] mb-7 text-black leading-tight">
             {post.title}
           </h1>
           <div className="flex items-center justify-center gap-3">
@@ -97,9 +98,7 @@ export default function BlogDetail({ post }: { post: BlogPost }) {
               href="/blogs"
               className="group inline-flex gap-2 items-center text-sm font-medium text-black font-mono uppercase hover:text-gray-600 transition"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M19 12H5M5 12L12 19M5 12L12 5" />
-              </svg>
+              <Icon name="arrow_back" size={20} />
               Back to writing
             </Link>
             <Link href="/research" className="font-mono text-sm uppercase text-gray-500 hover:text-black transition">

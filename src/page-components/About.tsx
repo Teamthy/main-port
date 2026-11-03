@@ -2,11 +2,12 @@ import Link from "next/link";
 import ArrowIcon from "../components/ArrowIcon";
 import GitHubSignal from "../components/GitHubSignal";
 import { Avatar, PortraitFigure } from "../components/Portrait";
-import { PRINCIPLES, SITE, STACK } from "../data/site";
+import { NDA_NOTE, PRINCIPLES, SITE, STACK } from "../data/site";
+import Icon from "../components/Icon";
 
 const timeline = [
   {
-    period: "2026 — now",
+    period: "2026 to now",
     title: "Verification-forward AI security",
     body: "tieout, gatecheck, host-failure-benchmark and ai-redteam-five-tests: four public harnesses for evidence, regression gating, crash consistency and the boring failures. Built, audited and documented in the open.",
     href: "/research",
@@ -14,7 +15,7 @@ const timeline = [
   {
     period: "2026",
     title: "Product platforms in Go and TypeScript",
-    body: "EduMart OS, Famex OS, YK Virtual, I CONFESS and CDRL — school systems, a tutoring marketplace, an audio habit platform and a risk consultancy, each with a contract, a database model and a CI gate of its own.",
+    body: "EduMart OS, Famex OS, YK Virtual, I CONFESS and CDRL: school systems, a tutoring marketplace, an audio habit platform and a risk consultancy, each with a contract, a database model and a CI gate of its own.",
     href: "/portfolio",
   },
   {
@@ -40,28 +41,28 @@ export default function About() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             <div className="lg:col-span-7">
               <p className="font-mono text-sm uppercase text-[#1D1F2C] -tracking-[0.18px] mb-3">About</p>
-              <h1 className="text-3xl lg:text-5xl font-normal -tracking-[2.4px] mb-6 text-black">
+              <h1 className="text-3xl lg:text-4xl font-normal -tracking-[2.4px] mb-6 text-black">
                 I build the product, then try to <span className="italic">break the claim</span>
               </h1>
               <p className="text-lg text-gray-700 leading-7 -tracking-[0.2px] mb-5">
-                I am Olusanya Timothy — a software engineer in Lagos working across two things that turn out to
-                be the same thing: production platforms in Go and TypeScript, and the evaluation infrastructure
-                that decides whether an AI system actually held.
+                I am Olusanya Timothy, a software engineer in Lagos. I have been shipping software since 2024,
+                mostly in Go, TypeScript, Node.js, JavaScript and Python, across two things that turn out to be
+                the same thing: production platforms, and the evaluation infrastructure that decides whether an
+                AI system actually held.
               </p>
-              <p className="text-lg text-gray-700 leading-7 -tracking-[0.2px] mb-8">
+              <p className="text-lg text-gray-700 leading-7 -tracking-[0.2px] mb-5">
                 The work spans school operating systems and marketplaces, financial ledgers, computer-vision
                 pipelines and public red-team harnesses. What connects them is a preference for claims that can
                 be checked: a contract that fails the build, a ledger that cannot be unbalanced, a bundle a
                 stranger can re-derive.
               </p>
+              <p className="text-base text-gray-600 leading-7 -tracking-[0.2px] mb-8 border-l-2 border-black pl-5">
+                {NDA_NOTE}
+              </p>
               <div className="flex flex-col sm:flex-row items-start gap-4">
                 <a href={SITE.resume} download className="btn btn-primary group">
                   <span>Download CV</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <line x1="12" y1="15" x2="12" y2="3" />
-                  </svg>
+                  <Icon name="download" size={18} />
                 </a>
                 <Link href="/contact" className="btn btn-outline uppercase">
                   <span>Work with me</span>
@@ -128,7 +129,7 @@ export default function About() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-2xl mb-14">
             <p className="font-mono text-xs uppercase tracking-[0.18em] text-white/40 mb-3">Trajectory</p>
-            <h2 className="text-3xl sm:text-5xl font-normal text-white -tracking-[1.92px]">
+            <h2 className="text-3xl sm:text-4xl font-normal text-white -tracking-[1.92px]">
               What I have been <span className="italic">building</span>
             </h2>
           </div>
@@ -163,7 +164,7 @@ export default function About() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-14 max-w-2xl">
             <p className="font-mono text-sm uppercase text-[#1D1F2C] -tracking-[0.18px] mb-3">Principles</p>
-            <h2 className="text-3xl sm:text-5xl font-normal -tracking-[1.92px] text-black">
+            <h2 className="text-3xl sm:text-4xl font-normal -tracking-[1.92px] text-black">
               What <span className="italic">drives the work</span>
             </h2>
           </div>
@@ -238,7 +239,7 @@ export default function About() {
               <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-gray-700 rounded-full opacity-25 blur-[100px]" />
             </div>
             <div className="relative z-10 max-w-3xl mx-auto">
-              <h2 className="text-3xl sm:text-5xl font-normal text-white -tracking-[2.4px] leading-tight mb-6">
+              <h2 className="text-3xl sm:text-4xl font-normal text-white -tracking-[2.4px] leading-tight mb-6">
                 Want to work <span className="italic">together?</span>
               </h2>
               <p className="text-base text-white/60 leading-7 mb-10 max-w-xl mx-auto">

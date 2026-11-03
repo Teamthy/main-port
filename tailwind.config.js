@@ -6,7 +6,7 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['var(--font-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                sans: ['var(--font-mono)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
                 mono: ['var(--font-mono)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
             },
             spacing: {

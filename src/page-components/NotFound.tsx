@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Icon from "../components/Icon";
 
 export default function NotFound() {
   return (
@@ -6,7 +7,10 @@ export default function NotFound() {
       <section className="lg:pt-30 lg:pb-20 pt-20 pb-10">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-3xl text-center mx-auto">
-            <h1 className="text-3xl lg:text-5xl font-normal -tracking-[2.88px] mb-4 text-black">
+            <div className="mx-auto mb-6 flex size-14 items-center justify-center rounded-full bg-black text-white">
+              <Icon name="search_off" size={26} />
+            </div>
+            <h1 className="text-3xl lg:text-4xl font-normal -tracking-[2.88px] mb-4 text-black">
               Oops! Page Not Found
             </h1>
             <p className="mb-8 lg:mb-12 text-gray-700 text-lg leading-6 -tracking-[0.2px] max-w-xl mx-auto">
