@@ -9,21 +9,17 @@ import { BLOG_POSTS } from "../data/blogs";
 import { CAPABILITIES, PRINCIPLES, SITE } from "../data/site";
 
 const marqueeItems = [
-  "Go",
+  "Evidence over reports",
   "✦",
-  "TypeScript",
+  "Named gaps beat green bundles",
   "✦",
-  "Python",
+  "Block on regression",
   "✦",
-  "PostgreSQL",
+  "Contracts fail the build",
   "✦",
-  "Next.js",
+  "Money in kobo",
   "✦",
-  "OpenTelemetry",
-  "✦",
-  "ONNX",
-  "✦",
-  "GitHub Actions",
+  "No model · no key · no network",
   "✦",
 ];
 
